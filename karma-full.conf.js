@@ -7,12 +7,18 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
     files: [
+      'dist/luminous.js',
       'test/**/*.js'
     ],
     exclude: [],
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'test/**/*.js': 'babel'
+    },
+    babelPreprocessor: {
+        options: {
+            presets: ['es2015']
+        }
     },
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
@@ -35,9 +41,6 @@ module.exports = function(config) {
       'sl_android_5',
       'sl_android_4'
     ],
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true,
     concurrency: Infinity,
     sauceLabs: {
         testName: 'Luminous Tests'

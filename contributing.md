@@ -162,9 +162,9 @@ Once you're configured, building the JavaScript from the command line is easy:
 
 ```
 gulp            # build Luminous from source
-gulp watch      # watch for changes and build automatically
+gulp watch      # watch for changes and build automatically, testing with PhantomJS
 gulp test-local # run the test against local browsers only (Chrome, Safari, Firefox)
 gulp test-full  # run the test suite against all supported browsers (using SauceLabs)
 ```
 
-Please note: in order to run the tests, Chrome, Safari, and Firefox should all be installed locally. If you want to run `gulp test-full`, `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` must be defined in your shell.
+Please note: in order to run tests in-browser (with `gulp test-local`), Chrome and Firefox should be installed locally. If you want to run `gulp test-full`, `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` must be defined in your shell.

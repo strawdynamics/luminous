@@ -30,8 +30,7 @@ module.exports = function(config) {
     autoWatch: true,
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
-      'Chrome',
-      'Firefox'
+      'PhantomJS'
     ],
     concurrency: Infinity
   })
