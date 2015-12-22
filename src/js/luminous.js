@@ -26,7 +26,7 @@ export default class Luminous {
       onClose = null, // If present (and a function), this will be called whenver the lightbox is closed
     } = options
 
-    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, onOpen, onClose }
+    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, minContentWidth, onOpen, onClose }
   }
 }
 

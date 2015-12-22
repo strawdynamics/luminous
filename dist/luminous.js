@@ -58,7 +58,7 @@ var Luminous = function Luminous(el) {
   var // If present (and a function), this will be called whenver the lightbox is opened
   onClose = _options$onClose === undefined ? null : _options$onClose;
 
-  this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, onOpen: onOpen, onClose: onClose };
+  this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, minContentWidth: minContentWidth, onOpen: onOpen, onClose: onClose };
 };
 
 exports.default = Luminous;

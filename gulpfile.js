@@ -47,6 +47,8 @@ function runKarmaTests(configFileName, done, singleRun) {
 gulp.task('default', ['build', 'test-headless']);
 
 gulp.task('build', ['build-js', 'build-css']);
+// When actually setting up CI stuff, this will need to run in sequence.
+// https://www.npmjs.com/package/run-sequence
 gulp.task('build-ci', ['build', 'test-full']);
 
 gulp.task('test-local', function(done) {
@@ -72,7 +74,7 @@ gulp.task('build-js', function() {
     .pipe(buffer())
     .pipe(gulp.dest('dist'))
     .pipe(uglify())
-    .pipe(rename('luminous.min.js'))
+    .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest('dist'));
 });
 
