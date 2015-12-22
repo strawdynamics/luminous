@@ -1,9 +1,13 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _dom = require('./util/dom');
 
 var _throwIfMissing = require('./util/throwIfMissing');
 
@@ -13,19 +17,43 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Lightbox = function Lightbox() {
-  var namespace = arguments.length <= 0 || arguments[0] === undefined ? (0, _throwIfMissing2.default)() : arguments[0];
-  var minContentWidth = arguments.length <= 1 || arguments[1] === undefined ? (0, _throwIfMissing2.default)() : arguments[1];
+var Lightbox = (function () {
+  function Lightbox() {
+    var namespace = arguments.length <= 0 || arguments[0] === undefined ? (0, _throwIfMissing2.default)() : arguments[0];
+    var minContentWidth = arguments.length <= 1 || arguments[1] === undefined ? (0, _throwIfMissing2.default)() : arguments[1];
+    var appendToEl = arguments.length <= 2 || arguments[2] === undefined ? (0, _throwIfMissing2.default)() : arguments[2];
 
-  _classCallCheck(this, Lightbox);
+    _classCallCheck(this, Lightbox);
 
-  this.namespace = namespace;
-  this.minContentWidth = minContentWidth;
-};
+    this.namespace = namespace;
+    this.minContentWidth = minContentWidth;
+
+    if (!(0, _dom.isDOMElement)(appendToEl)) {
+      throw new TypeError('`new Lightbox` requires a DOM element passed as `appendToEl`.');
+    }
+
+    this._buildElement(appendToEl);
+  }
+
+  _createClass(Lightbox, [{
+    key: '_buildElement',
+    value: function _buildElement(appendToEl) {
+      var el = document.createElement('div');
+
+      el.classList.add(this.namespace + '-lightbox');
+
+      appendToEl.appendChild(el);
+
+      this.el = el;
+    }
+  }]);
+
+  return Lightbox;
+})();
 
 exports.default = Lightbox;
 
-},{"./util/throwIfMissing":4}],2:[function(require,module,exports){
+},{"./util/dom":3,"./util/throwIfMissing":4}],2:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -92,6 +120,8 @@ var Luminous = function Luminous(el) {
   onClose = _options$onClose === undefined ? null : _options$onClose;
 
   this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, minContentWidth: minContentWidth, onOpen: onOpen, onClose: onClose };
+
+  this.lightbox = new _Lightbox2.default(this.settings.namespace, this.settings.minContentWidth, document.querySelector(this.settings.appendToSelector));
 };
 
 exports.default = Luminous;

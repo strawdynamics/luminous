@@ -8,7 +8,7 @@ export default class Luminous {
     this.el = el;
 
     if (!isDOMElement(this.el)) {
-      throw new TypeError('`new Luminous` requires a DOM element as its first argument.')
+      throw new TypeError('`new Luminous` requires a DOM element as its first argument.');
     }
 
     // A bit unexpected if you haven't seen this pattern before.
@@ -28,9 +28,13 @@ export default class Luminous {
     } = options
 
     this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, minContentWidth, onOpen, onClose }
+
+    this.lightbox = new Lightbox(
+      this.settings.namespace,
+      this.settings.minContentWidth,
+      document.querySelector(this.settings.appendToSelector)
+    )
   }
-
-
 }
 
 global.Luminous = Luminous;

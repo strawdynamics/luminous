@@ -54,13 +54,13 @@ describe('Configuration', () => {
 
   it('accepts custom settings', () => {
     let anchor = document.querySelector('.test-anchor');
-    let lum = new Luminous(anchor, {namespace: 'not the default'});
-    expect(lum.settings.namespace).toBe('not the default');
+    let lum = new Luminous(anchor, {namespace: 'not-the-default'});
+    expect(lum.settings.namespace).toBe('not-the-default');
   });
 
   it('leaves settings defaults in place when custom settings are passed', () => {
     let anchor = document.querySelector('.test-anchor');
-    let lum = new Luminous(anchor, {namespace: 'not the default'});
+    let lum = new Luminous(anchor, {namespace: 'not-the-default'});
     expect(lum.settings.openTrigger).toBe('click');
   });
 });
