@@ -30,9 +30,17 @@ Once you've installed Luminous via one of the above methods, you're ready to get
 ## Options / Defaults
 
 ``` javascript
-var defaults = {
-	lorem: 'ipsum', // a description of this feature
-	dolor: 'sit' // a description of this feature
+{
+	namespace: 'luminous', // Prefix for generated element class names
+	sourceAttribute: 'href', // Which attribute to pull the lightbox source from
+	openTrigger: 'click', // The event to listen to on the passed element that triggers opening
+	closeTrigger: 'click', // The event to listen to on the background element that triggers closing
+	closeWithEscape: true, // Allow closing by pressing escape
+	appendToSelector: 'body', // A selector defining what to append the lightbox element to
+	showCloseButton: false, // Whether or not to show a close button.
+	minContentWidth: 460, // When below this width, the content will no longer shrink to fit. Instead, it will scroll inside its container.
+	onOpen: null, // If present (and a function), this will be called whenver the lightbox is opened
+	onClose: null, // If present (and a function), this will be called whenver the lightbox is closed
 };
 ```
 
