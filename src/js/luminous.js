@@ -4,10 +4,10 @@ import Lightbox from './Lightbox';
 export const VERSION = '0.1.0';
 
 export default class Luminous {
-  constructor(el, options = {}) {
-    this.el = el;
+  constructor(trigger, options = {}) {
+    this.trigger = trigger;
 
-    if (!isDOMElement(this.el)) {
+    if (!isDOMElement(this.trigger)) {
       throw new TypeError('`new Luminous` requires a DOM element as its first argument.');
     }
 
@@ -29,11 +29,61 @@ export default class Luminous {
 
     this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, minContentWidth, onOpen, onClose }
 
+    this.imageURL = this.trigger.getAttribute(this.settings.sourceAttribute);
+    if (!this.imageURL) {
+      throw new Error(`No image URL was found in the ${this.settings.sourceAttribute} attribute of the trigger.`);
+    }
+
+    this._setUpLightbox();
+    this._bindEvents();
+  }
+
+  open = (e) => {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
+
+    console.log('hrm', this)
+    this.lightbox.open();
+
+    let onOpen = this.settings.onOpen
+    if (onOpen && typeof onOpen === 'function') {
+      onOpen();
+    }
+  }
+
+  close = (e) => {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
+
+    this.lightbox.close();
+
+    let onClose = this.settings.onClose
+    if (onClose && typeof onClose === 'function') {
+      onClose();
+    }
+  }
+
+  _setUpLightbox() {
     this.lightbox = new Lightbox(
       this.settings.namespace,
       this.settings.minContentWidth,
-      document.querySelector(this.settings.appendToSelector)
+      document.querySelector(this.settings.appendToSelector),
+      this.imageURL
     )
+  }
+
+  _bindEvents() {
+    this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
+  }
+
+  _unbindEvents() {
+    this.trigger.removeEventListener(this.settings.openTrigger, this.open, false);
+  }
+
+  destroy = () => {
+    this._unbindEvents();
   }
 }
 

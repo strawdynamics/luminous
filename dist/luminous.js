@@ -21,30 +21,47 @@ var Lightbox = (function () {
   function Lightbox() {
     var namespace = arguments.length <= 0 || arguments[0] === undefined ? (0, _throwIfMissing2.default)() : arguments[0];
     var minContentWidth = arguments.length <= 1 || arguments[1] === undefined ? (0, _throwIfMissing2.default)() : arguments[1];
-    var appendToEl = arguments.length <= 2 || arguments[2] === undefined ? (0, _throwIfMissing2.default)() : arguments[2];
+    var parentEl = arguments.length <= 2 || arguments[2] === undefined ? (0, _throwIfMissing2.default)() : arguments[2];
+    var imageURL = arguments.length <= 3 || arguments[3] === undefined ? (0, _throwIfMissing2.default)() : arguments[3];
 
     _classCallCheck(this, Lightbox);
 
     this.namespace = namespace;
     this.minContentWidth = minContentWidth;
 
-    if (!(0, _dom.isDOMElement)(appendToEl)) {
-      throw new TypeError('`new Lightbox` requires a DOM element passed as `appendToEl`.');
+    if (!(0, _dom.isDOMElement)(parentEl)) {
+      throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
     }
+    this.parentEl = parentEl;
 
-    this._buildElement(appendToEl);
+    this._buildElement(imageURL);
   }
 
   _createClass(Lightbox, [{
     key: '_buildElement',
-    value: function _buildElement(appendToEl) {
+    value: function _buildElement(imageURL) {
       var el = document.createElement('div');
-
       el.classList.add(this.namespace + '-lightbox');
+      el.innerHTML = '<img alt src="' + imageURL + '">';
 
-      appendToEl.appendChild(el);
+      this.parentEl.appendChild(el);
 
       this.el = el;
+    }
+  }, {
+    key: 'open',
+    value: function open() {
+      this.el.classList.add(this.namespace + '-open');
+    }
+  }, {
+    key: 'close',
+    value: function close() {
+      this.el.classList.add(this.namespace + '-close');
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      this.parentEl.removeChild(this.el);
     }
   }]);
 
@@ -56,6 +73,8 @@ exports.default = Lightbox;
 },{"./util/dom":3,"./util/throwIfMissing":4}],2:[function(require,module,exports){
 (function (global){
 'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -74,54 +93,118 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var VERSION = exports.VERSION = '0.1.0';
 
-var Luminous = function Luminous(el) {
-  var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+var Luminous = (function () {
+  function Luminous(trigger) {
+    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-  _classCallCheck(this, Luminous);
+    _classCallCheck(this, Luminous);
 
-  this.el = el;
+    _initialiseProps.call(this);
 
-  if (!(0, _dom.isDOMElement)(this.el)) {
-    throw new TypeError('`new Luminous` requires a DOM element as its first argument.');
+    this.trigger = trigger;
+
+    if (!(0, _dom.isDOMElement)(this.trigger)) {
+      throw new TypeError('`new Luminous` requires a DOM element as its first argument.');
+    }
+
+    // A bit unexpected if you haven't seen this pattern before.
+    // Based on the pattern here:
+    // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
+    var _options$namespace = // If present (and a function), this will be called whenver the lightbox is closed
+    options.namespace;
+    var namespace = _options$namespace === undefined ? 'luminous' : _options$namespace;
+    var _options$sourceAttrib = options.sourceAttribute;
+    var // Prefix for generated element class names
+    sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib;
+    var _options$openTrigger = options.openTrigger;
+    var // Which attribute to pull the lightbox source from
+    openTrigger = _options$openTrigger === undefined ? 'click' : _options$openTrigger;
+    var _options$closeTrigger = options.closeTrigger;
+    var // The event to listen to on the passed element that triggers opening
+    closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
+    var _options$closeWithEsc = options.closeWithEscape;
+    var // The event to listen to on the background element that triggers closing
+    closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
+    var _options$appendToSele = options.appendToSelector;
+    var // Allow closing by pressing escape
+    appendToSelector = _options$appendToSele === undefined ? 'body' : _options$appendToSele;
+    var _options$showCloseBut = options.showCloseButton;
+    var // A selector defining what to append the lightbox element to
+    showCloseButton = _options$showCloseBut === undefined ? false : _options$showCloseBut;
+    var _options$minContentWi = options.minContentWidth;
+    var // Whether or not to show a close button.
+    minContentWidth = _options$minContentWi === undefined ? 460 : _options$minContentWi;
+    var _options$onOpen = options.onOpen;
+    var // When below this width, the content will no longer shrink to fit. Instead, it will scroll inside its container.
+    onOpen = _options$onOpen === undefined ? null : _options$onOpen;
+    var _options$onClose = options.onClose;
+    var // If present (and a function), this will be called whenver the lightbox is opened
+    onClose = _options$onClose === undefined ? null : _options$onClose;
+
+    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, minContentWidth: minContentWidth, onOpen: onOpen, onClose: onClose };
+
+    this.imageURL = this.trigger.getAttribute(this.settings.sourceAttribute);
+    if (!this.imageURL) {
+      throw new Error('No image URL was found in the ' + this.settings.sourceAttribute + ' attribute of the trigger.');
+    }
+
+    this._setUpLightbox();
+    this._bindEvents();
   }
 
-  // A bit unexpected if you haven't seen this pattern before.
-  // Based on the pattern here:
-  // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
-  var _options$namespace = // If present (and a function), this will be called whenver the lightbox is closed
-  options.namespace;
-  var namespace = _options$namespace === undefined ? 'luminous' : _options$namespace;
-  var _options$sourceAttrib = options.sourceAttribute;
-  var // Prefix for generated element class names
-  sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib;
-  var _options$openTrigger = options.openTrigger;
-  var // Which attribute to pull the lightbox source from
-  openTrigger = _options$openTrigger === undefined ? 'click' : _options$openTrigger;
-  var _options$closeTrigger = options.closeTrigger;
-  var // The event to listen to on the passed element that triggers opening
-  closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
-  var _options$closeWithEsc = options.closeWithEscape;
-  var // The event to listen to on the background element that triggers closing
-  closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
-  var _options$appendToSele = options.appendToSelector;
-  var // Allow closing by pressing escape
-  appendToSelector = _options$appendToSele === undefined ? 'body' : _options$appendToSele;
-  var _options$showCloseBut = options.showCloseButton;
-  var // A selector defining what to append the lightbox element to
-  showCloseButton = _options$showCloseBut === undefined ? false : _options$showCloseBut;
-  var _options$minContentWi = options.minContentWidth;
-  var // Whether or not to show a close button.
-  minContentWidth = _options$minContentWi === undefined ? 460 : _options$minContentWi;
-  var _options$onOpen = options.onOpen;
-  var // When below this width, the content will no longer shrink to fit. Instead, it will scroll inside its container.
-  onOpen = _options$onOpen === undefined ? null : _options$onOpen;
-  var _options$onClose = options.onClose;
-  var // If present (and a function), this will be called whenver the lightbox is opened
-  onClose = _options$onClose === undefined ? null : _options$onClose;
+  _createClass(Luminous, [{
+    key: '_setUpLightbox',
+    value: function _setUpLightbox() {
+      this.lightbox = new _Lightbox2.default(this.settings.namespace, this.settings.minContentWidth, document.querySelector(this.settings.appendToSelector), this.imageURL);
+    }
+  }, {
+    key: '_bindEvents',
+    value: function _bindEvents() {
+      this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
+    }
+  }, {
+    key: '_unbindEvents',
+    value: function _unbindEvents() {
+      this.trigger.removeEventListener(this.settings.openTrigger, this.open, false);
+    }
+  }]);
 
-  this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, minContentWidth: minContentWidth, onOpen: onOpen, onClose: onClose };
+  return Luminous;
+})();
 
-  this.lightbox = new _Lightbox2.default(this.settings.namespace, this.settings.minContentWidth, document.querySelector(this.settings.appendToSelector));
+var _initialiseProps = function _initialiseProps() {
+  var _this = this;
+
+  this.open = function (e) {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
+
+    console.log('hrm', _this);
+    _this.lightbox.open();
+
+    var onOpen = _this.settings.onOpen;
+    if (onOpen && typeof onOpen === 'function') {
+      onOpen();
+    }
+  };
+
+  this.close = function (e) {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
+
+    _this.lightbox.close();
+
+    var onClose = _this.settings.onClose;
+    if (onClose && typeof onClose === 'function') {
+      onClose();
+    }
+  };
+
+  this.destroy = function () {
+    _this._unbindEvents();
+  };
 };
 
 exports.default = Luminous;

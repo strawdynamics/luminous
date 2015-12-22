@@ -2,8 +2,8 @@ import Luminous from '../src/js/Luminous';
 
 beforeEach(function() {
   let anchor = document.createElement('a');
-  anchor.href = 'https://images.unsplash.com/photo-1442606440995-d0be22c5f90f?crop=entropy&fit=crop&fm=jpg&h=1200&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1300';
-  anchor.classList.add('test-anchor')
+  anchor.href = 'http://website.com/image.png';
+  anchor.classList.add('test-anchor');
 
   document.body.appendChild(anchor);
 });

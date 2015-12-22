@@ -13,6 +13,7 @@ const karmaConfig = require('./karmaConfig');
 const Config = require('karma/lib/config').Config;
 
 const paths = {
+  test: __dirname + '/test/**/*.js',
   js: __dirname + '/src/js/**/*.js',
   jsEntry: __dirname + '/src/js/luminous.js',
   css: __dirname + '/src/css/**/*.scss'
@@ -24,7 +25,7 @@ function runKarmaTests(configObj, done, singleRun) {
 
   new Server(config, function(exitCode) {
     if (exitCode !== 0) {
-      throw new gutil.PluginError('Karma tests failed');
+      throw new gutil.PluginError({plugin: 'karma', message: 'Karma tests failed'});
     }
 
     done();
@@ -70,7 +71,7 @@ gulp.task('build-css', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.js, function() {
+  gulp.watch([paths.js, paths.test], function() {
     runSequence(['build-js', 'test-headless']);
   });
   gulp.watch(paths.css, ['build-css']);
