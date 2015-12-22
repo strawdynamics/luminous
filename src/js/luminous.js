@@ -1,4 +1,5 @@
 import { isDOMElement } from './util/dom';
+import Lightbox from './Lightbox';
 
 export const VERSION = '0.1.0';
 
@@ -28,6 +29,8 @@ export default class Luminous {
 
     this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, minContentWidth, onOpen, onClose }
   }
+
+
 }
 
 global.Luminous = Luminous;

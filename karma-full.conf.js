@@ -5,20 +5,21 @@ module.exports = function(config) {
   config.set({
     basePath: '',
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['browserify', 'jasmine'],
     files: [
-      'dist/luminous.js',
+      {pattern: 'src/**/*.js', included: false, served: false},
       'test/**/*.js'
     ],
     exclude: [],
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js': 'babel'
+      'src/**/*.js': 'browserify',
+      'test/**/*.js': 'browserify',
     },
-    babelPreprocessor: {
-        options: {
-            presets: ['es2015']
-        }
+    browserify: {
+      transform: [
+        ['babelify', { presets: ['es2015'] }],
+      ]
     },
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter

@@ -28,7 +28,7 @@ function runKarmaTests(configFileName, done, singleRun) {
 
   server.on('browser_error', function(browser, err) {
     gutil.log('Karma run failed: ' + err.message);
-    throw err;
+    // throw err;
   });
 
   if (done) {
