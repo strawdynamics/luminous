@@ -10,7 +10,7 @@ const baseConfig = {
   },
   browserify: {
     transform: [
-      ['babelify', { presets: ['es2015'] }],
+      'babelify',
     ]
   }
 };
