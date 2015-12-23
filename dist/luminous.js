@@ -17,11 +17,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+// All officially-supported browsers have this, but it's easy to
+// account for, just in case.
+var HAS_ANIMATION = 'animation' in document.body.style;
+
 var Lightbox = (function () {
   function Lightbox() {
+    var _this = this;
+
     var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
     _classCallCheck(this, Lightbox);
+
+    this._completeOpen = function () {
+      _this.el.removeEventListener('animationend', _this._completeOpen, false);
+
+      _this.el.classList.remove(_this.openingClass);
+    };
+
+    this._completeClose = function () {
+      _this.el.removeEventListener('animationend', _this._completeClose, false);
+
+      _this.el.classList.remove(_this.openClass, _this.closingClass);
+    };
 
     var _options$namespace = options.namespace;
     var namespace = _options$namespace === undefined ? (0, _throwIfMissing2.default)() : _options$namespace;
@@ -31,12 +49,18 @@ var Lightbox = (function () {
     var imageURL = _options$imageURL === undefined ? (0, _throwIfMissing2.default)() : _options$imageURL;
     var _options$includeImgix = options.includeImgixJSClass;
     var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
+    var _options$closeTrigger = options.closeTrigger;
+    var closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
 
-    this.settings = { namespace: namespace, parentEl: parentEl, imageURL: imageURL, includeImgixJSClass: includeImgixJSClass };
+    this.settings = { namespace: namespace, parentEl: parentEl, imageURL: imageURL, includeImgixJSClass: includeImgixJSClass, closeTrigger: closeTrigger };
 
     if (!(0, _dom.isDOMElement)(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
     }
+
+    this.openClass = this.settings.namespace + '-open';
+    this.openingClass = this.openClass + 'ing';
+    this.closingClass = this.settings.namespace + '-closing';
 
     this._buildElement();
   }
@@ -59,12 +83,22 @@ var Lightbox = (function () {
   }, {
     key: 'open',
     value: function open() {
-      this.el.classList.add(this.settings.namespace + '-open');
+      this.el.classList.add(this.openClass);
+
+      if (HAS_ANIMATION) {
+        this.el.addEventListener('animationend', this._completeOpen, false);
+        this.el.classList.add(this.openingClass);
+      }
     }
   }, {
     key: 'close',
     value: function close() {
-      this.el.classList.add(this.settings.namespace + '-close');
+      if (HAS_ANIMATION) {
+        this.el.addEventListener('animationend', this._completeClose, false);
+        this.el.classList.add(this.closingClass);
+      } else {
+        this.el.classList.remove(this.openClass);
+      }
     }
   }, {
     key: 'destroy',
@@ -167,18 +201,21 @@ var Luminous = (function () {
         namespace: this.settings.namespace,
         parentEl: document.querySelector(this.settings.appendToSelector),
         imageURL: this.imageURL,
-        includeImgixJSClass: this.settings.includeImgixJSClass
+        includeImgixJSClass: this.settings.includeImgixJSClass,
+        closeTrigger: this.settings.closeTrigger
       });
     }
   }, {
     key: '_bindEvents',
     value: function _bindEvents() {
       this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
+      this.lightbox.el.addEventListener(this.settings.closeTrigger, this.close, false);
     }
   }, {
     key: '_unbindEvents',
     value: function _unbindEvents() {
       this.trigger.removeEventListener(this.settings.openTrigger, this.open, false);
+      this.lightbox.el.removeEventListener(this.settings.closeTrigger, this.close, false);
     }
   }]);
 
@@ -202,6 +239,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.close = function (e) {
+    console.log('hello there, close!', e);
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
     }
@@ -216,6 +254,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.destroy = function () {
     _this._unbindEvents();
+    _this.lightbox.destroy();
   };
 };
 

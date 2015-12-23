@@ -10,14 +10,26 @@
 		<title>Luminous Playground</title>
 
 		<style type="text/css">
-			@keyframes fadeIn {
+			@keyframes noop {  }
+
+			@keyframes fade {
 				0% { opacity: 0; }
 				100% { opacity: 1; }
 			}
 
-			@keyframes fadeZoomIn {
+			@keyframes fadeOut {
+				0% { opacity: 1; }
+				100% { opacity: 0; }
+			}
+
+			@keyframes fadeZoom {
 				0% { transform: scale(0.5); opacity: 0; }
 				100% { transform: scale(1); opacity: 1; }
+			}
+
+			@keyframes fadeZoomOut {
+				0% { transform: scale(1); opacity: 1; }
+				100% { transform: scale(0.5); opacity: 0; }
 			}
 
 			.lum-lightbox {
@@ -33,11 +45,33 @@
 
 			.lum-lightbox.lum-open {
 				display: block;
-				animation: fadeIn 300ms ease-out;
 			}
 
-			.lum-lightbox.lum-open .lum-lightbox-inner {
-				animation: fadeZoomIn 300ms ease-out;
+			/*.lum-lightbox.lum-opening {
+				animation: noop;
+			}
+
+			.lum-lightbox.lum-closing {
+				animation: noop;
+			}*/
+
+			.lum-lightbox.lum-opening {
+				display: block;
+				animation: fade 300ms ease-out;
+			}
+
+			.lum-lightbox.lum-opening .lum-lightbox-inner {
+				animation: fadeZoom 300ms ease-out;
+			}
+
+			.lum-lightbox.lum-closing {
+				animation: fade 300ms ease-out;
+				animation-direction: reverse;
+			}
+
+			.lum-lightbox.lum-closing .lum-lightbox-inner {
+				animation: fadeZoom 300ms ease-out;
+				animation-direction: reverse;
 			}
 
 			.lum-lightbox-inner {

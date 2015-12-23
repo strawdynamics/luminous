@@ -52,6 +52,7 @@ export default class Luminous {
   }
 
   close = (e) => {
+    console.log('hello there, close!', e);
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
     }
@@ -70,19 +71,23 @@ export default class Luminous {
       parentEl: document.querySelector(this.settings.appendToSelector),
       imageURL: this.imageURL,
       includeImgixJSClass: this.settings.includeImgixJSClass,
+      closeTrigger: this.settings.closeTrigger,
     });
   }
 
   _bindEvents() {
     this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
+    this.lightbox.el.addEventListener(this.settings.closeTrigger, this.close, false);
   }
 
   _unbindEvents() {
     this.trigger.removeEventListener(this.settings.openTrigger, this.open, false);
+    this.lightbox.el.removeEventListener(this.settings.closeTrigger, this.close, false);
   }
 
   destroy = () => {
     this._unbindEvents();
+    this.lightbox.destroy();
   }
 }
 
