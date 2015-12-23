@@ -220,25 +220,33 @@ var Luminous = (function () {
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
     var _options$namespace = // Add base styles to the page. See the "Theming" section of README.md for more information.
     options.namespace;
-    var namespace = _options$namespace === undefined ? null : _options$namespace;
+    var
+    // Prefix for generated element class names (e.g. `my-ns` will
+    // result in classes such as `my-ns-lightbox`. Default `lum-`
+    // prefixed classes will always be added as well.
+    namespace = _options$namespace === undefined ? null : _options$namespace;
     var _options$sourceAttrib = options.sourceAttribute;
-    var // Prefix for generated element class names (e.g. `my-ns` will result in classes such as `my-ns-lightbox`. Default `lum-` prefixed classes will always be added as well
+    var
+    // Which attribute to pull the lightbox image source from.
     sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib;
     var _options$openTrigger = options.openTrigger;
-    var // Which attribute to pull the lightbox source from
+    var
+    // The event to listen to on the _trigger_ element: triggers opening.
     openTrigger = _options$openTrigger === undefined ? 'click' : _options$openTrigger;
     var _options$closeTrigger = options.closeTrigger;
-    var // The event to listen to on the _trigger_ element that triggers opening
+    var
+    // The event to listen to on the _lightbox_ element: triggers closing.
     closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
     var _options$closeWithEsc = options.closeWithEscape;
-    var // The event to listen to on the _lightbox_ element that triggers closing
+    var
+    // Allow closing by pressing escape.
     closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
     var _options$appendToSele = options.appendToSelector;
-    var // Allow closing by pressing escape
+    var
+    // A selector defining what to append the lightbox element to
     appendToSelector = _options$appendToSele === undefined ? 'body' : _options$appendToSele;
     var _options$showCloseBut = options.showCloseButton;
-    var // A selector defining what to append the lightbox element to
-    showCloseButton = _options$showCloseBut === undefined ? false : _options$showCloseBut;
+    var showCloseButton = _options$showCloseBut === undefined ? false : _options$showCloseBut;
     var _options$onOpen = options.onOpen;
     var // Whether or not to show a close button.
     onOpen = _options$onOpen === undefined ? null : _options$onOpen;

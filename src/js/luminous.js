@@ -18,12 +18,20 @@ export default class Luminous {
     // Based on the pattern here:
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
     let {
-      namespace = null, // Prefix for generated element class names (e.g. `my-ns` will result in classes such as `my-ns-lightbox`. Default `lum-` prefixed classes will always be added as well
-      sourceAttribute = 'href', // Which attribute to pull the lightbox source from
-      openTrigger = 'click', // The event to listen to on the _trigger_ element that triggers opening
-      closeTrigger = 'click', // The event to listen to on the _lightbox_ element that triggers closing
-      closeWithEscape = true, // Allow closing by pressing escape
-      appendToSelector = 'body', // A selector defining what to append the lightbox element to
+      // Prefix for generated element class names (e.g. `my-ns` will
+      // result in classes such as `my-ns-lightbox`. Default `lum-`
+      // prefixed classes will always be added as well.
+      namespace = null,
+      // Which attribute to pull the lightbox image source from.
+      sourceAttribute = 'href',
+      // The event to listen to on the _trigger_ element: triggers opening.
+      openTrigger = 'click',
+      // The event to listen to on the _lightbox_ element: triggers closing.
+      closeTrigger = 'click',
+      // Allow closing by pressing escape.
+      closeWithEscape = true,
+      // A selector defining what to append the lightbox element to
+      appendToSelector = 'body',
       showCloseButton = false, // Whether or not to show a close button.
       onOpen = null, // If present (and a function), this will be called whenver the lightbox is opened
       onClose = null, // If present (and a function), this will be called whenver the lightbox is closed
