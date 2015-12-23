@@ -30,16 +30,24 @@ export default class Luminous {
       closeTrigger = 'click',
       // Allow closing by pressing escape.
       closeWithEscape = true,
-      // A selector defining what to append the lightbox element to
+      // A selector defining what to append the lightbox element to.
       appendToSelector = 'body',
-      showCloseButton = false, // Whether or not to show a close button.
-      onOpen = null, // If present (and a function), this will be called whenver the lightbox is opened
-      onClose = null, // If present (and a function), this will be called whenver the lightbox is closed
-      includeImgixJSClass = false, // When true, adds the `imgix-fluid` class to the `img` inside the lightbox
-      injectBaseStyles = true, // Add base styles to the page. See the "Theming" section of README.md for more information.
+      // If present (and a function), this will be called
+      // whenever the lightbox is opened.
+      onOpen = null,
+      // If present (and a function), this will be called
+      // whenever the lightbox is closed.
+      onClose = null,
+      // When true, adds the `imgix-fluid` class to the `img`
+      // inside the lightbox. See https://github.com/imgix/imgix.js
+      // for more information.
+      includeImgixJSClass = false,
+      // Add base styles to the page. See the "Theming"
+      // section of README.md for more information.
+      injectBaseStyles = true,
     } = options
 
-    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, onOpen, onClose, includeImgixJSClass, injectBaseStyles }
+    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles }
 
     if (this.settings.injectBaseStyles) {
       injectBaseStylesheet();

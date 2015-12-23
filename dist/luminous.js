@@ -218,8 +218,7 @@ var Luminous = (function () {
     // A bit unexpected if you haven't seen this pattern before.
     // Based on the pattern here:
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
-    var _options$namespace = // Add base styles to the page. See the "Theming" section of README.md for more information.
-    options.namespace;
+    var _options$namespace = options.namespace;
     var
     // Prefix for generated element class names (e.g. `my-ns` will
     // result in classes such as `my-ns-lightbox`. Default `lum-`
@@ -243,24 +242,31 @@ var Luminous = (function () {
     closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
     var _options$appendToSele = options.appendToSelector;
     var
-    // A selector defining what to append the lightbox element to
+    // A selector defining what to append the lightbox element to.
     appendToSelector = _options$appendToSele === undefined ? 'body' : _options$appendToSele;
-    var _options$showCloseBut = options.showCloseButton;
-    var showCloseButton = _options$showCloseBut === undefined ? false : _options$showCloseBut;
     var _options$onOpen = options.onOpen;
-    var // Whether or not to show a close button.
+    var
+    // If present (and a function), this will be called
+    // whenever the lightbox is opened.
     onOpen = _options$onOpen === undefined ? null : _options$onOpen;
     var _options$onClose = options.onClose;
-    var // If present (and a function), this will be called whenver the lightbox is opened
+    var
+    // If present (and a function), this will be called
+    // whenever the lightbox is closed.
     onClose = _options$onClose === undefined ? null : _options$onClose;
     var _options$includeImgix = options.includeImgixJSClass;
-    var // If present (and a function), this will be called whenver the lightbox is closed
+    var
+    // When true, adds the `imgix-fluid` class to the `img`
+    // inside the lightbox. See https://github.com/imgix/imgix.js
+    // for more information.
     includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
     var _options$injectBaseSt = options.injectBaseStyles;
-    var // When true, adds the `imgix-fluid` class to the `img` inside the lightbox
+    var
+    // Add base styles to the page. See the "Theming"
+    // section of README.md for more information.
     injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt;
 
-    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
+    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
 
     if (this.settings.injectBaseStyles) {
       (0, _injectBaseStylesheet2.default)();

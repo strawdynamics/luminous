@@ -8,6 +8,7 @@ const gutil = require('gulp-util');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const Server = require('karma').Server;
+const minifyCss = require('gulp-minify-css');
 const runSequence = require('run-sequence');
 const karmaConfig = require('./karmaConfig');
 const Config = require('karma/lib/config').Config;
@@ -16,7 +17,7 @@ const paths = {
   test: __dirname + '/test/**/*.js',
   js: __dirname + '/src/js/**/*.js',
   jsEntry: __dirname + '/src/js/luminous.js',
-  css: __dirname + '/src/css/**/*.scss'
+  css: __dirname + '/src/css/**/*.css'
 };
 
 function runKarmaTests(configObj, done, singleRun) {
@@ -74,7 +75,11 @@ gulp.task('build-js', function() {
 });
 
 gulp.task('build-css', function() {
-
+  return gulp.src(paths.css)
+    .pipe(gulp.dest('dist'))
+    .pipe(minifyCss())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('dist'))
 });
 
 gulp.task('watch', function() {

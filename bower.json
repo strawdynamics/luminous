@@ -1,7 +1,10 @@
 {
   "name": "luminous",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
-  "main": "dist/luminous.js",
+  "main": [
+    "dist/luminous.js",
+    "dist/luminous-basic.css"
+  ],
   "authors": [
     "imgix"
   ],
