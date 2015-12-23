@@ -179,6 +179,8 @@ var Luminous = (function () {
 
     _initialiseProps.call(this);
 
+    this.isOpen = false;
+
     this.trigger = trigger;
 
     if (!(0, _dom.isDOMElement)(this.trigger)) {
@@ -201,7 +203,7 @@ var Luminous = (function () {
     var // The event to listen to on the _trigger_ element that triggers opening
     closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
     var _options$closeWithEsc = options.closeWithEscape;
-    var // The event to listen to on the _background_ element that triggers closing
+    var // The event to listen to on the _lightbox_ element that triggers closing
     closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
     var _options$appendToSele = options.appendToSelector;
     var // Allow closing by pressing escape
@@ -242,12 +244,20 @@ var Luminous = (function () {
     value: function _bindEvents() {
       this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
       this.lightbox.el.addEventListener(this.settings.closeTrigger, this.close, false);
+
+      if (this.settings.closeWithEscape) {
+        window.addEventListener('keyup', this._handleKeyup, false);
+      }
     }
   }, {
     key: '_unbindEvents',
     value: function _unbindEvents() {
       this.trigger.removeEventListener(this.settings.openTrigger, this.open, false);
       this.lightbox.el.removeEventListener(this.settings.closeTrigger, this.close, false);
+
+      if (this.settings.closeWithEscape) {
+        window.removeEventListener('keyup', this._handleKeyup, false);
+      }
     }
   }]);
 
@@ -268,6 +278,8 @@ var _initialiseProps = function _initialiseProps() {
     if (onOpen && typeof onOpen === 'function') {
       onOpen();
     }
+
+    _this.isOpen = true;
   };
 
   this.close = function (e) {
@@ -280,6 +292,14 @@ var _initialiseProps = function _initialiseProps() {
     var onClose = _this.settings.onClose;
     if (onClose && typeof onClose === 'function') {
       onClose();
+    }
+
+    _this.isOpen = false;
+  };
+
+  this._handleKeyup = function (e) {
+    if (_this.isOpen && e.keyCode === 27) {
+      _this.close();
     }
   };
 

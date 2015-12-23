@@ -5,6 +5,8 @@ export const VERSION = '0.1.0';
 
 export default class Luminous {
   constructor(trigger, options = {}) {
+    this.isOpen = false;
+
     this.trigger = trigger;
 
     if (!isDOMElement(this.trigger)) {
@@ -18,7 +20,7 @@ export default class Luminous {
       namespace = null, // Prefix for generated element class names (e.g. `my-ns` will result in classes such as `my-ns-lightbox`. Default `lum-` prefixed classes will always be added as well
       sourceAttribute = 'href', // Which attribute to pull the lightbox source from
       openTrigger = 'click', // The event to listen to on the _trigger_ element that triggers opening
-      closeTrigger = 'click', // The event to listen to on the _background_ element that triggers closing
+      closeTrigger = 'click', // The event to listen to on the _lightbox_ element that triggers closing
       closeWithEscape = true, // Allow closing by pressing escape
       appendToSelector = 'body', // A selector defining what to append the lightbox element to
       showCloseButton = false, // Whether or not to show a close button.
@@ -44,6 +46,8 @@ export default class Luminous {
     if (onOpen && typeof onOpen === 'function') {
       onOpen();
     }
+
+    this.isOpen = true;
   }
 
   close = (e) => {
@@ -57,6 +61,8 @@ export default class Luminous {
     if (onClose && typeof onClose === 'function') {
       onClose();
     }
+
+    this.isOpen = false;
   }
 
   _buildLightbox() {
@@ -73,11 +79,25 @@ export default class Luminous {
   _bindEvents() {
     this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
     this.lightbox.el.addEventListener(this.settings.closeTrigger, this.close, false);
+
+    if (this.settings.closeWithEscape) {
+      window.addEventListener('keyup', this._handleKeyup, false);
+    }
   }
 
   _unbindEvents() {
     this.trigger.removeEventListener(this.settings.openTrigger, this.open, false);
     this.lightbox.el.removeEventListener(this.settings.closeTrigger, this.close, false);
+
+    if (this.settings.closeWithEscape) {
+      window.removeEventListener('keyup', this._handleKeyup, false);
+    }
+  }
+
+  _handleKeyup = (e) => {
+    if (this.isOpen && e.keyCode === 27) {
+      this.close()
+    }
   }
 
   destroy = () => {

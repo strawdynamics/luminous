@@ -34,7 +34,7 @@ Once you've installed Luminous via one of the above methods, you're ready to get
 	namespace = null, // Prefix for generated element class names (e.g. `my-ns` will result in classes such as `my-ns-lightbox`. Default `lum-` prefixed classes will always be added as well
 	sourceAttribute = 'href', // Which attribute to pull the lightbox source from
 	openTrigger = 'click', // The event to listen to on the _trigger_ element that triggers opening
-	closeTrigger = 'click', // The event to listen to on the _background_ element that triggers closing
+	closeTrigger = 'click', // The event to listen to on the _lightbox_ element that triggers closing
 	closeWithEscape = true, // Allow closing by pressing escape
 	appendToSelector = 'body', // A selector defining what to append the lightbox element to
 	showCloseButton = false, // Whether or not to show a close button.
