@@ -19,52 +19,57 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Lightbox = (function () {
   function Lightbox() {
-    var namespace = arguments.length <= 0 || arguments[0] === undefined ? (0, _throwIfMissing2.default)() : arguments[0];
-    var parentEl = arguments.length <= 1 || arguments[1] === undefined ? (0, _throwIfMissing2.default)() : arguments[1];
-    var imageURL = arguments.length <= 2 || arguments[2] === undefined ? (0, _throwIfMissing2.default)() : arguments[2];
-    var includeImgixJSClass = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
+    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
     _classCallCheck(this, Lightbox);
 
-    this.namespace = namespace;
+    var _options$namespace = options.namespace;
+    var namespace = _options$namespace === undefined ? (0, _throwIfMissing2.default)() : _options$namespace;
+    var _options$parentEl = options.parentEl;
+    var parentEl = _options$parentEl === undefined ? (0, _throwIfMissing2.default)() : _options$parentEl;
+    var _options$imageURL = options.imageURL;
+    var imageURL = _options$imageURL === undefined ? (0, _throwIfMissing2.default)() : _options$imageURL;
+    var _options$includeImgix = options.includeImgixJSClass;
+    var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
 
-    if (!(0, _dom.isDOMElement)(parentEl)) {
+    this.settings = { namespace: namespace, parentEl: parentEl, imageURL: imageURL, includeImgixJSClass: includeImgixJSClass };
+
+    if (!(0, _dom.isDOMElement)(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
     }
-    this.parentEl = parentEl;
 
-    this._buildElement(imageURL, includeImgixJSClass);
+    this._buildElement();
   }
 
   _createClass(Lightbox, [{
     key: '_buildElement',
-    value: function _buildElement(imageURL, includeImgixJSClass) {
+    value: function _buildElement() {
       var el = document.createElement('div');
-      el.classList.add(this.namespace + '-lightbox');
-      el.innerHTML = '\n      <div class="' + this.namespace + '-lightbox-inner">\n        <img alt src="' + imageURL + '">\n      </div>\n    ';
+      el.classList.add(this.settings.namespace + '-lightbox');
+      el.innerHTML = '\n      <div class="' + this.settings.namespace + '-lightbox-inner">\n        <img alt src="' + this.settings.imageURL + '">\n      </div>\n    ';
 
-      if (includeImgixJSClass) {
+      if (this.settings.includeImgixJSClass) {
         el.querySelector('img').classList.add('imgix-fluid');
       }
 
-      this.parentEl.appendChild(el);
+      this.settings.parentEl.appendChild(el);
 
       this.el = el;
     }
   }, {
     key: 'open',
     value: function open() {
-      this.el.classList.add(this.namespace + '-open');
+      this.el.classList.add(this.settings.namespace + '-open');
     }
   }, {
     key: 'close',
     value: function close() {
-      this.el.classList.add(this.namespace + '-close');
+      this.el.classList.add(this.settings.namespace + '-close');
     }
   }, {
     key: 'destroy',
     value: function destroy() {
-      this.parentEl.removeChild(this.el);
+      this.settings.parentEl.removeChild(this.el);
     }
   }]);
 
@@ -123,10 +128,10 @@ var Luminous = (function () {
     var // Which attribute to pull the lightbox source from
     openTrigger = _options$openTrigger === undefined ? 'click' : _options$openTrigger;
     var _options$closeTrigger = options.closeTrigger;
-    var // The event to listen to on the passed element that triggers opening
+    var // The event to listen to on the _trigger_ element that triggers opening
     closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
     var _options$closeWithEsc = options.closeWithEscape;
-    var // The event to listen to on the background element that triggers closing
+    var // The event to listen to on the _background_ element that triggers closing
     closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
     var _options$appendToSele = options.appendToSelector;
     var // Allow closing by pressing escape
@@ -151,14 +156,19 @@ var Luminous = (function () {
       throw new Error('No image URL was found in the ' + this.settings.sourceAttribute + ' attribute of the trigger.');
     }
 
-    this._setUpLightbox();
+    this._buildLightbox();
     this._bindEvents();
   }
 
   _createClass(Luminous, [{
-    key: '_setUpLightbox',
-    value: function _setUpLightbox() {
-      this.lightbox = new _Lightbox2.default(this.settings.namespace, document.querySelector(this.settings.appendToSelector), this.imageURL, this.settings.includeImgixJSClass);
+    key: '_buildLightbox',
+    value: function _buildLightbox() {
+      this.lightbox = new _Lightbox2.default({
+        namespace: this.settings.namespace,
+        parentEl: document.querySelector(this.settings.appendToSelector),
+        imageURL: this.imageURL,
+        includeImgixJSClass: this.settings.includeImgixJSClass
+      });
     }
   }, {
     key: '_bindEvents',

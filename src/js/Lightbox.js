@@ -2,49 +2,50 @@ import { isDOMElement } from './util/dom';
 import throwIfMissing from './util/throwIfMissing';
 
 export default class Lightbox {
-  constructor(
-    namespace = throwIfMissing(),
-    parentEl = throwIfMissing(),
-    imageURL = throwIfMissing(),
-    includeImgixJSClass = false,
-  ) {
-    this.namespace = namespace;
+  constructor(options = {}) {
+    let {
+      namespace = throwIfMissing(),
+      parentEl = throwIfMissing(),
+      imageURL = throwIfMissing(),
+      includeImgixJSClass = false
+    } = options;
 
-    if (!isDOMElement(parentEl)) {
+    this.settings = { namespace, parentEl, imageURL, includeImgixJSClass }
+
+    if (!isDOMElement(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
     }
-    this.parentEl = parentEl;
 
-    this._buildElement(imageURL, includeImgixJSClass);
+    this._buildElement();
   }
 
-  _buildElement(imageURL, includeImgixJSClass) {
+  _buildElement() {
     let el = document.createElement('div');
-    el.classList.add(`${this.namespace}-lightbox`);
+    el.classList.add(`${this.settings.namespace}-lightbox`);
     el.innerHTML = `
-      <div class="${this.namespace}-lightbox-inner">
-        <img alt src="${imageURL}">
+      <div class="${this.settings.namespace}-lightbox-inner">
+        <img alt src="${this.settings.imageURL}">
       </div>
     `
 
-    if (includeImgixJSClass) {
+    if (this.settings.includeImgixJSClass) {
       el.querySelector('img').classList.add('imgix-fluid')
     }
 
-    this.parentEl.appendChild(el);
+    this.settings.parentEl.appendChild(el);
 
     this.el = el;
   }
 
   open() {
-    this.el.classList.add(`${this.namespace}-open`);
+    this.el.classList.add(`${this.settings.namespace}-open`);
   }
 
   close() {
-    this.el.classList.add(`${this.namespace}-close`);
+    this.el.classList.add(`${this.settings.namespace}-close`);
   }
 
   destroy() {
-    this.parentEl.removeChild(this.el);
+    this.settings.parentEl.removeChild(this.el);
   }
 }

@@ -17,8 +17,8 @@ export default class Luminous {
     let {
       namespace = 'lum', // Prefix for generated element class names
       sourceAttribute = 'href', // Which attribute to pull the lightbox source from
-      openTrigger = 'click', // The event to listen to on the passed element that triggers opening
-      closeTrigger = 'click', // The event to listen to on the background element that triggers closing
+      openTrigger = 'click', // The event to listen to on the _trigger_ element that triggers opening
+      closeTrigger = 'click', // The event to listen to on the _background_ element that triggers closing
       closeWithEscape = true, // Allow closing by pressing escape
       appendToSelector = 'body', // A selector defining what to append the lightbox element to
       showCloseButton = false, // Whether or not to show a close button.
@@ -34,7 +34,7 @@ export default class Luminous {
       throw new Error(`No image URL was found in the ${this.settings.sourceAttribute} attribute of the trigger.`);
     }
 
-    this._setUpLightbox();
+    this._buildLightbox();
     this._bindEvents();
   }
 
@@ -64,13 +64,13 @@ export default class Luminous {
     }
   }
 
-  _setUpLightbox() {
-    this.lightbox = new Lightbox(
-      this.settings.namespace,
-      document.querySelector(this.settings.appendToSelector),
-      this.imageURL,
-      this.settings.includeImgixJSClass
-    )
+  _buildLightbox() {
+    this.lightbox = new Lightbox({
+      namespace: this.settings.namespace,
+      parentEl: document.querySelector(this.settings.appendToSelector),
+      imageURL: this.imageURL,
+      includeImgixJSClass: this.settings.includeImgixJSClass,
+    });
   }
 
   _bindEvents() {

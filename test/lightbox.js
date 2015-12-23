@@ -9,24 +9,24 @@ describe('Lightbox', () => {
 
   it('throws if a required argument is missing', () => {
     expect(() => {
-      new Lightbox('test', document.body);
+      new Lightbox({namespace: 'test', parentEl: document.body});
     }).toThrowError(Error, 'Missing parameter');
   });
 
   it('does not throw if all required arguments are passed', () => {
     expect(() => {
-      new Lightbox('test', document.body, 'http://something.com/test.png');
+      new Lightbox({namespace: 'test', parentEl: document.body, imageURL: 'http://something.com/test.png'});
     }).not.toThrowError();
   });
 
   it('throws if passed `parentEl` is not a DOM element', () => {
     expect(() => {
-      new Lightbox('test', '.not-an-element', 'http://something.com/test.png');
+      new Lightbox({namespace: 'test', parentEl: '.not-an-element', imageURL: 'http://something.com/test.png'});
     }).toThrowError(TypeError, '`new Lightbox` requires a DOM element passed as `parentEl`.');
   });
 
   it('assigns the correct class to its element', () => {
-    let lightbox = new Lightbox('test-namespace', document.body, 'http://something.com/test.png');
+    let lightbox = new Lightbox({namespace: 'test-namespace', parentEl: document.body, imageURL: 'http://something.com/test.png'});
 
     expect(document.body.querySelector('.test-namespace-lightbox')).not.toBeNull();
   });
@@ -36,20 +36,20 @@ describe('Lightbox', () => {
     demoDiv.classList.add('demo-div');
     document.body.appendChild(demoDiv);
 
-    let lightbox = new Lightbox('lum', demoDiv, 'http://something.com/test.png');
+    let lightbox = new Lightbox({namespace: 'lum', parentEl: demoDiv, imageURL: 'http://something.com/test.png'});
 
     expect(document.body.querySelector('.demo-div > .lum-lightbox')).not.toBeNull();
   });
 
   it('cleans up its element when destroyed', () => {
-    let lightbox = new Lightbox('to-destroy', document.body, 'http://something.com/test.png');
+    let lightbox = new Lightbox({namespace: 'to-destroy', parentEl: document.body, imageURL: 'http://something.com/test.png'});
     lightbox.destroy();
 
     expect(document.body.querySelector('.to-destroy-lightbox')).toBeNull();
   });
 
   it('adds the `imgix-fluid` param if configured', () => {
-    let lightbox = new Lightbox('fluid', document.body, 'http://something.com/test.png', true);
+    let lightbox = new Lightbox({namespace: 'fluid', parentEl: document.body, imageURL: 'http://something.com/test.png', includeImgixJSClass: true});
 
     expect(lightbox.el.querySelector('.imgix-fluid')).not.toBeNull()
   });
