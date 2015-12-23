@@ -1,0 +1,28 @@
+{
+  "name": "luminous",
+  "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
+  "main": "dist/luminous.js",
+  "authors": [
+    "imgix"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "javascript",
+    "lightbox",
+    "image",
+    "images"
+  ],
+  "homepage": "https://github.com/imgix/luminous",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src",
+    "test",
+    "CONTRIBUTING.md",
+    "gulpfile.js",
+    "index.html",
+    "karmaConfig.js",
+    "package.json",
+  ]
+}
