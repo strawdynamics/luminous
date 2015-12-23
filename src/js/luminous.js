@@ -15,19 +15,19 @@ export default class Luminous {
     // Based on the pattern here:
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
     let {
-      namespace = 'luminous', // Prefix for generated element class names
+      namespace = 'lum', // Prefix for generated element class names
       sourceAttribute = 'href', // Which attribute to pull the lightbox source from
       openTrigger = 'click', // The event to listen to on the passed element that triggers opening
       closeTrigger = 'click', // The event to listen to on the background element that triggers closing
       closeWithEscape = true, // Allow closing by pressing escape
       appendToSelector = 'body', // A selector defining what to append the lightbox element to
       showCloseButton = false, // Whether or not to show a close button.
-      minContentWidth = 460, // When below this width, the content will no longer shrink to fit. Instead, it will scroll inside its container.
       onOpen = null, // If present (and a function), this will be called whenver the lightbox is opened
       onClose = null, // If present (and a function), this will be called whenver the lightbox is closed
+      includeImgixJSClass = false, // When true, adds the `imgix-fluid` class to the `img` inside the lightbox
     } = options
 
-    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, minContentWidth, onOpen, onClose }
+    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, onOpen, onClose, includeImgixJSClass }
 
     this.imageURL = this.trigger.getAttribute(this.settings.sourceAttribute);
     if (!this.imageURL) {
@@ -43,7 +43,6 @@ export default class Luminous {
       e.preventDefault();
     }
 
-    console.log('hrm', this)
     this.lightbox.open();
 
     let onOpen = this.settings.onOpen
@@ -68,9 +67,9 @@ export default class Luminous {
   _setUpLightbox() {
     this.lightbox = new Lightbox(
       this.settings.namespace,
-      this.settings.minContentWidth,
       document.querySelector(this.settings.appendToSelector),
-      this.imageURL
+      this.imageURL,
+      this.settings.includeImgixJSClass
     )
   }
 

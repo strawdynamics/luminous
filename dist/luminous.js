@@ -20,29 +20,32 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Lightbox = (function () {
   function Lightbox() {
     var namespace = arguments.length <= 0 || arguments[0] === undefined ? (0, _throwIfMissing2.default)() : arguments[0];
-    var minContentWidth = arguments.length <= 1 || arguments[1] === undefined ? (0, _throwIfMissing2.default)() : arguments[1];
-    var parentEl = arguments.length <= 2 || arguments[2] === undefined ? (0, _throwIfMissing2.default)() : arguments[2];
-    var imageURL = arguments.length <= 3 || arguments[3] === undefined ? (0, _throwIfMissing2.default)() : arguments[3];
+    var parentEl = arguments.length <= 1 || arguments[1] === undefined ? (0, _throwIfMissing2.default)() : arguments[1];
+    var imageURL = arguments.length <= 2 || arguments[2] === undefined ? (0, _throwIfMissing2.default)() : arguments[2];
+    var includeImgixJSClass = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
 
     _classCallCheck(this, Lightbox);
 
     this.namespace = namespace;
-    this.minContentWidth = minContentWidth;
 
     if (!(0, _dom.isDOMElement)(parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
     }
     this.parentEl = parentEl;
 
-    this._buildElement(imageURL);
+    this._buildElement(imageURL, includeImgixJSClass);
   }
 
   _createClass(Lightbox, [{
     key: '_buildElement',
-    value: function _buildElement(imageURL) {
+    value: function _buildElement(imageURL, includeImgixJSClass) {
       var el = document.createElement('div');
       el.classList.add(this.namespace + '-lightbox');
-      el.innerHTML = '<img alt src="' + imageURL + '">';
+      el.innerHTML = '\n      <div class="' + this.namespace + '-lightbox-inner">\n        <img alt src="' + imageURL + '">\n      </div>\n    ';
+
+      if (includeImgixJSClass) {
+        el.querySelector('img').classList.add('imgix-fluid');
+      }
 
       this.parentEl.appendChild(el);
 
@@ -110,9 +113,9 @@ var Luminous = (function () {
     // A bit unexpected if you haven't seen this pattern before.
     // Based on the pattern here:
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
-    var _options$namespace = // If present (and a function), this will be called whenver the lightbox is closed
+    var _options$namespace = // When true, adds the `imgix-fluid` class to the `img` inside the lightbox
     options.namespace;
-    var namespace = _options$namespace === undefined ? 'luminous' : _options$namespace;
+    var namespace = _options$namespace === undefined ? 'lum' : _options$namespace;
     var _options$sourceAttrib = options.sourceAttribute;
     var // Prefix for generated element class names
     sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib;
@@ -131,17 +134,17 @@ var Luminous = (function () {
     var _options$showCloseBut = options.showCloseButton;
     var // A selector defining what to append the lightbox element to
     showCloseButton = _options$showCloseBut === undefined ? false : _options$showCloseBut;
-    var _options$minContentWi = options.minContentWidth;
-    var // Whether or not to show a close button.
-    minContentWidth = _options$minContentWi === undefined ? 460 : _options$minContentWi;
     var _options$onOpen = options.onOpen;
-    var // When below this width, the content will no longer shrink to fit. Instead, it will scroll inside its container.
+    var // Whether or not to show a close button.
     onOpen = _options$onOpen === undefined ? null : _options$onOpen;
     var _options$onClose = options.onClose;
     var // If present (and a function), this will be called whenver the lightbox is opened
     onClose = _options$onClose === undefined ? null : _options$onClose;
+    var _options$includeImgix = options.includeImgixJSClass;
+    var // If present (and a function), this will be called whenver the lightbox is closed
+    includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
 
-    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, minContentWidth: minContentWidth, onOpen: onOpen, onClose: onClose };
+    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass };
 
     this.imageURL = this.trigger.getAttribute(this.settings.sourceAttribute);
     if (!this.imageURL) {
@@ -155,7 +158,7 @@ var Luminous = (function () {
   _createClass(Luminous, [{
     key: '_setUpLightbox',
     value: function _setUpLightbox() {
-      this.lightbox = new _Lightbox2.default(this.settings.namespace, this.settings.minContentWidth, document.querySelector(this.settings.appendToSelector), this.imageURL);
+      this.lightbox = new _Lightbox2.default(this.settings.namespace, document.querySelector(this.settings.appendToSelector), this.imageURL, this.settings.includeImgixJSClass);
     }
   }, {
     key: '_bindEvents',
@@ -180,7 +183,6 @@ var _initialiseProps = function _initialiseProps() {
       e.preventDefault();
     }
 
-    console.log('hrm', _this);
     _this.lightbox.open();
 
     var onOpen = _this.settings.onOpen;

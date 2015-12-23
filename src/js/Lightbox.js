@@ -4,25 +4,32 @@ import throwIfMissing from './util/throwIfMissing';
 export default class Lightbox {
   constructor(
     namespace = throwIfMissing(),
-    minContentWidth = throwIfMissing(),
     parentEl = throwIfMissing(),
-    imageURL = throwIfMissing()
+    imageURL = throwIfMissing(),
+    includeImgixJSClass = false,
   ) {
     this.namespace = namespace;
-    this.minContentWidth = minContentWidth;
 
     if (!isDOMElement(parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
     }
     this.parentEl = parentEl;
 
-    this._buildElement(imageURL);
+    this._buildElement(imageURL, includeImgixJSClass);
   }
 
-  _buildElement(imageURL) {
+  _buildElement(imageURL, includeImgixJSClass) {
     let el = document.createElement('div');
     el.classList.add(`${this.namespace}-lightbox`);
-    el.innerHTML = `<img alt src="${imageURL}">`
+    el.innerHTML = `
+      <div class="${this.namespace}-lightbox-inner">
+        <img alt src="${imageURL}">
+      </div>
+    `
+
+    if (includeImgixJSClass) {
+      el.querySelector('img').classList.add('imgix-fluid')
+    }
 
     this.parentEl.appendChild(el);
 

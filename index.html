@@ -8,13 +8,82 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 
 		<title>Luminous Playground</title>
+
+		<style type="text/css">
+			@keyframes fadeIn {
+				0% { opacity: 0; }
+				100% { opacity: 1; }
+			}
+
+			@keyframes fadeZoomIn {
+				0% { transform: scale(0.5); opacity: 0; }
+				100% { transform: scale(1); opacity: 1; }
+			}
+
+			.lum-lightbox {
+				position: fixed;
+				display: none;
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				background: rgba(0, 0, 0, 0.5);
+			}
+
+			.lum-lightbox.lum-open {
+				display: block;
+				animation: fadeIn 300ms ease-out;
+			}
+
+			.lum-lightbox.lum-open .lum-lightbox-inner {
+				animation: fadeZoomIn 300ms ease-out;
+			}
+
+			.lum-lightbox-inner {
+				position: absolute;
+				top: 3%;
+				right: 3%;
+				bottom: 3%;
+				left: 3%;
+
+				overflow: hidden;
+			}
+
+			.lum-lightbox-inner img {
+				max-width: 100%;
+				max-height: 100%;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				display: block;
+			}
+
+			@media (max-width: 460px) {
+				.lum-lightbox-inner {
+					overflow: auto;
+					-webkit-overflow-scrolling: touch;
+				}
+
+				.lum-lightbox-inner img {
+					max-width: none;
+					max-height: none;
+					position: relative;
+					top: 0;
+					left: 0;
+					transform: none;
+					display: block;
+				}
+			}
+		</style>
 	</head>
 
 	<body>
 		<p>Donec ullamcorper nulla non metus auctor fringilla. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nulla vitae elit libero, a pharetra augue. Maecenas faucibus mollis interdum.</p>
 
-		<a href="http://paulstraw.imgix.net/pretty.jpg">
-			<img src="http://paulstraw.imgix.net/pretty.jpg?w=200">
+		<a href="http://paulstraw.imgix.net/pretty2.jpg?w=1440">
+			<img src="http://paulstraw.imgix.net/pretty2.jpg?w=200">
 		</a>
 
 		<script src="dist/luminous.js"></script>
