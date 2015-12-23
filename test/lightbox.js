@@ -1,5 +1,14 @@
 import Lightbox from '../src/js/Lightbox';
 
+beforeEach(function() {
+  let anchor = document.createElement('a');
+  anchor.href = 'http://website.com/image.png';
+  anchor.classList.add('test-anchor');
+
+  document.body.appendChild(anchor);
+});
+
+
 describe('Lightbox', () => {
   it('throws if no arguments are passed', () => {
     expect(() => {
@@ -7,7 +16,7 @@ describe('Lightbox', () => {
     }).toThrowError(Error, 'Missing parameter');
   });
 
-  it('throws if a required argument is missing', () => {
+  it('throws if required arguments are missing', () => {
     expect(() => {
       new Lightbox({namespace: 'test', parentEl: document.body});
     }).toThrowError(Error, 'Missing parameter');
@@ -15,18 +24,24 @@ describe('Lightbox', () => {
 
   it('does not throw if all required arguments are passed', () => {
     expect(() => {
-      new Lightbox({namespace: 'test', parentEl: document.body, imageURL: 'http://something.com/test.png'});
+      let triggerEl = document.querySelector('.test-anchor');
+
+      new Lightbox({namespace: 'test', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href'});
     }).not.toThrowError();
   });
 
   it('throws if passed `parentEl` is not a DOM element', () => {
     expect(() => {
-      new Lightbox({namespace: 'test', parentEl: '.not-an-element', imageURL: 'http://something.com/test.png'});
+      let triggerEl = document.querySelector('.test-anchor');
+
+      new Lightbox({namespace: 'test', parentEl: '.not-an-element', triggerEl: triggerEl, sourceAttribute: 'href'});
     }).toThrowError(TypeError, '`new Lightbox` requires a DOM element passed as `parentEl`.');
   });
 
   it('assigns the correct class to its element', () => {
-    let lightbox = new Lightbox({namespace: 'test-namespace', parentEl: document.body, imageURL: 'http://something.com/test.png'});
+    let triggerEl = document.querySelector('.test-anchor');
+
+    let lightbox = new Lightbox({namespace: 'test-namespace', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href'});
 
     expect(document.body.querySelector('.test-namespace-lightbox')).not.toBeNull();
   });
@@ -36,20 +51,26 @@ describe('Lightbox', () => {
     demoDiv.classList.add('demo-div');
     document.body.appendChild(demoDiv);
 
-    let lightbox = new Lightbox({namespace: 'lum', parentEl: demoDiv, imageURL: 'http://something.com/test.png'});
+    let triggerEl = document.querySelector('.test-anchor');
+
+    let lightbox = new Lightbox({namespace: 'lum', parentEl: demoDiv, triggerEl: triggerEl, sourceAttribute: 'href'});
 
     expect(document.body.querySelector('.demo-div > .lum-lightbox')).not.toBeNull();
   });
 
   it('cleans up its element when destroyed', () => {
-    let lightbox = new Lightbox({namespace: 'to-destroy', parentEl: document.body, imageURL: 'http://something.com/test.png'});
+    let triggerEl = document.querySelector('.test-anchor');
+
+    let lightbox = new Lightbox({namespace: 'to-destroy', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href'});
     lightbox.destroy();
 
     expect(document.body.querySelector('.to-destroy-lightbox')).toBeNull();
   });
 
   it('adds the `imgix-fluid` param if configured', () => {
-    let lightbox = new Lightbox({namespace: 'fluid', parentEl: document.body, imageURL: 'http://something.com/test.png', includeImgixJSClass: true});
+    let triggerEl = document.querySelector('.test-anchor');
+
+    let lightbox = new Lightbox({namespace: 'fluid', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href', includeImgixJSClass: true});
 
     expect(lightbox.el.querySelector('.imgix-fluid')).not.toBeNull()
   });

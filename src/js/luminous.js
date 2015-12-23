@@ -29,11 +29,6 @@ export default class Luminous {
 
     this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, onOpen, onClose, includeImgixJSClass }
 
-    this.imageURL = this.trigger.getAttribute(this.settings.sourceAttribute);
-    if (!this.imageURL) {
-      throw new Error(`No image URL was found in the ${this.settings.sourceAttribute} attribute of the trigger.`);
-    }
-
     this._buildLightbox();
     this._bindEvents();
   }
@@ -69,7 +64,8 @@ export default class Luminous {
     this.lightbox = new Lightbox({
       namespace: this.settings.namespace,
       parentEl: document.querySelector(this.settings.appendToSelector),
-      imageURL: this.imageURL,
+      triggerEl: this.trigger,
+      sourceAttribute: this.settings.sourceAttribute,
       includeImgixJSClass: this.settings.includeImgixJSClass,
       closeTrigger: this.settings.closeTrigger,
     });

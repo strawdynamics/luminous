@@ -45,14 +45,16 @@ var Lightbox = (function () {
     var namespace = _options$namespace === undefined ? (0, _throwIfMissing2.default)() : _options$namespace;
     var _options$parentEl = options.parentEl;
     var parentEl = _options$parentEl === undefined ? (0, _throwIfMissing2.default)() : _options$parentEl;
-    var _options$imageURL = options.imageURL;
-    var imageURL = _options$imageURL === undefined ? (0, _throwIfMissing2.default)() : _options$imageURL;
+    var _options$triggerEl = options.triggerEl;
+    var triggerEl = _options$triggerEl === undefined ? (0, _throwIfMissing2.default)() : _options$triggerEl;
+    var _options$sourceAttrib = options.sourceAttribute;
+    var sourceAttribute = _options$sourceAttrib === undefined ? (0, _throwIfMissing2.default)() : _options$sourceAttrib;
     var _options$includeImgix = options.includeImgixJSClass;
     var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
     var _options$closeTrigger = options.closeTrigger;
     var closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
 
-    this.settings = { namespace: namespace, parentEl: parentEl, imageURL: imageURL, includeImgixJSClass: includeImgixJSClass, closeTrigger: closeTrigger };
+    this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, includeImgixJSClass: includeImgixJSClass, closeTrigger: closeTrigger };
 
     if (!(0, _dom.isDOMElement)(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
@@ -70,19 +72,37 @@ var Lightbox = (function () {
     value: function _buildElement() {
       var el = document.createElement('div');
       el.classList.add(this.settings.namespace + '-lightbox');
-      el.innerHTML = '\n      <div class="' + this.settings.namespace + '-lightbox-inner">\n        <img alt src="' + this.settings.imageURL + '">\n      </div>\n    ';
-
-      if (this.settings.includeImgixJSClass) {
-        el.querySelector('img').classList.add('imgix-fluid');
-      }
+      el.innerHTML = '\n      <div class="' + this.settings.namespace + '-lightbox-inner">\n        <img alt>\n      </div>\n    ';
 
       this.settings.parentEl.appendChild(el);
 
+      this.imgEl = el.querySelector('img');
       this.el = el;
+
+      this._updateImgSrc();
+
+      if (this.settings.includeImgixJSClass) {
+        this.imgEl.classList.add('imgix-fluid');
+      }
+    }
+  }, {
+    key: '_updateImgSrc',
+    value: function _updateImgSrc() {
+      var imageURL = this.settings.triggerEl.getAttribute(this.settings.sourceAttribute);
+
+      if (!imageURL) {
+        throw new Error('No image URL was found in the ' + this.settings.sourceAttribute + ' attribute of the trigger.');
+      }
+
+      this.imgEl.setAttribute('src', imageURL);
     }
   }, {
     key: 'open',
     value: function open() {
+      // Make sure to re-set the `img` `src`, in case it's been changed
+      // by someone/something else.
+      this._updateImgSrc();
+
       this.el.classList.add(this.openClass);
 
       if (HAS_ANIMATION) {
@@ -185,11 +205,6 @@ var Luminous = (function () {
 
     this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass };
 
-    this.imageURL = this.trigger.getAttribute(this.settings.sourceAttribute);
-    if (!this.imageURL) {
-      throw new Error('No image URL was found in the ' + this.settings.sourceAttribute + ' attribute of the trigger.');
-    }
-
     this._buildLightbox();
     this._bindEvents();
   }
@@ -200,7 +215,8 @@ var Luminous = (function () {
       this.lightbox = new _Lightbox2.default({
         namespace: this.settings.namespace,
         parentEl: document.querySelector(this.settings.appendToSelector),
-        imageURL: this.imageURL,
+        triggerEl: this.trigger,
+        sourceAttribute: this.settings.sourceAttribute,
         includeImgixJSClass: this.settings.includeImgixJSClass,
         closeTrigger: this.settings.closeTrigger
       });

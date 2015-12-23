@@ -43,24 +43,28 @@ describe('Configuration', () => {
   it('sets up settings object when no options are passed', () => {
     let anchor = document.querySelector('.test-anchor');
     let lum = new Luminous(anchor);
+
     expect(lum.settings).toBeDefined();
   });
 
   it('applies proper setting defaults when no options are passed', () => {
     let anchor = document.querySelector('.test-anchor');
     let lum = new Luminous(anchor);
+
     expect(lum.settings.namespace).toBe('lum');
   });
 
   it('accepts custom settings', () => {
     let anchor = document.querySelector('.test-anchor');
     let lum = new Luminous(anchor, {namespace: 'not-the-default'});
+
     expect(lum.settings.namespace).toBe('not-the-default');
   });
 
   it('leaves settings defaults in place when custom settings are passed', () => {
     let anchor = document.querySelector('.test-anchor');
     let lum = new Luminous(anchor, {namespace: 'it-does-not-matter'});
+
     expect(lum.settings.openTrigger).toBe('click');
   });
 });

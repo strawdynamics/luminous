@@ -10,12 +10,13 @@ export default class Lightbox {
     let {
       namespace = throwIfMissing(),
       parentEl = throwIfMissing(),
-      imageURL = throwIfMissing(),
+      triggerEl = throwIfMissing(),
+      sourceAttribute = throwIfMissing(),
       includeImgixJSClass = false,
       closeTrigger = 'click',
     } = options;
 
-    this.settings = { namespace, parentEl, imageURL, includeImgixJSClass, closeTrigger }
+    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, includeImgixJSClass, closeTrigger };
 
     if (!isDOMElement(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
@@ -33,20 +34,38 @@ export default class Lightbox {
     el.classList.add(`${this.settings.namespace}-lightbox`);
     el.innerHTML = `
       <div class="${this.settings.namespace}-lightbox-inner">
-        <img alt src="${this.settings.imageURL}">
+        <img alt>
       </div>
-    `
+    `;
 
-    if (this.settings.includeImgixJSClass) {
-      el.querySelector('img').classList.add('imgix-fluid')
-    }
 
     this.settings.parentEl.appendChild(el);
 
+    this.imgEl = el.querySelector('img')
     this.el = el;
+
+    this._updateImgSrc();
+
+    if (this.settings.includeImgixJSClass) {
+      this.imgEl.classList.add('imgix-fluid')
+    }
+  }
+
+  _updateImgSrc() {
+    let imageURL = this.settings.triggerEl.getAttribute(this.settings.sourceAttribute);
+
+    if (!imageURL) {
+      throw new Error(`No image URL was found in the ${this.settings.sourceAttribute} attribute of the trigger.`);
+    }
+
+    this.imgEl.setAttribute('src', imageURL);
   }
 
   open() {
+    // Make sure to re-set the `img` `src`, in case it's been changed
+    // by someone/something else.
+    this._updateImgSrc();
+
     this.el.classList.add(this.openClass);
 
     if (HAS_ANIMATION) {
