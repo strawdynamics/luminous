@@ -47,7 +47,6 @@ export default class Luminous {
   }
 
   close = (e) => {
-    console.log('hello there, close!', e);
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
     }

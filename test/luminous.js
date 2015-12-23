@@ -37,6 +37,33 @@ describe('Core', () => {
 
     expect(lum.constructor).toBe(Luminous);
   });
+
+  it('executes the `onOpen` callback when present', () => {
+    let called = false;
+    function openCallback() {
+      called = true;
+    }
+
+    let anchor = document.querySelector('.test-anchor');
+    let lum = new Luminous(anchor, {onOpen: openCallback});
+
+    lum.open();
+    expect(called).toBe(true);
+  });
+
+  it('executes the `onClose` callback when present', () => {
+    let called = false;
+    function closeCallback() {
+      called = true;
+    }
+
+    let anchor = document.querySelector('.test-anchor');
+    let lum = new Luminous(anchor, {onClose: closeCallback});
+
+    lum.open();
+    lum.close();
+    expect(called).toBe(true);
+  });
 });
 
 describe('Configuration', () => {

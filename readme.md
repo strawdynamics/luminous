@@ -31,16 +31,16 @@ Once you've installed Luminous via one of the above methods, you're ready to get
 
 ``` javascript
 {
-	namespace: 'lum', // Prefix for generated element class names
-	sourceAttribute: 'href', // Which attribute to pull the lightbox source from
-	openTrigger: 'click', // The event to listen to on the passed element that triggers opening
-	closeTrigger: 'click', // The event to listen to on the background element that triggers closing
-	closeWithEscape: true, // Allow closing by pressing escape
-	appendToSelector: 'body', // A selector defining what to append the lightbox element to
-	showCloseButton: false, // Whether or not to show a close button.
-	onOpen: null, // If present (and a function), this will be called whenver the lightbox is opened
-	onClose: null, // If present (and a function), this will be called whenver the lightbox is closed
-	includeImgixJSClass: false, // When true, adds the `imgix-fluid` class to the `img` inside the lightbox, for easy compatibility with imgix.js
+	namespace = null, // Prefix for generated element class names (e.g. `my-ns` will result in classes such as `my-ns-lightbox`. Default `lum-` prefixed classes will always be added as well
+	sourceAttribute = 'href', // Which attribute to pull the lightbox source from
+	openTrigger = 'click', // The event to listen to on the _trigger_ element that triggers opening
+	closeTrigger = 'click', // The event to listen to on the _background_ element that triggers closing
+	closeWithEscape = true, // Allow closing by pressing escape
+	appendToSelector = 'body', // A selector defining what to append the lightbox element to
+	showCloseButton = false, // Whether or not to show a close button.
+	onOpen = null, // If present (and a function), this will be called whenver the lightbox is opened
+	onClose = null, // If present (and a function), this will be called whenver the lightbox is closed
+	includeImgixJSClass = false, // When true, adds the `imgix-fluid` class to the `img` inside the lightbox
 }
 ```
 
