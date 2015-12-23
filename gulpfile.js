@@ -48,6 +48,13 @@ gulp.task('test-headless', function(done) {
 });
 
 gulp.task('test-full', function(done) {
+  if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
+    throw new gutil.PluginError({
+      plugin: 'test-full',
+      message: 'Unable to run full tests. Please make sure both SAUCE_USERNAME and SAUCE_ACCESS_KEY are defined in the environment.'
+    });
+  }
+
   runKarmaTests(karmaConfig.full, done);
 });
 
