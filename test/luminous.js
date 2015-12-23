@@ -51,7 +51,7 @@ describe('Configuration', () => {
     let anchor = document.querySelector('.test-anchor');
     let lum = new Luminous(anchor);
 
-    expect(lum.settings.namespace).toBe('lum');
+    expect(lum.settings.sourceAttribute).toBe('href');
   });
 
   it('accepts custom settings', () => {

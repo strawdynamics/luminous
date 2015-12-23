@@ -15,7 +15,7 @@ export default class Luminous {
     // Based on the pattern here:
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
     let {
-      namespace = 'lum', // Prefix for generated element class names
+      namespace = null, // Prefix for generated element class names (e.g. `my-ns` will result in classes such as `my-ns-lightbox`. Default `lum-` prefixed classes will always be added as well
       sourceAttribute = 'href', // Which attribute to pull the lightbox source from
       openTrigger = 'click', // The event to listen to on the _trigger_ element that triggers opening
       closeTrigger = 'click', // The event to listen to on the _background_ element that triggers closing

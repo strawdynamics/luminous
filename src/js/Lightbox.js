@@ -1,4 +1,4 @@
-import { isDOMElement } from './util/dom';
+import { isDOMElement, addClasses, removeClasses } from './util/dom';
 import throwIfMissing from './util/throwIfMissing';
 
 // All officially-supported browsers have this, but it's easy to
@@ -8,7 +8,7 @@ const HAS_ANIMATION = 'animation' in document.body.style;
 export default class Lightbox {
   constructor(options = {}) {
     let {
-      namespace = throwIfMissing(),
+      namespace = null,
       parentEl = throwIfMissing(),
       triggerEl = throwIfMissing(),
       sourceAttribute = throwIfMissing(),
@@ -22,27 +22,36 @@ export default class Lightbox {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
     }
 
-    this.openClass = `${this.settings.namespace}-open`;
-    this.openingClass = this.openClass + 'ing';
-    this.closingClass = `${this.settings.namespace}-closing`;
+    this.openClasses = this._buildClasses('open');
+    this.openingClasses = this._buildClasses('opening');
+    this.closingClasses = this._buildClasses('closing');
 
     this._buildElement();
   }
 
+  _buildClasses(suffix) {
+    let classes = [`lum-${suffix}`];
+
+    let ns = this.settings.namespace;
+    if (ns) {
+      classes.push(`${ns}-${suffix}`)
+    }
+
+    return classes
+  }
+
   _buildElement() {
-    let el = document.createElement('div');
-    el.classList.add(`${this.settings.namespace}-lightbox`);
-    el.innerHTML = `
-      <div class="${this.settings.namespace}-lightbox-inner">
-        <img alt>
-      </div>
-    `;
+    this.el = document.createElement('div');
+    addClasses(this.el, this._buildClasses('lightbox'));
 
+    let innerEl = document.createElement('div');
+    addClasses(innerEl, this._buildClasses('lightbox-inner'));
+    this.el.appendChild(innerEl);
 
-    this.settings.parentEl.appendChild(el);
+    this.imgEl = document.createElement('img');
+    innerEl.appendChild(this.imgEl)
 
-    this.imgEl = el.querySelector('img')
-    this.el = el;
+    this.settings.parentEl.appendChild(this.el);
 
     this._updateImgSrc();
 
@@ -66,33 +75,34 @@ export default class Lightbox {
     // by someone/something else.
     this._updateImgSrc();
 
-    this.el.classList.add(this.openClass);
+    addClasses(this.el, this.openClasses);
 
     if (HAS_ANIMATION) {
       this.el.addEventListener('animationend', this._completeOpen, false);
-      this.el.classList.add(this.openingClass);
+      addClasses(this.el, this.openingClasses);
     }
   }
 
   close() {
     if (HAS_ANIMATION) {
       this.el.addEventListener('animationend', this._completeClose, false);
-      this.el.classList.add(this.closingClass);
+      addClasses(this.el, this.closingClasses);
     } else {
-      this.el.classList.remove(this.openClass)
+      removeClasses(this.el, this.openClasses);
     }
   }
 
   _completeOpen = () => {
     this.el.removeEventListener('animationend', this._completeOpen, false);
 
-    this.el.classList.remove(this.openingClass);
+    removeClasses(this.el, this.openingClasses);
   }
 
   _completeClose = () => {
     this.el.removeEventListener('animationend', this._completeClose, false);
 
-    this.el.classList.remove(this.openClass, this.closingClass);
+    removeClasses(this.el, this.openClasses);
+    removeClasses(this.el, this.closingClasses);
   }
 
   destroy() {

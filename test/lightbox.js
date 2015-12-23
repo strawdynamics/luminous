@@ -8,6 +8,12 @@ beforeEach(function() {
   document.body.appendChild(anchor);
 });
 
+afterEach(function() {
+  let anchor = document.querySelector('.test-anchor')
+
+  document.body.removeChild(anchor);
+});
+
 
 describe('Lightbox', () => {
   it('throws if no arguments are passed', () => {

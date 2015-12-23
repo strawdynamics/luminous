@@ -32,17 +32,18 @@ var Lightbox = (function () {
     this._completeOpen = function () {
       _this.el.removeEventListener('animationend', _this._completeOpen, false);
 
-      _this.el.classList.remove(_this.openingClass);
+      (0, _dom.removeClasses)(_this.el, _this.openingClasses);
     };
 
     this._completeClose = function () {
       _this.el.removeEventListener('animationend', _this._completeClose, false);
 
-      _this.el.classList.remove(_this.openClass, _this.closingClass);
+      (0, _dom.removeClasses)(_this.el, _this.openClasses);
+      (0, _dom.removeClasses)(_this.el, _this.closingClasses);
     };
 
     var _options$namespace = options.namespace;
-    var namespace = _options$namespace === undefined ? (0, _throwIfMissing2.default)() : _options$namespace;
+    var namespace = _options$namespace === undefined ? null : _options$namespace;
     var _options$parentEl = options.parentEl;
     var parentEl = _options$parentEl === undefined ? (0, _throwIfMissing2.default)() : _options$parentEl;
     var _options$triggerEl = options.triggerEl;
@@ -60,24 +61,39 @@ var Lightbox = (function () {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
     }
 
-    this.openClass = this.settings.namespace + '-open';
-    this.openingClass = this.openClass + 'ing';
-    this.closingClass = this.settings.namespace + '-closing';
+    this.openClasses = this._buildClasses('open');
+    this.openingClasses = this._buildClasses('opening');
+    this.closingClasses = this._buildClasses('closing');
 
     this._buildElement();
   }
 
   _createClass(Lightbox, [{
+    key: '_buildClasses',
+    value: function _buildClasses(suffix) {
+      var classes = ['lum-' + suffix];
+
+      var ns = this.settings.namespace;
+      if (ns) {
+        classes.push(ns + '-' + suffix);
+      }
+
+      return classes;
+    }
+  }, {
     key: '_buildElement',
     value: function _buildElement() {
-      var el = document.createElement('div');
-      el.classList.add(this.settings.namespace + '-lightbox');
-      el.innerHTML = '\n      <div class="' + this.settings.namespace + '-lightbox-inner">\n        <img alt>\n      </div>\n    ';
+      this.el = document.createElement('div');
+      (0, _dom.addClasses)(this.el, this._buildClasses('lightbox'));
 
-      this.settings.parentEl.appendChild(el);
+      var innerEl = document.createElement('div');
+      (0, _dom.addClasses)(innerEl, this._buildClasses('lightbox-inner'));
+      this.el.appendChild(innerEl);
 
-      this.imgEl = el.querySelector('img');
-      this.el = el;
+      this.imgEl = document.createElement('img');
+      innerEl.appendChild(this.imgEl);
+
+      this.settings.parentEl.appendChild(this.el);
 
       this._updateImgSrc();
 
@@ -103,11 +119,11 @@ var Lightbox = (function () {
       // by someone/something else.
       this._updateImgSrc();
 
-      this.el.classList.add(this.openClass);
+      (0, _dom.addClasses)(this.el, this.openClasses);
 
       if (HAS_ANIMATION) {
         this.el.addEventListener('animationend', this._completeOpen, false);
-        this.el.classList.add(this.openingClass);
+        (0, _dom.addClasses)(this.el, this.openingClasses);
       }
     }
   }, {
@@ -115,9 +131,9 @@ var Lightbox = (function () {
     value: function close() {
       if (HAS_ANIMATION) {
         this.el.addEventListener('animationend', this._completeClose, false);
-        this.el.classList.add(this.closingClass);
+        (0, _dom.addClasses)(this.el, this.closingClasses);
       } else {
-        this.el.classList.remove(this.openClass);
+        (0, _dom.removeClasses)(this.el, this.openClasses);
       }
     }
   }, {
@@ -174,9 +190,9 @@ var Luminous = (function () {
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
     var _options$namespace = // When true, adds the `imgix-fluid` class to the `img` inside the lightbox
     options.namespace;
-    var namespace = _options$namespace === undefined ? 'lum' : _options$namespace;
+    var namespace = _options$namespace === undefined ? null : _options$namespace;
     var _options$sourceAttrib = options.sourceAttribute;
-    var // Prefix for generated element class names
+    var // Prefix for generated element class names (e.g. `my-ns` will result in classes such as `my-ns-lightbox`. Default `lum-` prefixed classes will always be added as well
     sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib;
     var _options$openTrigger = options.openTrigger;
     var // Which attribute to pull the lightbox source from
@@ -283,9 +299,11 @@ global.Luminous = Luminous;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 exports.isDOMElement = isDOMElement;
+exports.addClasses = addClasses;
+exports.removeClasses = removeClasses;
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
@@ -294,7 +312,19 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 var hasDOM2 = (typeof HTMLElement === 'undefined' ? 'undefined' : _typeof(HTMLElement)) === 'object';
 
 function isDOMElement(obj) {
-	return hasDOM2 ? obj instanceof HTMLElement : obj && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && obj !== null && obj.nodeType === 1 && typeof obj.nodeName === 'string';
+  return hasDOM2 ? obj instanceof HTMLElement : obj && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && obj !== null && obj.nodeType === 1 && typeof obj.nodeName === 'string';
+}
+
+function addClasses(el, classNames) {
+  classNames.forEach(function (className) {
+    el.classList.add(className);
+  });
+}
+
+function removeClasses(el, classNames) {
+  classNames.forEach(function (className) {
+    el.classList.remove(className);
+  });
 }
 
 },{}],4:[function(require,module,exports){
