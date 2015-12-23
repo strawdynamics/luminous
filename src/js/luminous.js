@@ -1,4 +1,5 @@
 import { isDOMElement } from './util/dom';
+import injectBaseStylesheet from './injectBaseStylesheet';
 import Lightbox from './Lightbox';
 
 export const VERSION = '0.1.0';
@@ -27,9 +28,14 @@ export default class Luminous {
       onOpen = null, // If present (and a function), this will be called whenver the lightbox is opened
       onClose = null, // If present (and a function), this will be called whenver the lightbox is closed
       includeImgixJSClass = false, // When true, adds the `imgix-fluid` class to the `img` inside the lightbox
+      injectBaseStyles = true, // Add base styles to the page. See the "Theming" section of README.md for more information.
     } = options
 
-    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, onOpen, onClose, includeImgixJSClass }
+    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, showCloseButton, onOpen, onClose, includeImgixJSClass, injectBaseStyles }
+
+    if (this.settings.injectBaseStyles) {
+      injectBaseStylesheet();
+    }
 
     this._buildLightbox();
     this._bindEvents();

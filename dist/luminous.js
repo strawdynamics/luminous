@@ -148,7 +148,31 @@ var Lightbox = (function () {
 
 exports.default = Lightbox;
 
-},{"./util/dom":3,"./util/throwIfMissing":4}],2:[function(require,module,exports){
+},{"./util/dom":4,"./util/throwIfMissing":5}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = injectBaseStylesheet;
+var RULES = '\n@keyframes noop {  }\n\n.lum-lightbox {\n  position: fixed;\n  display: none;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n\n.lum-lightbox.lum-open {\n  display: block;\n}\n\n.lum-lightbox.lum-opening, .lum-lightbox.lum-closing {\n  animation: noop;\n}\n\n.lum-lightbox-inner {\n  position: absolute;\n  top: 0%;\n  right: 0%;\n  bottom: 0%;\n  left: 0%;\n\n  overflow: hidden;\n}\n\n.lum-lightbox-inner img {\n  max-width: 100%;\n  max-height: 100%;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  display: block;\n}\n';
+
+function injectBaseStylesheet() {
+  if (document.querySelector('.lum-base-styles')) {
+    return;
+  }
+
+  var styleEl = document.createElement('style');
+  styleEl.type = 'text/css';
+  styleEl.classList.add('lum-base-styles');
+
+  styleEl.appendChild(document.createTextNode(RULES));
+
+  var head = document.head;
+  head.insertBefore(styleEl, head.firstChild);
+}
+
+},{}],3:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -160,6 +184,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.VERSION = undefined;
 
 var _dom = require('./util/dom');
+
+var _injectBaseStylesheet = require('./injectBaseStylesheet');
+
+var _injectBaseStylesheet2 = _interopRequireDefault(_injectBaseStylesheet);
 
 var _Lightbox = require('./Lightbox');
 
@@ -190,7 +218,7 @@ var Luminous = (function () {
     // A bit unexpected if you haven't seen this pattern before.
     // Based on the pattern here:
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
-    var _options$namespace = // When true, adds the `imgix-fluid` class to the `img` inside the lightbox
+    var _options$namespace = // Add base styles to the page. See the "Theming" section of README.md for more information.
     options.namespace;
     var namespace = _options$namespace === undefined ? null : _options$namespace;
     var _options$sourceAttrib = options.sourceAttribute;
@@ -220,8 +248,15 @@ var Luminous = (function () {
     var _options$includeImgix = options.includeImgixJSClass;
     var // If present (and a function), this will be called whenver the lightbox is closed
     includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
+    var _options$injectBaseSt = options.injectBaseStyles;
+    var // When true, adds the `imgix-fluid` class to the `img` inside the lightbox
+    injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt;
 
-    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass };
+    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, showCloseButton: showCloseButton, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
+
+    if (this.settings.injectBaseStyles) {
+      (0, _injectBaseStylesheet2.default)();
+    }
 
     this._buildLightbox();
     this._bindEvents();
@@ -314,7 +349,7 @@ exports.default = Luminous;
 global.Luminous = Luminous;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Lightbox":1,"./util/dom":3}],3:[function(require,module,exports){
+},{"./Lightbox":1,"./injectBaseStylesheet":2,"./util/dom":4}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -346,7 +381,7 @@ function removeClasses(el, classNames) {
   });
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -357,4 +392,4 @@ function throwIfMissing() {
 	throw new Error('Missing parameter');
 }
 
-},{}]},{},[2]);
+},{}]},{},[3]);

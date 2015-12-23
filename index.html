@@ -10,16 +10,9 @@
 		<title>Luminous Playground</title>
 
 		<style type="text/css">
-			@keyframes noop {  }
-
 			@keyframes fade {
 				0% { opacity: 0; }
 				100% { opacity: 1; }
-			}
-
-			@keyframes fadeOut {
-				0% { opacity: 1; }
-				100% { opacity: 0; }
 			}
 
 			@keyframes fadeZoom {
@@ -27,36 +20,18 @@
 				100% { transform: scale(1); opacity: 1; }
 			}
 
-			@keyframes fadeZoomOut {
-				0% { transform: scale(1); opacity: 1; }
-				100% { transform: scale(0.5); opacity: 0; }
-			}
-
 			.lum-lightbox {
-				position: fixed;
-				display: none;
-				position: fixed;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
 				background: rgba(0, 0, 0, 0.5);
 			}
 
-			.lum-lightbox.lum-open {
-				display: block;
+			.lum-lightbox-inner {
+				top: 2.5%;
+				right: 2.5%;
+				bottom: 2.5%;
+				left: 2.5%;
 			}
-
-			/*.lum-lightbox.lum-opening {
-				animation: noop;
-			}
-
-			.lum-lightbox.lum-closing {
-				animation: noop;
-			}*/
 
 			.lum-lightbox.lum-opening {
-				display: block;
 				animation: fade 300ms ease-out;
 			}
 
@@ -74,26 +49,7 @@
 				animation-direction: reverse;
 			}
 
-			.lum-lightbox-inner {
-				position: absolute;
-				top: 3%;
-				right: 3%;
-				bottom: 3%;
-				left: 3%;
-
-				overflow: hidden;
-			}
-
-			.lum-lightbox-inner img {
-				max-width: 100%;
-				max-height: 100%;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				display: block;
-			}
-
+			/* This media query makes screens less than 460px wide display in a "fullscreen"-esque mode. Users can then scroll around inside the lightbox to see the entire image. */
 			@media (max-width: 460px) {
 				.lum-lightbox-inner {
 					overflow: auto;
