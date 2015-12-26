@@ -38,7 +38,9 @@ gulp.task('default', ['build', 'test-headless']);
 gulp.task('build', ['build-js', 'build-css']);
 // When actually setting up CI stuff, this will need to run in sequence.
 // https://www.npmjs.com/package/run-sequence
-gulp.task('build-ci', ['build', 'test-full']);
+gulp.task('build-ci', function() {
+  runSequence(['build', 'test-full']);
+});
 
 gulp.task('test-local', function(done) {
   runKarmaTests(karmaConfig.local, done);
