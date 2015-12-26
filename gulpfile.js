@@ -16,7 +16,7 @@ const Config = require('karma/lib/config').Config;
 const paths = {
   test: __dirname + '/test/**/*.js',
   js: __dirname + '/src/js/**/*.js',
-  jsEntry: __dirname + '/src/js/luminous.js',
+  jsEntry: __dirname + '/src/js/Luminous.js',
   css: __dirname + '/src/css/**/*.css'
 };
 
@@ -76,7 +76,7 @@ gulp.task('build-js', function() {
     transform: [babelify]
   }).bundle();
 
-  return b.pipe(source('luminous.js'))
+  return b.pipe(source('Luminous.js'))
     .pipe(buffer())
     .pipe(gulp.dest('dist'))
     .pipe(uglify())
