@@ -13,7 +13,7 @@ const baseConfig = {
       'babelify',
     ]
   },
-  concurrency: 2
+  concurrency: 5
 };
 
 const stringConfig = JSON.stringify(baseConfig);
