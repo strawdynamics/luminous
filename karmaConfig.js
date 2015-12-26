@@ -13,7 +13,10 @@ const baseConfig = {
       'babelify',
     ]
   },
-  concurrency: 5
+  concurrency: 5,
+  captureTimeout: 90000,
+  browserConnectTimeout: 3000,
+  browserNoActivityTimeout: 15000,
 };
 
 const stringConfig = JSON.stringify(baseConfig);
@@ -38,7 +41,7 @@ fullConfig.browsers = [
   'sl_ios_9',
   'sl_ios_8',
   'sl_android_5',
-  'sl_android_4'
+  'sl_android_4',
 ];
 fullConfig.customLaunchers = {
   sl_chrome: { base: 'SauceLabs', browserName: 'Chrome' },
