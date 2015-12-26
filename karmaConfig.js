@@ -12,7 +12,8 @@ const baseConfig = {
     transform: [
       'babelify',
     ]
-  }
+  },
+  concurrency: 2
 };
 
 const stringConfig = JSON.stringify(baseConfig);
