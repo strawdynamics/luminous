@@ -1,5 +1,5 @@
 {
-  "name": "luminous",
+  "name": "luminous-lightbox",
   "version": "0.1.0",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
   "main": "index.js",
