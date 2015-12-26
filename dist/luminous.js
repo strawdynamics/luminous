@@ -399,11 +399,11 @@ function removeClasses(el, classNames) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 exports.default = throwIfMissing;
 function throwIfMissing() {
-	throw new Error('Missing parameter');
+  throw new Error('Missing parameter');
 }
 
 },{}]},{},[3]);

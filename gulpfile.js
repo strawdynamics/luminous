@@ -8,7 +8,7 @@ const gutil = require('gulp-util');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const Server = require('karma').Server;
-const minifyCss = require('gulp-minify-css');
+const cssnano = require('gulp-cssnano');
 const runSequence = require('run-sequence');
 const karmaConfig = require('./karmaConfig');
 const Config = require('karma/lib/config').Config;
@@ -24,6 +24,10 @@ function runKarmaTests(configObj, done, singleRun) {
   var config = new Config();
   config.set(configObj);
 
+  if (singleRun !== null) {
+    config.singleRun = singleRun;
+  }
+
   new Server(config, function(exitCode) {
     if (exitCode !== 0) {
       throw new gutil.PluginError({plugin: 'karma', message: 'Karma tests failed'});
@@ -33,7 +37,7 @@ function runKarmaTests(configObj, done, singleRun) {
   }).start();
 }
 
-gulp.task('default', ['build', 'test-headless']);
+gulp.task('default', ['build', 'test-headless-no-watch']);
 
 gulp.task('build', ['build-js', 'build-css']);
 // When actually setting up CI stuff, this will need to run in sequence.
@@ -48,6 +52,10 @@ gulp.task('test-local', function(done) {
 
 gulp.task('test-headless', function(done) {
   runKarmaTests(karmaConfig.headless, done);
+});
+
+gulp.task('test-headless-no-watch', function(done) {
+  runKarmaTests(karmaConfig.headless, done, true);
 });
 
 gulp.task('test-full', function(done) {
@@ -79,7 +87,7 @@ gulp.task('build-js', function() {
 gulp.task('build-css', function() {
   return gulp.src(paths.css)
     .pipe(gulp.dest('dist'))
-    .pipe(minifyCss())
+    .pipe(cssnano())
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest('dist'))
 });
