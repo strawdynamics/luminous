@@ -25,6 +25,12 @@ A simple, lightweight, no-dependencies JavaScript image lightbox.
 
 Once you've installed Luminous via one of the above methods, you're ready to get started. There are no dependencies, so you can just start making cool stuff. Check out the [announcement blog post](http://blog.imgix.com/TODO) for a demo, or clone/download the repository and take a peek at `index.html` in your browser. Here's an example of the most basic possible implementation:
 
+``` html
+<a href="http://assets.imgix.net/dog.png?w=1600>
+	<img alt="A dog!" src="http://assets.imgix.net/dog.png?w=400">
+</a>
+```
+
 ``` javascript
 new Luminous(document.querySelector('a'));
 ```
