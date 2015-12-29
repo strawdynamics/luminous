@@ -37,7 +37,7 @@ function runKarmaTests(configObj, done, singleRun) {
   }).start();
 }
 
-gulp.task('default', ['build', 'test-headless-no-watch']);
+gulp.task('default', ['build', 'test-headless']);
 
 gulp.task('build', ['build-js', 'build-css']);
 // When actually setting up CI stuff, this will need to run in sequence.
