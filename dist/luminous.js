@@ -65,7 +65,7 @@ var Lightbox = (function () {
     this.openingClasses = this._buildClasses('opening');
     this.closingClasses = this._buildClasses('closing');
 
-    this._buildElement();
+    this.elementBuilt = false;
   }
 
   _createClass(Lightbox, [{
@@ -115,6 +115,11 @@ var Lightbox = (function () {
   }, {
     key: 'open',
     value: function open() {
+      if (!this.elementBuilt) {
+        this._buildElement();
+        this.elementBuilt = true;
+      }
+
       // Make sure to re-set the `img` `src`, in case it's been changed
       // by someone/something else.
       this._updateImgSrc();
@@ -268,11 +273,15 @@ var Luminous = (function () {
     key: '_bindEvents',
     value: function _bindEvents() {
       this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
-      this.lightbox.el.addEventListener(this.settings.closeTrigger, this.close, false);
 
       if (this.settings.closeWithEscape) {
         window.addEventListener('keyup', this._handleKeyup, false);
       }
+    }
+  }, {
+    key: '_bindCloseEvent',
+    value: function _bindCloseEvent() {
+      this.lightbox.el.addEventListener(this.settings.closeTrigger, this.close, false);
     }
   }, {
     key: '_unbindEvents',
@@ -297,7 +306,13 @@ var _initialiseProps = function _initialiseProps() {
       e.preventDefault();
     }
 
+    var previouslyBuilt = _this.lightbox.elementBuilt;
+
     _this.lightbox.open();
+
+    if (!previouslyBuilt) {
+      _this._bindCloseEvent();
+    }
 
     var onOpen = _this.settings.onOpen;
     if (onOpen && typeof onOpen === 'function') {

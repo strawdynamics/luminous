@@ -48,6 +48,8 @@ describe('Lightbox', () => {
     let triggerEl = document.querySelector('.test-anchor');
 
     let lightbox = new Lightbox({namespace: 'test-namespace', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href'});
+    lightbox.open();
+    lightbox.close();
 
     expect(document.body.querySelector('.test-namespace-lightbox')).not.toBeNull();
   });
@@ -60,6 +62,8 @@ describe('Lightbox', () => {
     let triggerEl = document.querySelector('.test-anchor');
 
     let lightbox = new Lightbox({namespace: 'lum', parentEl: demoDiv, triggerEl: triggerEl, sourceAttribute: 'href'});
+    lightbox.open();
+    lightbox.close();
 
     expect(document.body.querySelector('.demo-div > .lum-lightbox')).not.toBeNull();
   });
@@ -68,6 +72,8 @@ describe('Lightbox', () => {
     let triggerEl = document.querySelector('.test-anchor');
 
     let lightbox = new Lightbox({namespace: 'to-destroy', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href'});
+    lightbox.open();
+    lightbox.close();
     lightbox.destroy();
 
     expect(document.body.querySelector('.to-destroy-lightbox')).toBeNull();
@@ -77,6 +83,8 @@ describe('Lightbox', () => {
     let triggerEl = document.querySelector('.test-anchor');
 
     let lightbox = new Lightbox({namespace: 'fluid', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href', includeImgixJSClass: true});
+    lightbox.open();
+    lightbox.close();
 
     expect(lightbox.el.querySelector('.imgix-fluid')).not.toBeNull()
   });

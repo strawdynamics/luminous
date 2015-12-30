@@ -26,7 +26,7 @@ export default class Lightbox {
     this.openingClasses = this._buildClasses('opening');
     this.closingClasses = this._buildClasses('closing');
 
-    this._buildElement();
+    this.elementBuilt = false;
   }
 
   _buildClasses(suffix) {
@@ -71,6 +71,11 @@ export default class Lightbox {
   }
 
   open() {
+    if (!this.elementBuilt) {
+      this._buildElement();
+      this.elementBuilt = true;
+    }
+
     // Make sure to re-set the `img` `src`, in case it's been changed
     // by someone/something else.
     this._updateImgSrc();

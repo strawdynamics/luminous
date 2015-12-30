@@ -62,7 +62,13 @@ export default class Luminous {
       e.preventDefault();
     }
 
+    let previouslyBuilt = this.lightbox.elementBuilt;
+
     this.lightbox.open();
+
+    if (!previouslyBuilt) {
+      this._bindCloseEvent();
+    }
 
     let onOpen = this.settings.onOpen
     if (onOpen && typeof onOpen === 'function') {
@@ -100,11 +106,14 @@ export default class Luminous {
 
   _bindEvents() {
     this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
-    this.lightbox.el.addEventListener(this.settings.closeTrigger, this.close, false);
 
     if (this.settings.closeWithEscape) {
       window.addEventListener('keyup', this._handleKeyup, false);
     }
+  }
+
+  _bindCloseEvent() {
+    this.lightbox.el.addEventListener(this.settings.closeTrigger, this.close, false);
   }
 
   _unbindEvents() {
