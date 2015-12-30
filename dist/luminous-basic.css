@@ -1,9 +1,9 @@
-@keyframes fade {
+@keyframes lum-fade {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
 
-@keyframes fadeZoom {
+@keyframes lum-fadeZoom {
   0% { transform: scale(0.5); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
@@ -20,20 +20,20 @@
 }
 
 .lum-lightbox.lum-opening {
-  animation: fade 180ms ease-out;
+  animation: lum-fade 180ms ease-out;
 }
 
 .lum-lightbox.lum-opening .lum-lightbox-inner {
-  animation: fadeZoom 180ms ease-out;
+  animation: lum-fadeZoom 180ms ease-out;
 }
 
 .lum-lightbox.lum-closing {
-  animation: fade 300ms ease-in;
+  animation: lum-fade 300ms ease-in;
   animation-direction: reverse;
 }
 
 .lum-lightbox.lum-closing .lum-lightbox-inner {
-  animation: fadeZoom 300ms ease-in;
+  animation: lum-fadeZoom 300ms ease-in;
   animation-direction: reverse;
 }
 
