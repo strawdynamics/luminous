@@ -28,6 +28,10 @@ const RULES = `
   overflow: hidden;
 }
 
+.lum-lightbox-loader {
+  display: none;
+}
+
 .lum-lightbox-inner img {
   max-width: 100%;
   max-height: 100%;

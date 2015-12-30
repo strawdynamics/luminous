@@ -48,6 +48,10 @@ export default class Lightbox {
     addClasses(innerEl, this._buildClasses('lightbox-inner'));
     this.el.appendChild(innerEl);
 
+    let loaderEl = document.createElement('div');
+    addClasses(loaderEl, this._buildClasses('lightbox-loader'));
+    innerEl.appendChild(loaderEl);
+
     this.imgEl = document.createElement('img');
     innerEl.appendChild(this.imgEl);
 
