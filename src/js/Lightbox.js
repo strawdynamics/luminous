@@ -34,10 +34,10 @@ export default class Lightbox {
 
     let ns = this.settings.namespace;
     if (ns) {
-      classes.push(`${ns}-${suffix}`)
+      classes.push(`${ns}-${suffix}`);
     }
 
-    return classes
+    return classes;
   }
 
   _buildElement() {
@@ -49,14 +49,14 @@ export default class Lightbox {
     this.el.appendChild(innerEl);
 
     this.imgEl = document.createElement('img');
-    innerEl.appendChild(this.imgEl)
+    innerEl.appendChild(this.imgEl);
 
     this.settings.parentEl.appendChild(this.el);
 
     this._updateImgSrc();
 
     if (this.settings.includeImgixJSClass) {
-      this.imgEl.classList.add('imgix-fluid')
+      this.imgEl.classList.add('imgix-fluid');
     }
   }
 

@@ -7,8 +7,8 @@ export function isDOMElement(obj) {
     HAS_DOM_2 ?
       obj instanceof HTMLElement :
       (obj && typeof obj === 'object' && obj !== null &&
-        obj.nodeType === 1 && typeof obj.nodeName === 'string')
-  )
+        obj.nodeType === 1 && typeof obj.nodeName === 'string');
+  );
 }
 
 export function addClasses(el, classNames) {

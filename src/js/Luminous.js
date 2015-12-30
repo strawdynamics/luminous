@@ -47,7 +47,7 @@ export default class Luminous {
       injectBaseStyles = true,
     } = options
 
-    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles }
+    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles };
 
     if (this.settings.injectBaseStyles) {
       injectBaseStylesheet();
@@ -118,7 +118,7 @@ export default class Luminous {
 
   _handleKeyup = (e) => {
     if (this.isOpen && e.keyCode === 27) {
-      this.close()
+      this.close();
     }
   }
 
