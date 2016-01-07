@@ -76,7 +76,7 @@ export default class Luminous {
     }
 
     this.isOpen = true;
-  }
+  };
 
   close = (e) => {
     if (e && typeof e.preventDefault === 'function') {
@@ -91,7 +91,7 @@ export default class Luminous {
     }
 
     this.isOpen = false;
-  }
+  };
 
   _buildLightbox() {
     this.lightbox = new Lightbox({
@@ -129,12 +129,12 @@ export default class Luminous {
     if (this.isOpen && e.keyCode === 27) {
       this.close();
     }
-  }
+  };
 
   destroy = () => {
     this._unbindEvents();
     this.lightbox.destroy();
-  }
+  };
 }
 
 global.Luminous = Luminous;

@@ -105,14 +105,14 @@ export default class Lightbox {
     this.el.removeEventListener('animationend', this._completeOpen, false);
 
     removeClasses(this.el, this.openingClasses);
-  }
+  };
 
   _completeClose = () => {
     this.el.removeEventListener('animationend', this._completeClose, false);
 
     removeClasses(this.el, this.openClasses);
     removeClasses(this.el, this.closingClasses);
-  }
+  };
 
   destroy() {
     this.settings.parentEl.removeChild(this.el);
