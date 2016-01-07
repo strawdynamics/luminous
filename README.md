@@ -1,6 +1,6 @@
 ![imgix logo](https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=200&h=200)
 
-# Luminous [![Build Status](https://travis-ci.org/imgix/luminous.svg?branch=master)](https://travis-ci.org/imgix/luminous)
+# Luminous [![Build Status](https://travis-ci.org/imgix/luminous.svg?branch=master)](https://travis-ci.org/imgix/luminous) [![Slack Status](http://slack.imgix.com/badge.svg)](http://slack.imgix.com)
 
 A simple, lightweight, no-dependencies JavaScript image lightbox.
 
