@@ -2,7 +2,7 @@ import { isDOMElement } from './util/dom';
 import injectBaseStylesheet from './injectBaseStylesheet';
 import Lightbox from './Lightbox';
 
-export const VERSION = '0.1.2';
+export const VERSION = '0.1.3';
 
 export default class Luminous {
   constructor(trigger, options = {}) {
