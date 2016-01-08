@@ -3,7 +3,7 @@ import throwIfMissing from './util/throwIfMissing';
 
 // All officially-supported browsers have this, but it's easy to
 // account for, just in case.
-const HAS_ANIMATION = 'animation' in document.body.style;
+const HAS_ANIMATION = 'animation' in document.createElement('div').style;
 
 export default class Lightbox {
   constructor(options = {}) {
