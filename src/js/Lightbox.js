@@ -12,10 +12,11 @@ export default class Lightbox {
       parentEl = throwIfMissing(),
       triggerEl = throwIfMissing(),
       sourceAttribute = throwIfMissing(),
+      captionAttribute = throwIfMissing(),
       includeImgixJSClass = false,
     } = options;
 
-    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, includeImgixJSClass };
+    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, captionAttribute, includeImgixJSClass };
 
     if (!isDOMElement(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
@@ -62,9 +63,14 @@ export default class Lightbox {
     this.imgEl = document.createElement('img');
     positionHelperEl.appendChild(this.imgEl);
 
+    this.captionEl = document.createElement('p');
+    addClasses(this.captionEl, this._buildClasses('lightbox-caption'));
+    positionHelperEl.appendChild(this.captionEl);
+
     this.settings.parentEl.appendChild(this.el);
 
     this._updateImgSrc();
+    this._updateCaption();
 
     if (this.settings.includeImgixJSClass) {
       this.imgEl.classList.add('imgix-fluid');
@@ -74,8 +80,15 @@ export default class Lightbox {
   _sizeImgWrapperEl = () => {
     let style = this.imgWrapperEl.style;
     style.width = `${this.innerEl.clientWidth}px`
-    style.height = `${this.innerEl.clientHeight}px`
+    style.height = `${this.innerEl.clientHeight - this.captionEl.clientHeight}px`
   };
+
+  _updateCaption() {
+    let captionAttr = this.settings.captionAttribute;
+    if (captionAttr) {
+      this.captionEl.innerText = this.settings.triggerEl.getAttribute(captionAttr);
+    }
+  }
 
   _updateImgSrc() {
     let imageURL = this.settings.triggerEl.getAttribute(this.settings.sourceAttribute);
@@ -96,6 +109,7 @@ export default class Lightbox {
     // Make sure to re-set the `img` `src`, in case it's been changed
     // by someone/something else.
     this._updateImgSrc();
+    this._updateCaption();
 
     addClasses(this.el, this.openClasses);
 

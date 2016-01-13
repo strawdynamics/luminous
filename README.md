@@ -49,6 +49,8 @@ var options = {
 	namespace: null,
 	// Which attribute to pull the lightbox image source from.
 	sourceAttribute: 'href',
+	// Which attribute to pull the caption from, if any.
+	captionAttribute: null,
 	// The event to listen to on the _trigger_ element: triggers opening.
 	openTrigger: 'click',
 	// The event to listen to on the _lightbox_ element: triggers closing.

@@ -32,7 +32,7 @@ var Lightbox = (function () {
     this._sizeImgWrapperEl = function () {
       var style = _this.imgWrapperEl.style;
       style.width = _this.innerEl.clientWidth + 'px';
-      style.height = _this.innerEl.clientHeight + 'px';
+      style.height = _this.innerEl.clientHeight - _this.captionEl.clientHeight + 'px';
     };
 
     this._completeOpen = function () {
@@ -56,10 +56,12 @@ var Lightbox = (function () {
     var triggerEl = _options$triggerEl === undefined ? (0, _throwIfMissing2.default)() : _options$triggerEl;
     var _options$sourceAttrib = options.sourceAttribute;
     var sourceAttribute = _options$sourceAttrib === undefined ? (0, _throwIfMissing2.default)() : _options$sourceAttrib;
+    var _options$captionAttri = options.captionAttribute;
+    var captionAttribute = _options$captionAttri === undefined ? (0, _throwIfMissing2.default)() : _options$captionAttri;
     var _options$includeImgix = options.includeImgixJSClass;
     var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
 
-    this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, includeImgixJSClass: includeImgixJSClass };
+    this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, captionAttribute: captionAttribute, includeImgixJSClass: includeImgixJSClass };
 
     if (!(0, _dom.isDOMElement)(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
@@ -109,12 +111,25 @@ var Lightbox = (function () {
       this.imgEl = document.createElement('img');
       positionHelperEl.appendChild(this.imgEl);
 
+      this.captionEl = document.createElement('p');
+      (0, _dom.addClasses)(this.captionEl, this._buildClasses('lightbox-caption'));
+      positionHelperEl.appendChild(this.captionEl);
+
       this.settings.parentEl.appendChild(this.el);
 
       this._updateImgSrc();
+      this._updateCaption();
 
       if (this.settings.includeImgixJSClass) {
         this.imgEl.classList.add('imgix-fluid');
+      }
+    }
+  }, {
+    key: '_updateCaption',
+    value: function _updateCaption() {
+      var captionAttr = this.settings.captionAttribute;
+      if (captionAttr) {
+        this.captionEl.innerText = this.settings.triggerEl.getAttribute(captionAttr);
       }
     }
   }, {
@@ -139,6 +154,7 @@ var Lightbox = (function () {
       // Make sure to re-set the `img` `src`, in case it's been changed
       // by someone/something else.
       this._updateImgSrc();
+      this._updateCaption();
 
       (0, _dom.addClasses)(this.el, this.openClasses);
 
@@ -230,6 +246,10 @@ var Luminous = (function () {
     var
     // Which attribute to pull the lightbox image source from.
     sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib;
+    var _options$captionAttri = options.captionAttribute;
+    var
+    // Which attribute to pull the caption from, if any.
+    captionAttribute = _options$captionAttri === undefined ? null : _options$captionAttri;
     var _options$openTrigger = options.openTrigger;
     var
     // The event to listen to on the _trigger_ element: triggers opening.
@@ -272,7 +292,7 @@ var Luminous = (function () {
     // section of README.md for more information.
     injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt;
 
-    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, closeOnScroll: closeOnScroll, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
+    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, captionAttribute: captionAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, closeOnScroll: closeOnScroll, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
 
     if (this.settings.injectBaseStyles) {
       (0, _injectBaseStylesheet2.default)();
@@ -290,6 +310,7 @@ var Luminous = (function () {
         parentEl: document.querySelector(this.settings.appendToSelector),
         triggerEl: this.trigger,
         sourceAttribute: this.settings.sourceAttribute,
+        captionAttribute: this.settings.captionAttribute,
         includeImgixJSClass: this.settings.includeImgixJSClass
       });
     }

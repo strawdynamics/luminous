@@ -39,7 +39,7 @@
 }
 
 .lum-lightbox {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .lum-lightbox-inner {
@@ -51,6 +51,13 @@
 
 .lum-lightbox-inner img {
   position: relative;
+}
+
+.lum-lightbox-inner .lum-lightbox-caption {
+  margin: 0 auto;
+  color: #fff;
+  max-width: 700px;
+  text-align: center;
 }
 
 .lum-lightbox-loader {
@@ -107,9 +114,16 @@
 
 /* This media query makes screens less than 460px wide display in a "fullscreen"-esque mode. Users can then scroll around inside the lightbox to see the entire image. */
 @media (max-width: 460px) {
-  .lum-lightbox-inner {
+  .lum-lightbox-image-wrapper {
+    display: block;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .lum-lightbox-caption {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
   }
 
   .lum-lightbox-inner img {

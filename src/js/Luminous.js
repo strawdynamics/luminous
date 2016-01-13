@@ -24,6 +24,8 @@ export default class Luminous {
       namespace = null,
       // Which attribute to pull the lightbox image source from.
       sourceAttribute = 'href',
+      // Which attribute to pull the caption from, if any.
+      captionAttribute = null,
       // The event to listen to on the _trigger_ element: triggers opening.
       openTrigger = 'click',
       // The event to listen to on the _lightbox_ element: triggers closing.
@@ -49,7 +51,7 @@ export default class Luminous {
       injectBaseStyles = true,
     } = options
 
-    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, closeOnScroll, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles };
+    this.settings = { namespace, sourceAttribute, captionAttribute, openTrigger, closeTrigger, closeWithEscape, closeOnScroll, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles };
 
     if (this.settings.injectBaseStyles) {
       injectBaseStylesheet();
@@ -109,6 +111,7 @@ export default class Luminous {
       parentEl: document.querySelector(this.settings.appendToSelector),
       triggerEl: this.trigger,
       sourceAttribute: this.settings.sourceAttribute,
+      captionAttribute: this.settings.captionAttribute,
       includeImgixJSClass: this.settings.includeImgixJSClass,
     });
   }
