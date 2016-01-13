@@ -52,10 +52,8 @@ var Lightbox = (function () {
     var sourceAttribute = _options$sourceAttrib === undefined ? (0, _throwIfMissing2.default)() : _options$sourceAttrib;
     var _options$includeImgix = options.includeImgixJSClass;
     var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
-    var _options$closeTrigger = options.closeTrigger;
-    var closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
 
-    this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, includeImgixJSClass: includeImgixJSClass, closeTrigger: closeTrigger };
+    this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, includeImgixJSClass: includeImgixJSClass };
 
     if (!(0, _dom.isDOMElement)(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
@@ -225,6 +223,10 @@ var Luminous = (function () {
     var
     // Allow closing by pressing escape.
     closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
+    var _options$closeOnScrol = options.closeOnScroll;
+    var
+    // Automatically close when the page is scrolled.
+    closeOnScroll = _options$closeOnScrol === undefined ? false : _options$closeOnScrol;
     var _options$appendToSele = options.appendToSelector;
     var
     // A selector defining what to append the lightbox element to.
@@ -251,7 +253,7 @@ var Luminous = (function () {
     // section of README.md for more information.
     injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt;
 
-    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
+    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, closeOnScroll: closeOnScroll, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
 
     if (this.settings.injectBaseStyles) {
       (0, _injectBaseStylesheet2.default)();
@@ -269,8 +271,7 @@ var Luminous = (function () {
         parentEl: document.querySelector(this.settings.appendToSelector),
         triggerEl: this.trigger,
         sourceAttribute: this.settings.sourceAttribute,
-        includeImgixJSClass: this.settings.includeImgixJSClass,
-        closeTrigger: this.settings.closeTrigger
+        includeImgixJSClass: this.settings.includeImgixJSClass
       });
     }
   }, {
@@ -318,6 +319,10 @@ var _initialiseProps = function _initialiseProps() {
       _this._bindCloseEvent();
     }
 
+    if (_this.settings.closeOnScroll) {
+      window.addEventListener('scroll', _this.close, false);
+    }
+
     var onOpen = _this.settings.onOpen;
     if (onOpen && typeof onOpen === 'function') {
       onOpen();
@@ -329,6 +334,10 @@ var _initialiseProps = function _initialiseProps() {
   this.close = function (e) {
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
+    }
+
+    if (_this.settings.closeOnScroll) {
+      window.removeEventListener('scroll', _this.close, false);
     }
 
     _this.lightbox.close();

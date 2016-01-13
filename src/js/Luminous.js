@@ -30,6 +30,8 @@ export default class Luminous {
       closeTrigger = 'click',
       // Allow closing by pressing escape.
       closeWithEscape = true,
+      // Automatically close when the page is scrolled.
+      closeOnScroll = false,
       // A selector defining what to append the lightbox element to.
       appendToSelector = 'body',
       // If present (and a function), this will be called
@@ -47,7 +49,7 @@ export default class Luminous {
       injectBaseStyles = true,
     } = options
 
-    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles };
+    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, closeOnScroll, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles };
 
     if (this.settings.injectBaseStyles) {
       injectBaseStylesheet();
@@ -70,6 +72,10 @@ export default class Luminous {
       this._bindCloseEvent();
     }
 
+    if (this.settings.closeOnScroll) {
+      window.addEventListener('scroll', this.close, false);
+    }
+
     let onOpen = this.settings.onOpen
     if (onOpen && typeof onOpen === 'function') {
       onOpen();
@@ -81,6 +87,10 @@ export default class Luminous {
   close = (e) => {
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
+    }
+
+    if (this.settings.closeOnScroll) {
+      window.removeEventListener('scroll', this.close, false);
     }
 
     this.lightbox.close();
@@ -100,7 +110,6 @@ export default class Luminous {
       triggerEl: this.trigger,
       sourceAttribute: this.settings.sourceAttribute,
       includeImgixJSClass: this.settings.includeImgixJSClass,
-      closeTrigger: this.settings.closeTrigger,
     });
   }
 
