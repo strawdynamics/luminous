@@ -13,10 +13,9 @@ export default class Lightbox {
       triggerEl = throwIfMissing(),
       sourceAttribute = throwIfMissing(),
       includeImgixJSClass = false,
-      closeTrigger = 'click',
     } = options;
 
-    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, includeImgixJSClass, closeTrigger };
+    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, includeImgixJSClass };
 
     if (!isDOMElement(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');

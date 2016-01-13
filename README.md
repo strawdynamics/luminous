@@ -55,6 +55,8 @@ var options = {
 	closeTrigger: 'click',
 	// Allow closing by pressing escape.
 	closeWithEscape: true,
+	// Automatically close when the page is scrolled.
+	closeOnScroll: false,
 	// A selector defining what to append the lightbox element to.
 	appendToSelector: 'body',
 	// If present (and a function), this will be called
