@@ -29,6 +29,12 @@ var Lightbox = (function () {
 
     _classCallCheck(this, Lightbox);
 
+    this._sizeImgWrapperEl = function () {
+      var style = _this.imgWrapperEl.style;
+      style.width = _this.innerEl.clientWidth + 'px';
+      style.height = _this.innerEl.clientHeight + 'px';
+    };
+
     this._completeOpen = function () {
       _this.el.removeEventListener('animationend', _this._completeOpen, false);
 
@@ -84,16 +90,24 @@ var Lightbox = (function () {
       this.el = document.createElement('div');
       (0, _dom.addClasses)(this.el, this._buildClasses('lightbox'));
 
-      var innerEl = document.createElement('div');
-      (0, _dom.addClasses)(innerEl, this._buildClasses('lightbox-inner'));
-      this.el.appendChild(innerEl);
+      this.innerEl = document.createElement('div');
+      (0, _dom.addClasses)(this.innerEl, this._buildClasses('lightbox-inner'));
+      this.el.appendChild(this.innerEl);
 
       var loaderEl = document.createElement('div');
       (0, _dom.addClasses)(loaderEl, this._buildClasses('lightbox-loader'));
-      innerEl.appendChild(loaderEl);
+      this.innerEl.appendChild(loaderEl);
+
+      this.imgWrapperEl = document.createElement('div');
+      (0, _dom.addClasses)(this.imgWrapperEl, this._buildClasses('lightbox-image-wrapper'));
+      this.innerEl.appendChild(this.imgWrapperEl);
+
+      var positionHelperEl = document.createElement('span');
+      (0, _dom.addClasses)(positionHelperEl, this._buildClasses('lightbox-position-helper'));
+      this.imgWrapperEl.appendChild(positionHelperEl);
 
       this.imgEl = document.createElement('img');
-      innerEl.appendChild(this.imgEl);
+      positionHelperEl.appendChild(this.imgEl);
 
       this.settings.parentEl.appendChild(this.el);
 
@@ -128,6 +142,9 @@ var Lightbox = (function () {
 
       (0, _dom.addClasses)(this.el, this.openClasses);
 
+      this._sizeImgWrapperEl();
+      window.addEventListener('resize', this._sizeImgWrapperEl, false);
+
       if (HAS_ANIMATION) {
         this.el.addEventListener('animationend', this._completeOpen, false);
         (0, _dom.addClasses)(this.el, this.openingClasses);
@@ -136,6 +153,8 @@ var Lightbox = (function () {
   }, {
     key: 'close',
     value: function close() {
+      window.removeEventListener('resize', this._sizeImgWrapperEl, false);
+
       if (HAS_ANIMATION) {
         this.el.addEventListener('animationend', this._completeClose, false);
         (0, _dom.addClasses)(this.el, this.closingClasses);
@@ -374,7 +393,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = injectBaseStylesheet;
-var RULES = '\n@keyframes lum-noop {  }\n\n.lum-lightbox {\n  position: fixed;\n  display: none;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n\n.lum-lightbox.lum-open {\n  display: block;\n}\n\n.lum-lightbox.lum-opening, .lum-lightbox.lum-closing {\n  animation: lum-noop;\n}\n\n.lum-lightbox-inner {\n  position: absolute;\n  top: 0%;\n  right: 0%;\n  bottom: 0%;\n  left: 0%;\n\n  overflow: hidden;\n}\n\n.lum-lightbox-loader {\n  display: none;\n}\n\n.lum-lightbox-inner img {\n  max-width: 100%;\n  max-height: 100%;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  display: block;\n}\n';
+var RULES = '\n@keyframes lum-noop {  }\n\n.lum-lightbox {\n  position: fixed;\n  display: none;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n\n.lum-lightbox.lum-open {\n  display: block;\n}\n\n.lum-lightbox.lum-opening, .lum-lightbox.lum-closing {\n  animation: lum-noop;\n}\n\n.lum-lightbox-inner {\n  position: absolute;\n  top: 0%;\n  right: 0%;\n  bottom: 0%;\n  left: 0%;\n\n  overflow: hidden;\n}\n\n.lum-lightbox-loader {\n  display: none;\n}\n\n.lum-lightbox-inner img {\n  max-width: 100%;\n  max-height: 100%;\n}\n\n.lum-lightbox-image-wrapper {\n  vertical-align: middle;\n  display: table-cell;\n}\n';
 
 function injectBaseStylesheet() {
   if (document.querySelector('.lum-base-styles')) {

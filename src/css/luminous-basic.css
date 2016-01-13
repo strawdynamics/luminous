@@ -49,6 +49,10 @@
   left: 2.5%;
 }
 
+.lum-lightbox-inner img {
+  position: relative;
+}
+
 .lum-lightbox-loader {
   display: block;
   position: absolute;
@@ -111,10 +115,6 @@
   .lum-lightbox-inner img {
     max-width: none;
     max-height: none;
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
     display: block;
   }
 }
