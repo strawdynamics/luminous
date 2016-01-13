@@ -40,6 +40,7 @@ const RULES = `
 .lum-lightbox-image-wrapper {
   vertical-align: middle;
   display: table-cell;
+  text-align: center;
 }
 `
 
