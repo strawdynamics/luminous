@@ -29,6 +29,12 @@ var Lightbox = (function () {
 
     _classCallCheck(this, Lightbox);
 
+    this._sizeImgWrapperEl = function () {
+      var style = _this.imgWrapperEl.style;
+      style.width = _this.innerEl.clientWidth + 'px';
+      style.height = _this.innerEl.clientHeight - _this.captionEl.clientHeight + 'px';
+    };
+
     this._completeOpen = function () {
       _this.el.removeEventListener('animationend', _this._completeOpen, false);
 
@@ -50,12 +56,12 @@ var Lightbox = (function () {
     var triggerEl = _options$triggerEl === undefined ? (0, _throwIfMissing2.default)() : _options$triggerEl;
     var _options$sourceAttrib = options.sourceAttribute;
     var sourceAttribute = _options$sourceAttrib === undefined ? (0, _throwIfMissing2.default)() : _options$sourceAttrib;
+    var _options$captionAttri = options.captionAttribute;
+    var captionAttribute = _options$captionAttri === undefined ? (0, _throwIfMissing2.default)() : _options$captionAttri;
     var _options$includeImgix = options.includeImgixJSClass;
     var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
-    var _options$closeTrigger = options.closeTrigger;
-    var closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
 
-    this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, includeImgixJSClass: includeImgixJSClass, closeTrigger: closeTrigger };
+    this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, captionAttribute: captionAttribute, includeImgixJSClass: includeImgixJSClass };
 
     if (!(0, _dom.isDOMElement)(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
@@ -86,23 +92,44 @@ var Lightbox = (function () {
       this.el = document.createElement('div');
       (0, _dom.addClasses)(this.el, this._buildClasses('lightbox'));
 
-      var innerEl = document.createElement('div');
-      (0, _dom.addClasses)(innerEl, this._buildClasses('lightbox-inner'));
-      this.el.appendChild(innerEl);
+      this.innerEl = document.createElement('div');
+      (0, _dom.addClasses)(this.innerEl, this._buildClasses('lightbox-inner'));
+      this.el.appendChild(this.innerEl);
 
       var loaderEl = document.createElement('div');
       (0, _dom.addClasses)(loaderEl, this._buildClasses('lightbox-loader'));
-      innerEl.appendChild(loaderEl);
+      this.innerEl.appendChild(loaderEl);
+
+      this.imgWrapperEl = document.createElement('div');
+      (0, _dom.addClasses)(this.imgWrapperEl, this._buildClasses('lightbox-image-wrapper'));
+      this.innerEl.appendChild(this.imgWrapperEl);
+
+      var positionHelperEl = document.createElement('span');
+      (0, _dom.addClasses)(positionHelperEl, this._buildClasses('lightbox-position-helper'));
+      this.imgWrapperEl.appendChild(positionHelperEl);
 
       this.imgEl = document.createElement('img');
-      innerEl.appendChild(this.imgEl);
+      positionHelperEl.appendChild(this.imgEl);
+
+      this.captionEl = document.createElement('p');
+      (0, _dom.addClasses)(this.captionEl, this._buildClasses('lightbox-caption'));
+      positionHelperEl.appendChild(this.captionEl);
 
       this.settings.parentEl.appendChild(this.el);
 
       this._updateImgSrc();
+      this._updateCaption();
 
       if (this.settings.includeImgixJSClass) {
         this.imgEl.classList.add('imgix-fluid');
+      }
+    }
+  }, {
+    key: '_updateCaption',
+    value: function _updateCaption() {
+      var captionAttr = this.settings.captionAttribute;
+      if (captionAttr) {
+        this.captionEl.innerText = this.settings.triggerEl.getAttribute(captionAttr);
       }
     }
   }, {
@@ -127,8 +154,12 @@ var Lightbox = (function () {
       // Make sure to re-set the `img` `src`, in case it's been changed
       // by someone/something else.
       this._updateImgSrc();
+      this._updateCaption();
 
       (0, _dom.addClasses)(this.el, this.openClasses);
+
+      this._sizeImgWrapperEl();
+      window.addEventListener('resize', this._sizeImgWrapperEl, false);
 
       if (HAS_ANIMATION) {
         this.el.addEventListener('animationend', this._completeOpen, false);
@@ -138,6 +169,8 @@ var Lightbox = (function () {
   }, {
     key: 'close',
     value: function close() {
+      window.removeEventListener('resize', this._sizeImgWrapperEl, false);
+
       if (HAS_ANIMATION) {
         this.el.addEventListener('animationend', this._completeClose, false);
         (0, _dom.addClasses)(this.el, this.closingClasses);
@@ -182,7 +215,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var VERSION = exports.VERSION = '0.1.3';
+var VERSION = exports.VERSION = '0.2.1';
 
 var Luminous = (function () {
   function Luminous(trigger) {
@@ -213,6 +246,10 @@ var Luminous = (function () {
     var
     // Which attribute to pull the lightbox image source from.
     sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib;
+    var _options$captionAttri = options.captionAttribute;
+    var
+    // Which attribute to pull the caption from, if any.
+    captionAttribute = _options$captionAttri === undefined ? null : _options$captionAttri;
     var _options$openTrigger = options.openTrigger;
     var
     // The event to listen to on the _trigger_ element: triggers opening.
@@ -225,6 +262,10 @@ var Luminous = (function () {
     var
     // Allow closing by pressing escape.
     closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
+    var _options$closeOnScrol = options.closeOnScroll;
+    var
+    // Automatically close when the page is scrolled.
+    closeOnScroll = _options$closeOnScrol === undefined ? false : _options$closeOnScrol;
     var _options$appendToSele = options.appendToSelector;
     var
     // A selector defining what to append the lightbox element to.
@@ -251,7 +292,7 @@ var Luminous = (function () {
     // section of README.md for more information.
     injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt;
 
-    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
+    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, captionAttribute: captionAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, closeOnScroll: closeOnScroll, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
 
     if (this.settings.injectBaseStyles) {
       (0, _injectBaseStylesheet2.default)();
@@ -269,8 +310,8 @@ var Luminous = (function () {
         parentEl: document.querySelector(this.settings.appendToSelector),
         triggerEl: this.trigger,
         sourceAttribute: this.settings.sourceAttribute,
-        includeImgixJSClass: this.settings.includeImgixJSClass,
-        closeTrigger: this.settings.closeTrigger
+        captionAttribute: this.settings.captionAttribute,
+        includeImgixJSClass: this.settings.includeImgixJSClass
       });
     }
   }, {
@@ -318,6 +359,10 @@ var _initialiseProps = function _initialiseProps() {
       _this._bindCloseEvent();
     }
 
+    if (_this.settings.closeOnScroll) {
+      window.addEventListener('scroll', _this.close, false);
+    }
+
     var onOpen = _this.settings.onOpen;
     if (onOpen && typeof onOpen === 'function') {
       onOpen();
@@ -329,6 +374,10 @@ var _initialiseProps = function _initialiseProps() {
   this.close = function (e) {
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
+    }
+
+    if (_this.settings.closeOnScroll) {
+      window.removeEventListener('scroll', _this.close, false);
     }
 
     _this.lightbox.close();
@@ -365,7 +414,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = injectBaseStylesheet;
-var RULES = '\n@keyframes lum-noop {  }\n\n.lum-lightbox {\n  position: fixed;\n  display: none;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n\n.lum-lightbox.lum-open {\n  display: block;\n}\n\n.lum-lightbox.lum-opening, .lum-lightbox.lum-closing {\n  animation: lum-noop;\n}\n\n.lum-lightbox-inner {\n  position: absolute;\n  top: 0%;\n  right: 0%;\n  bottom: 0%;\n  left: 0%;\n\n  overflow: hidden;\n}\n\n.lum-lightbox-loader {\n  display: none;\n}\n\n.lum-lightbox-inner img {\n  max-width: 100%;\n  max-height: 100%;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  display: block;\n}\n';
+var RULES = '\n@keyframes lum-noop {  }\n\n.lum-lightbox {\n  position: fixed;\n  display: none;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n\n.lum-lightbox.lum-open {\n  display: block;\n}\n\n.lum-lightbox.lum-opening, .lum-lightbox.lum-closing {\n  animation: lum-noop;\n}\n\n.lum-lightbox-inner {\n  position: absolute;\n  top: 0%;\n  right: 0%;\n  bottom: 0%;\n  left: 0%;\n\n  overflow: hidden;\n}\n\n.lum-lightbox-loader {\n  display: none;\n}\n\n.lum-lightbox-inner img {\n  max-width: 100%;\n  max-height: 100%;\n}\n\n.lum-lightbox-image-wrapper {\n  vertical-align: middle;\n  display: table-cell;\n  text-align: center;\n}\n';
 
 function injectBaseStylesheet() {
   if (document.querySelector('.lum-base-styles')) {

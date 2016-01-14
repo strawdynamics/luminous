@@ -12,11 +12,11 @@ export default class Lightbox {
       parentEl = throwIfMissing(),
       triggerEl = throwIfMissing(),
       sourceAttribute = throwIfMissing(),
+      captionAttribute = throwIfMissing(),
       includeImgixJSClass = false,
-      closeTrigger = 'click',
     } = options;
 
-    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, includeImgixJSClass, closeTrigger };
+    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, captionAttribute, includeImgixJSClass };
 
     if (!isDOMElement(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
@@ -44,23 +44,49 @@ export default class Lightbox {
     this.el = document.createElement('div');
     addClasses(this.el, this._buildClasses('lightbox'));
 
-    let innerEl = document.createElement('div');
-    addClasses(innerEl, this._buildClasses('lightbox-inner'));
-    this.el.appendChild(innerEl);
+    this.innerEl = document.createElement('div');
+    addClasses(this.innerEl, this._buildClasses('lightbox-inner'));
+    this.el.appendChild(this.innerEl);
 
     let loaderEl = document.createElement('div');
     addClasses(loaderEl, this._buildClasses('lightbox-loader'));
-    innerEl.appendChild(loaderEl);
+    this.innerEl.appendChild(loaderEl);
+
+    this.imgWrapperEl = document.createElement('div');
+    addClasses(this.imgWrapperEl, this._buildClasses('lightbox-image-wrapper'));
+    this.innerEl.appendChild(this.imgWrapperEl);
+
+    let positionHelperEl = document.createElement('span');
+    addClasses(positionHelperEl, this._buildClasses('lightbox-position-helper'));
+    this.imgWrapperEl.appendChild(positionHelperEl);
 
     this.imgEl = document.createElement('img');
-    innerEl.appendChild(this.imgEl);
+    positionHelperEl.appendChild(this.imgEl);
+
+    this.captionEl = document.createElement('p');
+    addClasses(this.captionEl, this._buildClasses('lightbox-caption'));
+    positionHelperEl.appendChild(this.captionEl);
 
     this.settings.parentEl.appendChild(this.el);
 
     this._updateImgSrc();
+    this._updateCaption();
 
     if (this.settings.includeImgixJSClass) {
       this.imgEl.classList.add('imgix-fluid');
+    }
+  }
+
+  _sizeImgWrapperEl = () => {
+    let style = this.imgWrapperEl.style;
+    style.width = `${this.innerEl.clientWidth}px`
+    style.height = `${this.innerEl.clientHeight - this.captionEl.clientHeight}px`
+  };
+
+  _updateCaption() {
+    let captionAttr = this.settings.captionAttribute;
+    if (captionAttr) {
+      this.captionEl.innerText = this.settings.triggerEl.getAttribute(captionAttr);
     }
   }
 
@@ -83,8 +109,12 @@ export default class Lightbox {
     // Make sure to re-set the `img` `src`, in case it's been changed
     // by someone/something else.
     this._updateImgSrc();
+    this._updateCaption();
 
     addClasses(this.el, this.openClasses);
+
+    this._sizeImgWrapperEl();
+    window.addEventListener('resize', this._sizeImgWrapperEl, false);
 
     if (HAS_ANIMATION) {
       this.el.addEventListener('animationend', this._completeOpen, false);
@@ -93,6 +123,8 @@ export default class Lightbox {
   }
 
   close() {
+    window.removeEventListener('resize', this._sizeImgWrapperEl, false);
+
     if (HAS_ANIMATION) {
       this.el.addEventListener('animationend', this._completeClose, false);
       addClasses(this.el, this.closingClasses);

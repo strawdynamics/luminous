@@ -49,12 +49,16 @@ var options = {
 	namespace: null,
 	// Which attribute to pull the lightbox image source from.
 	sourceAttribute: 'href',
+	// Which attribute to pull the caption from, if any.
+	captionAttribute: null,
 	// The event to listen to on the _trigger_ element: triggers opening.
 	openTrigger: 'click',
 	// The event to listen to on the _lightbox_ element: triggers closing.
 	closeTrigger: 'click',
 	// Allow closing by pressing escape.
 	closeWithEscape: true,
+	// Automatically close when the page is scrolled.
+	closeOnScroll: false,
 	// A selector defining what to append the lightbox element to.
 	appendToSelector: 'body',
 	// If present (and a function), this will be called

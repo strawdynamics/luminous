@@ -35,11 +35,12 @@ const RULES = `
 .lum-lightbox-inner img {
   max-width: 100%;
   max-height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: block;
+}
+
+.lum-lightbox-image-wrapper {
+  vertical-align: middle;
+  display: table-cell;
+  text-align: center;
 }
 `
 

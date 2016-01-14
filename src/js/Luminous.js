@@ -2,7 +2,7 @@ import { isDOMElement } from './util/dom';
 import injectBaseStylesheet from './injectBaseStylesheet';
 import Lightbox from './Lightbox';
 
-export const VERSION = '0.1.3';
+export const VERSION = '0.2.1';
 
 export default class Luminous {
   constructor(trigger, options = {}) {
@@ -24,12 +24,16 @@ export default class Luminous {
       namespace = null,
       // Which attribute to pull the lightbox image source from.
       sourceAttribute = 'href',
+      // Which attribute to pull the caption from, if any.
+      captionAttribute = null,
       // The event to listen to on the _trigger_ element: triggers opening.
       openTrigger = 'click',
       // The event to listen to on the _lightbox_ element: triggers closing.
       closeTrigger = 'click',
       // Allow closing by pressing escape.
       closeWithEscape = true,
+      // Automatically close when the page is scrolled.
+      closeOnScroll = false,
       // A selector defining what to append the lightbox element to.
       appendToSelector = 'body',
       // If present (and a function), this will be called
@@ -47,7 +51,7 @@ export default class Luminous {
       injectBaseStyles = true,
     } = options
 
-    this.settings = { namespace, sourceAttribute, openTrigger, closeTrigger, closeWithEscape, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles };
+    this.settings = { namespace, sourceAttribute, captionAttribute, openTrigger, closeTrigger, closeWithEscape, closeOnScroll, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles };
 
     if (this.settings.injectBaseStyles) {
       injectBaseStylesheet();
@@ -70,6 +74,10 @@ export default class Luminous {
       this._bindCloseEvent();
     }
 
+    if (this.settings.closeOnScroll) {
+      window.addEventListener('scroll', this.close, false);
+    }
+
     let onOpen = this.settings.onOpen
     if (onOpen && typeof onOpen === 'function') {
       onOpen();
@@ -81,6 +89,10 @@ export default class Luminous {
   close = (e) => {
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
+    }
+
+    if (this.settings.closeOnScroll) {
+      window.removeEventListener('scroll', this.close, false);
     }
 
     this.lightbox.close();
@@ -99,8 +111,8 @@ export default class Luminous {
       parentEl: document.querySelector(this.settings.appendToSelector),
       triggerEl: this.trigger,
       sourceAttribute: this.settings.sourceAttribute,
+      captionAttribute: this.settings.captionAttribute,
       includeImgixJSClass: this.settings.includeImgixJSClass,
-      closeTrigger: this.settings.closeTrigger,
     });
   }
 
