@@ -1,6 +1,5 @@
 const gulp = require('gulp');
-const browserify = require('browserify');
-const babelify = require('babelify');
+const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const uglify = require('gulp-uglify');
@@ -67,13 +66,8 @@ gulp.task('test-full', function(done) {
 
 
 gulp.task('build-js', function() {
-  var b = browserify({
-    entries: paths.jsEntry,
-    transform: [babelify]
-  }).bundle();
-
-  return b.pipe(source('Luminous.js'))
-    .pipe(buffer())
+  return gulp.src(paths.jsEntry)
+    .pipe(babel())
     .pipe(gulp.dest('dist'))
     .pipe(uglify())
     .pipe(rename({ suffix: '.min' }))
