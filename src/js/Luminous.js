@@ -2,9 +2,9 @@ import { isDOMElement } from './util/dom';
 import injectBaseStylesheet from './injectBaseStylesheet';
 import Lightbox from './Lightbox';
 
-export const VERSION = '0.2.3';
+module.exports = class Luminous {
+  VERSION = '0.2.3'
 
-export default class Luminous {
   constructor(trigger, options = {}) {
     this.isOpen = false;
 
@@ -148,5 +148,3 @@ export default class Luminous {
     this.lightbox.destroy();
   };
 }
-
-global.Luminous = Luminous;
