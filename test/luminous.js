@@ -15,10 +15,6 @@ afterEach(function() {
 });
 
 describe('Core', () => {
-  it('exposes `Luminous` on `window`', () => {
-    expect(window.Luminous).toBeDefined();
-  });
-
   it('throws if no arguments are passed', () => {
     expect(() => {
       new Luminous;
