@@ -97,4 +97,4 @@ We support the latest version of Google Chrome (which [automatically updates](ht
 <a name="meta"></a>
 ## Meta
 
-Luminous was made by [imgix](http://imgix.com). It's licensed under the BSD 2-Clause license (see the [license file](https://github.com/imgix/luminous/blob/master/LICENSE.md) for more info). Any contribution is absolutely welcome, but please review the [contribution guidelines](https://github.com/imgix/luminous/blob/master/contributing.md) before getting started.
+Luminous was made by [imgix](http://imgix.com). It's licensed under the BSD 2-Clause license (see the [license file](https://github.com/imgix/luminous/blob/master/LICENSE.md) for more info). Any contribution is absolutely welcome, but please review the [contribution guidelines](https://github.com/imgix/luminous/blob/master/CONTRIBUTING.md) before getting started.
