@@ -19,6 +19,8 @@ A simple, lightweight, no-dependencies JavaScript image lightbox.
 * **Bower**: `bower install luminous`
 * **Manual**: [Download](https://github.com/imgix/luminous/archive/master.zip) and use `dist/luminous.min.js` or `dist/luminous.js`
 
+If your build process will re-run `dist/Drift.js` or `dist/Drift.min.js` through Browserify, you'll need to add `noParse: ['luminous-lightbox']` to your Browserify config. If you skip this, Browserify will attempt to re-require Luminous' dependencies which have already been inlined.
+
 
 <a name="usage"></a>
 ## Usage
