@@ -82,7 +82,9 @@ export default class Lightbox {
   _sizeImgWrapperEl = () => {
     let style = this.imgWrapperEl.style;
     style.width = `${this.innerEl.clientWidth}px`
+    style.maxWidth = `${this.innerEl.clientWidth}px`
     style.height = `${this.innerEl.clientHeight - this.captionEl.clientHeight}px`
+    style.maxHeight = `${this.innerEl.clientHeight - this.captionEl.clientHeight}px`
   };
 
   _updateCaption() {
