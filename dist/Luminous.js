@@ -1,11 +1,11 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Luminous = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dom = require('./util/dom');
 
@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 // account for, just in case.
 var HAS_ANIMATION = typeof document === 'undefined' ? false : 'animation' in document.createElement('div').style;
 
-var Lightbox = (function () {
+var Lightbox = function () {
   function Lightbox() {
     var _this = this;
 
@@ -32,7 +32,9 @@ var Lightbox = (function () {
     this._sizeImgWrapperEl = function () {
       var style = _this.imgWrapperEl.style;
       style.width = _this.innerEl.clientWidth + 'px';
+      style.maxWidth = _this.innerEl.clientWidth + 'px';
       style.height = _this.innerEl.clientHeight - _this.captionEl.clientHeight + 'px';
+      style.maxHeight = _this.innerEl.clientHeight - _this.captionEl.clientHeight + 'px';
     };
 
     this._completeOpen = function () {
@@ -60,6 +62,7 @@ var Lightbox = (function () {
     var captionAttribute = _options$captionAttri === undefined ? (0, _throwIfMissing2.default)() : _options$captionAttri;
     var _options$includeImgix = options.includeImgixJSClass;
     var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
+
 
     this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, captionAttribute: captionAttribute, includeImgixJSClass: includeImgixJSClass };
 
@@ -186,14 +189,14 @@ var Lightbox = (function () {
   }]);
 
   return Lightbox;
-})();
+}();
 
 exports.default = Lightbox;
 
 },{"./util/dom":4,"./util/throwIfMissing":5}],2:[function(require,module,exports){
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp, _initialiseProps;
 
@@ -211,7 +214,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-module.exports = (_temp = _class = (function () {
+module.exports = (_temp = _class = function () {
   function Luminous(trigger) {
     var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
@@ -286,6 +289,7 @@ module.exports = (_temp = _class = (function () {
     // section of README.md for more information.
     injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt;
 
+
     this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, captionAttribute: captionAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, closeOnScroll: closeOnScroll, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
 
     if (this.settings.injectBaseStyles) {
@@ -335,7 +339,7 @@ module.exports = (_temp = _class = (function () {
   }]);
 
   return Luminous;
-})(), _initialiseProps = function () {
+}(), _initialiseProps = function _initialiseProps() {
   var _this = this;
 
   this.VERSION = '0.2.4';
@@ -426,12 +430,12 @@ function injectBaseStylesheet() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 exports.isDOMElement = isDOMElement;
 exports.addClasses = addClasses;
 exports.removeClasses = removeClasses;
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-
 // This is not really a perfect check, but works fine.
 // From http://stackoverflow.com/questions/384286
 var HAS_DOM_2 = (typeof HTMLElement === 'undefined' ? 'undefined' : _typeof(HTMLElement)) === 'object';
