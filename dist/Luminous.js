@@ -32,7 +32,9 @@ var Lightbox = (function () {
     this._sizeImgWrapperEl = function () {
       var style = _this.imgWrapperEl.style;
       style.width = _this.innerEl.clientWidth + 'px';
+      style.maxWidth = _this.innerEl.clientWidth + 'px';
       style.height = _this.innerEl.clientHeight - _this.captionEl.clientHeight + 'px';
+      style.maxHeight = _this.innerEl.clientHeight - _this.captionEl.clientHeight + 'px';
     };
 
     this._completeOpen = function () {
