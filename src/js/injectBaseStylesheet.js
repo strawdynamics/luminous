@@ -1,5 +1,7 @@
 const RULES = `
-@keyframes lum-noop {  }
+@keyframes lum-noop {
+  0% { zoom: 1; }
+}
 
 .lum-lightbox {
   position: fixed;
@@ -15,7 +17,7 @@ const RULES = `
 }
 
 .lum-lightbox.lum-opening, .lum-lightbox.lum-closing {
-  animation: lum-noop;
+  animation: lum-noop 1ms;
 }
 
 .lum-lightbox-inner {
