@@ -342,7 +342,7 @@ module.exports = (_temp = _class = function () {
 }(), _initialiseProps = function _initialiseProps() {
   var _this = this;
 
-  this.VERSION = '0.2.5';
+  this.VERSION = '0.2.6';
 
   this.open = function (e) {
     if (e && typeof e.preventDefault === 'function') {
