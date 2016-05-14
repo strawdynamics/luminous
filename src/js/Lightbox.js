@@ -151,6 +151,8 @@ export default class Lightbox {
   };
 
   destroy() {
-    this.settings.parentEl.removeChild(this.el);
+    if (this.el) {
+      this.settings.parentEl.removeChild(this.el);
+    }
   }
 }
