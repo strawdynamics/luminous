@@ -184,7 +184,9 @@ var Lightbox = function () {
   }, {
     key: 'destroy',
     value: function destroy() {
-      this.settings.parentEl.removeChild(this.el);
+      if (this.el) {
+        this.settings.parentEl.removeChild(this.el);
+      }
     }
   }]);
 
@@ -330,7 +332,9 @@ module.exports = (_temp = _class = function () {
     key: '_unbindEvents',
     value: function _unbindEvents() {
       this.trigger.removeEventListener(this.settings.openTrigger, this.open, false);
-      this.lightbox.el.removeEventListener(this.settings.closeTrigger, this.close, false);
+      if (this.lightbox.el) {
+        this.lightbox.el.removeEventListener(this.settings.closeTrigger, this.close, false);
+      }
 
       if (this.settings.closeWithEscape) {
         window.removeEventListener('keyup', this._handleKeyup, false);

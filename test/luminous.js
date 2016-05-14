@@ -91,3 +91,14 @@ describe('Configuration', () => {
     expect(lum.settings.openTrigger).toBe('click');
   });
 });
+
+describe('#destroy', () => {
+  it('does not throw if the Lightbox instance has never been `#open`ed', () => {
+    let anchor = document.querySelector('.test-anchor');
+    let lum = new Luminous(anchor);
+
+    expect(function() {
+      lum.destroy();
+    }).not.toThrow();
+  });
+});
