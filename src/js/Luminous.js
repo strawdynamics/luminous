@@ -49,9 +49,12 @@ module.exports = class Luminous {
       // Add base styles to the page. See the "Theming"
       // section of README.md for more information.
       injectBaseStyles = true,
+      // Internal use only!
+      _gallery = null,
+      _arrowNavigation = null,
     } = options
 
-    this.settings = { namespace, sourceAttribute, captionAttribute, openTrigger, closeTrigger, closeWithEscape, closeOnScroll, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles };
+    this.settings = { namespace, sourceAttribute, captionAttribute, openTrigger, closeTrigger, closeWithEscape, closeOnScroll, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles, _gallery, _arrowNavigation };
 
     if (this.settings.injectBaseStyles) {
       injectBaseStylesheet();
@@ -113,6 +116,8 @@ module.exports = class Luminous {
       sourceAttribute: this.settings.sourceAttribute,
       captionAttribute: this.settings.captionAttribute,
       includeImgixJSClass: this.settings.includeImgixJSClass,
+      _gallery: this.settings._gallery,
+      _arrowNavigation: this.settings._arrowNavigation,
     });
   }
 

@@ -1,6 +1,9 @@
 import { isDOMElement, addClasses, removeClasses } from './util/dom';
 import throwIfMissing from './util/throwIfMissing';
 
+const LEFT_ARROW = 37;
+const RIGHT_ARROW = 39;
+
 // All officially-supported browsers have this, but it's easy to
 // account for, just in case.
 const HAS_ANIMATION = typeof document === 'undefined' ?
@@ -16,13 +19,17 @@ export default class Lightbox {
       sourceAttribute = throwIfMissing(),
       captionAttribute = throwIfMissing(),
       includeImgixJSClass = false,
+      _gallery = null,
+      _arrowNavigation = null,
     } = options;
 
-    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, captionAttribute, includeImgixJSClass };
+    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, captionAttribute, includeImgixJSClass, _gallery, _arrowNavigation };
 
     if (!isDOMElement(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
     }
+
+    this.currentTrigger = this.settings.triggerEl;
 
     this.openClasses = this._buildClasses('open');
     this.openingClasses = this._buildClasses('opening');
@@ -90,12 +97,12 @@ export default class Lightbox {
   _updateCaption() {
     let captionAttr = this.settings.captionAttribute;
     if (captionAttr) {
-      this.captionEl.innerText = this.settings.triggerEl.getAttribute(captionAttr);
+      this.captionEl.innerText = this.currentTrigger.getAttribute(captionAttr);
     }
   }
 
   _updateImgSrc() {
-    let imageURL = this.settings.triggerEl.getAttribute(this.settings.sourceAttribute);
+    let imageURL = this.currentTrigger.getAttribute(this.settings.sourceAttribute);
 
     if (!imageURL) {
       throw new Error(`No image URL was found in the ${this.settings.sourceAttribute} attribute of the trigger.`);
@@ -104,11 +111,44 @@ export default class Lightbox {
     this.imgEl.setAttribute('src', imageURL);
   }
 
+  _handleKeydown = (e) => {
+    if (e.keyCode == LEFT_ARROW) {
+      this.showPrevious();
+    } else if (e.keyCode == RIGHT_ARROW) {
+      this.showNext();
+    }
+  };
+
+  showNext() {
+    if (!this.settings._gallery) {
+      return;
+    }
+
+    this.currentTrigger = this.settings._gallery.nextTrigger(this.currentTrigger);
+    this._updateImgSrc();
+    this._updateCaption();
+    this._sizeImgWrapperEl();
+  }
+
+  showPrevious() {
+    if (!this.settings._gallery) {
+      return;
+    }
+
+    this.currentTrigger = this.settings._gallery.previousTrigger(this.currentTrigger);
+    this._updateImgSrc();
+    this._updateCaption();
+    this._sizeImgWrapperEl();
+  }
+
   open() {
     if (!this.elementBuilt) {
       this._buildElement();
       this.elementBuilt = true;
     }
+
+    // When opening, always reset to the trigger we were passed
+    this.currentTrigger = this.settings.triggerEl;
 
     // Make sure to re-set the `img` `src`, in case it's been changed
     // by someone/something else.
@@ -120,6 +160,10 @@ export default class Lightbox {
     this._sizeImgWrapperEl();
     window.addEventListener('resize', this._sizeImgWrapperEl, false);
 
+    if (this.settings._arrowNavigation) {
+      window.addEventListener('keydown', this._handleKeydown, false);
+    }
+
     if (HAS_ANIMATION) {
       this.el.addEventListener('animationend', this._completeOpen, false);
       addClasses(this.el, this.openingClasses);
@@ -128,6 +172,10 @@ export default class Lightbox {
 
   close() {
     window.removeEventListener('resize', this._sizeImgWrapperEl, false);
+
+    if (this.settings._arrowNavigation) {
+      window.removeEventListener('keydown', this._handleKeydown, false);
+    }
 
     if (HAS_ANIMATION) {
       this.el.addEventListener('animationend', this._completeClose, false);
