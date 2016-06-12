@@ -52,12 +52,24 @@
       a img {
         max-width: 100%;
       }
+
+      .gallery-demo-wrapper {
+        list-style: none;
+        text-align: center;
+        padding-left: 0;
+        margin-bottom: 36px;
+      }
+
+      .gallery-demo-wrapper li {
+        display: inline-block;
+        padding: 0 6px;
+      }
     </style>
   </head>
 
   <body>
-    <a class="zoom-in" href="http://assets.imgix.net/unsplash/pretty2.jpg?w=1600">
-      <img src="http://assets.imgix.net/unsplash/pretty2.jpg?w=400">
+    <a class="simple-demo zoom-in" href="http://assets.imgix.net/unsplash/pretty2.jpg?w=1600">
+      <img src="http://assets.imgix.net/unsplash/pretty2.jpg?w=400" alt="Mountainous landscape">
     </a>
 
     <section>
@@ -65,13 +77,40 @@
       <p>This is a demo of Luminous, a simple, lightweight, no-dependencies JavaScript image lightbox from <a href="http://imgix.com">imgix</a>. This demo uses the simple included theme, but it's very easy to extend and customize to fit your needs. You can <a href="https://github.com/imgix/luminous">learn more and download it here</a>.</p>
     </section>
 
+    <ul class="gallery-demo-wrapper">
+      <li>
+        <a class="gallery-demo" href="http://assets.imgix.net/unsplash/coyote.jpg?w=1600">
+          <img src="http://assets.imgix.net/unsplash/coyote.jpg?w=100" alt="Coyote">
+        </a>
+      </li>
+      <li>
+        <a class="gallery-demo" href="http://assets.imgix.net/unsplash/motorbike.jpg?w=1600">
+          <img src="http://assets.imgix.net/unsplash/motorbike.jpg?w=100" alt="Motorbike">
+        </a>
+      </li>
+      <li>
+        <a class="gallery-demo" href="http://assets.imgix.net/unsplash/hotairballoon.jpg?w=1600">
+          <img src="http://assets.imgix.net/unsplash/hotairballoon.jpg?w=100" alt="Hot air balloon">
+        </a>
+      </li>
+    </ul>
+
     <a href="https://imgix.com">
-      <img src="https://assets.imgix.net/presskit/imgix-presskit.pdf?page=3&amp;fm=png&amp;w=320&amp;dpr=2" width="160" height="60" alt="imgix">
+      <img
+        src="https://assets.imgix.net/presskit/imgix-presskit.pdf?page=3&amp;fm=png&amp;w=120"
+        srcset="
+          https://assets.imgix.net/presskit/imgix-presskit.pdf?page=3&amp;fm=png&amp;w=120 1x,
+          https://assets.imgix.net/presskit/imgix-presskit.pdf?page=3&amp;fm=png&amp;w=120&amp;dpr=2 2x,
+          https://assets.imgix.net/presskit/imgix-presskit.pdf?page=3&amp;fm=png&amp;w=120&amp;dpr=3 3x,
+        "
+        alt="imgix"
+      >
     </a>
 
     <script src="dist/luminous.js"></script>
     <script>
-      new Luminous(document.querySelector('a'));
+      new Luminous(document.querySelector('.simple-demo'));
+      new LuminousGallery(document.querySelectorAll('.gallery-demo'));
     </script>
   </body>
 </html>

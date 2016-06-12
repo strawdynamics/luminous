@@ -1,11 +1,11 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Luminous = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dom = require('./util/dom');
 
@@ -17,11 +17,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var LEFT_ARROW = 37;
+var RIGHT_ARROW = 39;
+
 // All officially-supported browsers have this, but it's easy to
 // account for, just in case.
 var HAS_ANIMATION = typeof document === 'undefined' ? false : 'animation' in document.createElement('div').style;
 
-var Lightbox = function () {
+var Lightbox = (function () {
   function Lightbox() {
     var _this = this;
 
@@ -35,6 +38,36 @@ var Lightbox = function () {
       style.maxWidth = _this.innerEl.clientWidth + 'px';
       style.height = _this.innerEl.clientHeight - _this.captionEl.clientHeight + 'px';
       style.maxHeight = _this.innerEl.clientHeight - _this.captionEl.clientHeight + 'px';
+    };
+
+    this._handleKeydown = function (e) {
+      if (e.keyCode == LEFT_ARROW) {
+        _this.showPrevious();
+      } else if (e.keyCode == RIGHT_ARROW) {
+        _this.showNext();
+      }
+    };
+
+    this.showNext = function () {
+      if (!_this.settings._gallery) {
+        return;
+      }
+
+      _this.currentTrigger = _this.settings._gallery.nextTrigger(_this.currentTrigger);
+      _this._updateImgSrc();
+      _this._updateCaption();
+      _this._sizeImgWrapperEl();
+    };
+
+    this.showPrevious = function () {
+      if (!_this.settings._gallery) {
+        return;
+      }
+
+      _this.currentTrigger = _this.settings._gallery.previousTrigger(_this.currentTrigger);
+      _this._updateImgSrc();
+      _this._updateCaption();
+      _this._sizeImgWrapperEl();
     };
 
     this._completeOpen = function () {
@@ -62,13 +95,21 @@ var Lightbox = function () {
     var captionAttribute = _options$captionAttri === undefined ? (0, _throwIfMissing2.default)() : _options$captionAttri;
     var _options$includeImgix = options.includeImgixJSClass;
     var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
+    var _options$_gallery = options._gallery;
 
+    var _gallery = _options$_gallery === undefined ? null : _options$_gallery;
 
-    this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, captionAttribute: captionAttribute, includeImgixJSClass: includeImgixJSClass };
+    var _options$_arrowNaviga = options._arrowNavigation;
+
+    var _arrowNavigation = _options$_arrowNaviga === undefined ? null : _options$_arrowNaviga;
+
+    this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, captionAttribute: captionAttribute, includeImgixJSClass: includeImgixJSClass, _gallery: _gallery, _arrowNavigation: _arrowNavigation };
 
     if (!(0, _dom.isDOMElement)(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
     }
+
+    this.currentTrigger = this.settings.triggerEl;
 
     this.openClasses = this._buildClasses('open');
     this.openingClasses = this._buildClasses('opening');
@@ -112,11 +153,16 @@ var Lightbox = function () {
       this.imgWrapperEl.appendChild(positionHelperEl);
 
       this.imgEl = document.createElement('img');
+      (0, _dom.addClasses)(this.imgEl, this._buildClasses('img'));
       positionHelperEl.appendChild(this.imgEl);
 
       this.captionEl = document.createElement('p');
       (0, _dom.addClasses)(this.captionEl, this._buildClasses('lightbox-caption'));
       positionHelperEl.appendChild(this.captionEl);
+
+      if (this.settings._gallery) {
+        this._setUpGalleryElements();
+      }
 
       this.settings.parentEl.appendChild(this.el);
 
@@ -128,21 +174,52 @@ var Lightbox = function () {
       }
     }
   }, {
+    key: '_setUpGalleryElements',
+    value: function _setUpGalleryElements() {
+      this._buildGalleryButton('previous', this.showPrevious);
+      this._buildGalleryButton('next', this.showNext);
+    }
+  }, {
+    key: '_buildGalleryButton',
+    value: function _buildGalleryButton(name, fn) {
+      var btn = document.createElement('button');
+      this[name + 'Button'] = btn;
+
+      btn.innerText = name;
+      (0, _dom.addClasses)(btn, this._buildClasses(name + '-button'));
+      (0, _dom.addClasses)(btn, this._buildClasses('gallery-button'));
+      this.innerEl.appendChild(btn);
+
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+
+        fn();
+      }, false);
+    }
+  }, {
     key: '_updateCaption',
     value: function _updateCaption() {
       var captionAttr = this.settings.captionAttribute;
       if (captionAttr) {
-        this.captionEl.innerText = this.settings.triggerEl.getAttribute(captionAttr);
+        this.captionEl.innerText = this.currentTrigger.getAttribute(captionAttr);
       }
     }
   }, {
     key: '_updateImgSrc',
     value: function _updateImgSrc() {
-      var imageURL = this.settings.triggerEl.getAttribute(this.settings.sourceAttribute);
+      var _this2 = this;
+
+      var imageURL = this.currentTrigger.getAttribute(this.settings.sourceAttribute);
 
       if (!imageURL) {
         throw new Error('No image URL was found in the ' + this.settings.sourceAttribute + ' attribute of the trigger.');
       }
+
+      var loadingClasses = this._buildClasses('loading');
+      (0, _dom.addClasses)(this.imgEl, loadingClasses);
+      this.imgEl.onload = function () {
+        (0, _dom.removeClasses)(_this2.imgEl, loadingClasses);
+      };
 
       this.imgEl.setAttribute('src', imageURL);
     }
@@ -154,6 +231,9 @@ var Lightbox = function () {
         this.elementBuilt = true;
       }
 
+      // When opening, always reset to the trigger we were passed
+      this.currentTrigger = this.settings.triggerEl;
+
       // Make sure to re-set the `img` `src`, in case it's been changed
       // by someone/something else.
       this._updateImgSrc();
@@ -164,6 +244,10 @@ var Lightbox = function () {
       this._sizeImgWrapperEl();
       window.addEventListener('resize', this._sizeImgWrapperEl, false);
 
+      if (this.settings._arrowNavigation) {
+        window.addEventListener('keydown', this._handleKeydown, false);
+      }
+
       if (HAS_ANIMATION) {
         this.el.addEventListener('animationend', this._completeOpen, false);
         (0, _dom.addClasses)(this.el, this.openingClasses);
@@ -173,6 +257,10 @@ var Lightbox = function () {
     key: 'close',
     value: function close() {
       window.removeEventListener('resize', this._sizeImgWrapperEl, false);
+
+      if (this.settings._arrowNavigation) {
+        window.removeEventListener('keydown', this._handleKeydown, false);
+      }
 
       if (HAS_ANIMATION) {
         this.el.addEventListener('animationend', this._completeClose, false);
@@ -191,14 +279,14 @@ var Lightbox = function () {
   }]);
 
   return Lightbox;
-}();
+})();
 
 exports.default = Lightbox;
 
-},{"./util/dom":4,"./util/throwIfMissing":5}],2:[function(require,module,exports){
+},{"./util/dom":6,"./util/throwIfMissing":7}],2:[function(require,module,exports){
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _class, _temp, _initialiseProps;
 
@@ -216,7 +304,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-module.exports = (_temp = _class = function () {
+module.exports = (_temp = _class = (function () {
   function Luminous(trigger) {
     var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
@@ -290,9 +378,17 @@ module.exports = (_temp = _class = function () {
     // Add base styles to the page. See the "Theming"
     // section of README.md for more information.
     injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt;
+    var _options$_gallery = options._gallery;
 
+    var
+    // Internal use only!
+    _gallery = _options$_gallery === undefined ? null : _options$_gallery;
 
-    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, captionAttribute: captionAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, closeOnScroll: closeOnScroll, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles };
+    var _options$_arrowNaviga = options._arrowNavigation;
+
+    var _arrowNavigation = _options$_arrowNaviga === undefined ? null : _options$_arrowNaviga;
+
+    this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, captionAttribute: captionAttribute, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, closeOnScroll: closeOnScroll, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles, _gallery: _gallery, _arrowNavigation: _arrowNavigation };
 
     if (this.settings.injectBaseStyles) {
       (0, _injectBaseStylesheet2.default)();
@@ -311,7 +407,9 @@ module.exports = (_temp = _class = function () {
         triggerEl: this.trigger,
         sourceAttribute: this.settings.sourceAttribute,
         captionAttribute: this.settings.captionAttribute,
-        includeImgixJSClass: this.settings.includeImgixJSClass
+        includeImgixJSClass: this.settings.includeImgixJSClass,
+        _gallery: this.settings._gallery,
+        _arrowNavigation: this.settings._arrowNavigation
       });
     }
   }, {
@@ -343,7 +441,7 @@ module.exports = (_temp = _class = function () {
   }]);
 
   return Luminous;
-}(), _initialiseProps = function _initialiseProps() {
+})(), _initialiseProps = function () {
   var _this = this;
 
   this.VERSION = '0.2.7';
@@ -404,7 +502,83 @@ module.exports = (_temp = _class = function () {
   };
 }, _temp);
 
-},{"./Lightbox":1,"./injectBaseStylesheet":3,"./util/dom":4}],3:[function(require,module,exports){
+},{"./Lightbox":1,"./injectBaseStylesheet":4,"./util/dom":6}],3:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('./util/dom');
+
+var _Luminous = require('./Luminous');
+
+var _Luminous2 = _interopRequireDefault(_Luminous);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LuminousGallery = (function () {
+  function LuminousGallery(triggers) {
+    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var luminousOpts = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+    _classCallCheck(this, LuminousGallery);
+
+    this.boundMethod = function () {};
+
+    var _options$arrowNavigat = options.arrowNavigation;
+    var arrowNavigation = _options$arrowNavigat === undefined ? true : _options$arrowNavigat;
+
+    this.settings = { arrowNavigation: arrowNavigation };
+
+    this.triggers = triggers;
+    this.luminousOpts = luminousOpts;
+    this.luminousOpts._gallery = this;
+    this.luminousOpts._arrowNavigation = this.settings.arrowNavigation;
+    this._constructLuminousInstances();
+  }
+
+  _createClass(LuminousGallery, [{
+    key: '_constructLuminousInstances',
+    value: function _constructLuminousInstances() {
+      this.luminousInstances = [];
+
+      var triggerLen = this.triggers.length;
+      for (var i = 0; i < triggerLen; i++) {
+        var trigger = this.triggers[i];
+        var lum = new _Luminous2.default(trigger, this.luminousOpts);
+        this.luminousInstances.push(lum);
+      }
+    }
+  }, {
+    key: 'nextTrigger',
+    value: function nextTrigger(trigger) {
+      var nextTriggerIndex = Array.prototype.indexOf.call(this.triggers, trigger) + 1;
+
+      return nextTriggerIndex >= this.triggers.length ? this.triggers[0] : this.triggers[nextTriggerIndex];
+    }
+  }, {
+    key: 'previousTrigger',
+    value: function previousTrigger(trigger) {
+      var prevTriggerIndex = Array.prototype.indexOf.call(this.triggers, trigger) - 1;
+
+      return prevTriggerIndex < 0 ? this.triggers[this.triggers.length - 1] : this.triggers[prevTriggerIndex];
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {}
+  }]);
+
+  return LuminousGallery;
+})();
+
+exports.default = LuminousGallery;
+
+},{"./Luminous":2,"./util/dom":6}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -428,18 +602,36 @@ function injectBaseStylesheet() {
   head.insertBefore(styleEl, head.firstChild);
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+(function (global){
+'use strict';
+
+var _Luminous = require('./Luminous');
+
+var _Luminous2 = _interopRequireDefault(_Luminous);
+
+var _LuminousGallery = require('./LuminousGallery');
+
+var _LuminousGallery2 = _interopRequireDefault(_LuminousGallery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+global.Luminous = _Luminous2.default;
+global.LuminousGallery = _LuminousGallery2.default;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./Luminous":2,"./LuminousGallery":3}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 exports.isDOMElement = isDOMElement;
 exports.addClasses = addClasses;
 exports.removeClasses = removeClasses;
+
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
 // This is not really a perfect check, but works fine.
 // From http://stackoverflow.com/questions/384286
 var HAS_DOM_2 = (typeof HTMLElement === 'undefined' ? 'undefined' : _typeof(HTMLElement)) === 'object';
@@ -460,7 +652,7 @@ function removeClasses(el, classNames) {
   });
 }
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -471,5 +663,4 @@ function throwIfMissing() {
   throw new Error('Missing parameter');
 }
 
-},{}]},{},[2])(2)
-});
+},{}]},{},[5]);
