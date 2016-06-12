@@ -1,4 +1,5 @@
-![imgix logo](https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=200&h=200)
+<img src="https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=120" srcset="https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=120 1x,
+ https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=120&dpr=2 2x, https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=120&dpr=3 3x" alt="imgix logo">
 
 # Luminous [![Build Status](https://travis-ci.org/imgix/luminous.svg?branch=master)](https://travis-ci.org/imgix/luminous) [![Slack Status](http://slack.imgix.com/badge.svg)](http://slack.imgix.com)
 
@@ -6,7 +7,9 @@ A simple, lightweight, no-dependencies JavaScript image lightbox.
 
 * [Installation](#installation)
 * [Usage](#usage)
+	* [LuminousGallery Usage](#luminousgallery-usage)
 * [Options / Defaults](#options-defaults)
+	* [LuminousGallery Options / Defaults](#luminousgallery-options-defaults)
 * [Browser Support](#browser-support)
 * [Theming](#theming)
 * [Meta](#meta)
@@ -35,6 +38,35 @@ Once you've installed Luminous via one of the above methods, you're ready to get
 
 ``` javascript
 new Luminous(document.querySelector('a'));
+```
+
+<a name="luminousgallery-usage"></a>
+### LuminousGallery Usage
+
+Luminous supports gallery-style navigation using the LuminousGallery class. It works nearly the same as Luminous, but has a slightly different method of instantiation.
+
+``` html
+<ul>
+  <li>
+    <a class="gallery-demo" href="http://assets.imgix.net/unsplash/coyote.jpg?w=1600">
+      <img src="http://assets.imgix.net/unsplash/coyote.jpg?w=100" alt="Coyote">
+    </a>
+  </li>
+  <li>
+    <a class="gallery-demo" href="http://assets.imgix.net/unsplash/motorbike.jpg?w=1600">
+      <img src="http://assets.imgix.net/unsplash/motorbike.jpg?w=100" alt="Motorbike">
+    </a>
+  </li>
+  <li>
+    <a class="gallery-demo" href="http://assets.imgix.net/unsplash/hotairballoon.jpg?w=1600">
+      <img src="http://assets.imgix.net/unsplash/hotairballoon.jpg?w=100" alt="Hot air balloon">
+    </a>
+  </li>
+</ul>
+```
+
+``` javascript
+new LuminousGallery(document.querySelectorAll('.gallery-demo'));
 ```
 
 
@@ -79,6 +111,24 @@ var options = {
 };
 
 new Luminous(document.querySelector('a'), options);
+```
+
+<a name="luminousgallery-options-defaults"></a>
+### LuminousGallery Options / Defaults
+
+LuminousGallery supports two sets of options arguments. The first set is specific to the gallery itself, and the second specifies the options that get passed to its child Luminous instances.
+
+``` javascript
+var galleryOpts = {
+	// Whether pressing the arrow keys should move to the next/previous slide.
+	arrowNavigation: true,
+};
+
+var luminousOpts = {
+	// These options have the same defaults and potential values as the Luminous class.
+}
+
+new LuminousGallery(document.querySelectorAll('a'), galleryOpts, luminousOpts);
 ```
 
 

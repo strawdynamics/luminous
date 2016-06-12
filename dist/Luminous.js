@@ -1,11 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dom = require('./util/dom');
 
@@ -24,7 +24,7 @@ var RIGHT_ARROW = 39;
 // account for, just in case.
 var HAS_ANIMATION = typeof document === 'undefined' ? false : 'animation' in document.createElement('div').style;
 
-var Lightbox = function () {
+var Lightbox = (function () {
   function Lightbox() {
     var _this = this;
 
@@ -46,6 +46,28 @@ var Lightbox = function () {
       } else if (e.keyCode == RIGHT_ARROW) {
         _this.showNext();
       }
+    };
+
+    this.showNext = function () {
+      if (!_this.settings._gallery) {
+        return;
+      }
+
+      _this.currentTrigger = _this.settings._gallery.nextTrigger(_this.currentTrigger);
+      _this._updateImgSrc();
+      _this._updateCaption();
+      _this._sizeImgWrapperEl();
+    };
+
+    this.showPrevious = function () {
+      if (!_this.settings._gallery) {
+        return;
+      }
+
+      _this.currentTrigger = _this.settings._gallery.previousTrigger(_this.currentTrigger);
+      _this._updateImgSrc();
+      _this._updateCaption();
+      _this._sizeImgWrapperEl();
     };
 
     this._completeOpen = function () {
@@ -131,11 +153,16 @@ var Lightbox = function () {
       this.imgWrapperEl.appendChild(positionHelperEl);
 
       this.imgEl = document.createElement('img');
+      (0, _dom.addClasses)(this.imgEl, this._buildClasses('img'));
       positionHelperEl.appendChild(this.imgEl);
 
       this.captionEl = document.createElement('p');
       (0, _dom.addClasses)(this.captionEl, this._buildClasses('lightbox-caption'));
       positionHelperEl.appendChild(this.captionEl);
+
+      if (this.settings._gallery) {
+        this._setUpGalleryElements();
+      }
 
       this.settings.parentEl.appendChild(this.el);
 
@@ -145,6 +172,29 @@ var Lightbox = function () {
       if (this.settings.includeImgixJSClass) {
         this.imgEl.classList.add('imgix-fluid');
       }
+    }
+  }, {
+    key: '_setUpGalleryElements',
+    value: function _setUpGalleryElements() {
+      this._buildGalleryButton('previous', this.showPrevious);
+      this._buildGalleryButton('next', this.showNext);
+    }
+  }, {
+    key: '_buildGalleryButton',
+    value: function _buildGalleryButton(name, fn) {
+      var btn = document.createElement('button');
+      this[name + 'Button'] = btn;
+
+      btn.innerText = name;
+      (0, _dom.addClasses)(btn, this._buildClasses(name + '-button'));
+      (0, _dom.addClasses)(btn, this._buildClasses('gallery-button'));
+      this.innerEl.appendChild(btn);
+
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+
+        fn();
+      }, false);
     }
   }, {
     key: '_updateCaption',
@@ -157,37 +207,21 @@ var Lightbox = function () {
   }, {
     key: '_updateImgSrc',
     value: function _updateImgSrc() {
+      var _this2 = this;
+
       var imageURL = this.currentTrigger.getAttribute(this.settings.sourceAttribute);
 
       if (!imageURL) {
         throw new Error('No image URL was found in the ' + this.settings.sourceAttribute + ' attribute of the trigger.');
       }
 
+      var loadingClasses = this._buildClasses('loading');
+      (0, _dom.addClasses)(this.imgEl, loadingClasses);
+      this.imgEl.onload = function () {
+        (0, _dom.removeClasses)(_this2.imgEl, loadingClasses);
+      };
+
       this.imgEl.setAttribute('src', imageURL);
-    }
-  }, {
-    key: 'showNext',
-    value: function showNext() {
-      if (!this.settings._gallery) {
-        return;
-      }
-
-      this.currentTrigger = this.settings._gallery.nextTrigger(this.currentTrigger);
-      this._updateImgSrc();
-      this._updateCaption();
-      this._sizeImgWrapperEl();
-    }
-  }, {
-    key: 'showPrevious',
-    value: function showPrevious() {
-      if (!this.settings._gallery) {
-        return;
-      }
-
-      this.currentTrigger = this.settings._gallery.previousTrigger(this.currentTrigger);
-      this._updateImgSrc();
-      this._updateCaption();
-      this._sizeImgWrapperEl();
     }
   }, {
     key: 'open',
@@ -245,14 +279,14 @@ var Lightbox = function () {
   }]);
 
   return Lightbox;
-}();
+})();
 
 exports.default = Lightbox;
 
 },{"./util/dom":6,"./util/throwIfMissing":7}],2:[function(require,module,exports){
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _class, _temp, _initialiseProps;
 
@@ -270,7 +304,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-module.exports = (_temp = _class = function () {
+module.exports = (_temp = _class = (function () {
   function Luminous(trigger) {
     var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
@@ -407,7 +441,7 @@ module.exports = (_temp = _class = function () {
   }]);
 
   return Luminous;
-}(), _initialiseProps = function _initialiseProps() {
+})(), _initialiseProps = function () {
   var _this = this;
 
   this.VERSION = '0.2.7';
@@ -471,11 +505,11 @@ module.exports = (_temp = _class = function () {
 },{"./Lightbox":1,"./injectBaseStylesheet":4,"./util/dom":6}],3:[function(require,module,exports){
 'use strict';
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dom = require('./util/dom');
 
@@ -487,7 +521,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var LuminousGallery = function () {
+var LuminousGallery = (function () {
   function LuminousGallery(triggers) {
     var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
     var luminousOpts = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
@@ -498,7 +532,6 @@ var LuminousGallery = function () {
 
     var _options$arrowNavigat = options.arrowNavigation;
     var arrowNavigation = _options$arrowNavigat === undefined ? true : _options$arrowNavigat;
-
 
     this.settings = { arrowNavigation: arrowNavigation };
 
@@ -541,7 +574,7 @@ var LuminousGallery = function () {
   }]);
 
   return LuminousGallery;
-}();
+})();
 
 exports.default = LuminousGallery;
 
@@ -593,12 +626,12 @@ global.LuminousGallery = _LuminousGallery2.default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 exports.isDOMElement = isDOMElement;
 exports.addClasses = addClasses;
 exports.removeClasses = removeClasses;
+
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
 // This is not really a perfect check, but works fine.
 // From http://stackoverflow.com/questions/384286
 var HAS_DOM_2 = (typeof HTMLElement === 'undefined' ? 'undefined' : _typeof(HTMLElement)) === 'object';

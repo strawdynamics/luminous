@@ -70,11 +70,16 @@ export default class Lightbox {
     this.imgWrapperEl.appendChild(positionHelperEl);
 
     this.imgEl = document.createElement('img');
+    addClasses(this.imgEl, this._buildClasses('img'));
     positionHelperEl.appendChild(this.imgEl);
 
     this.captionEl = document.createElement('p');
     addClasses(this.captionEl, this._buildClasses('lightbox-caption'));
     positionHelperEl.appendChild(this.captionEl);
+
+    if (this.settings._gallery) {
+      this._setUpGalleryElements();
+    }
 
     this.settings.parentEl.appendChild(this.el);
 
@@ -84,6 +89,27 @@ export default class Lightbox {
     if (this.settings.includeImgixJSClass) {
       this.imgEl.classList.add('imgix-fluid');
     }
+  }
+
+  _setUpGalleryElements() {
+    this._buildGalleryButton('previous', this.showPrevious);
+    this._buildGalleryButton('next', this.showNext);
+  }
+
+  _buildGalleryButton(name, fn) {
+    let btn = document.createElement('button');
+    this[`${name}Button`] = btn;
+
+    btn.innerText = name;
+    addClasses(btn, this._buildClasses(`${name}-button`));
+    addClasses(btn, this._buildClasses('gallery-button'));
+    this.innerEl.appendChild(btn);
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      fn();
+    }, false);
   }
 
   _sizeImgWrapperEl = () => {
@@ -108,6 +134,12 @@ export default class Lightbox {
       throw new Error(`No image URL was found in the ${this.settings.sourceAttribute} attribute of the trigger.`);
     }
 
+    let loadingClasses = this._buildClasses('loading');
+    addClasses(this.imgEl, loadingClasses);
+    this.imgEl.onload = () => {
+      removeClasses(this.imgEl, loadingClasses);
+    }
+
     this.imgEl.setAttribute('src', imageURL);
   }
 
@@ -119,7 +151,7 @@ export default class Lightbox {
     }
   };
 
-  showNext() {
+  showNext = () => {
     if (!this.settings._gallery) {
       return;
     }
@@ -128,9 +160,9 @@ export default class Lightbox {
     this._updateImgSrc();
     this._updateCaption();
     this._sizeImgWrapperEl();
-  }
+  };
 
-  showPrevious() {
+  showPrevious = () => {
     if (!this.settings._gallery) {
       return;
     }
@@ -139,7 +171,7 @@ export default class Lightbox {
     this._updateImgSrc();
     this._updateCaption();
     this._sizeImgWrapperEl();
-  }
+  };
 
   open() {
     if (!this.elementBuilt) {
