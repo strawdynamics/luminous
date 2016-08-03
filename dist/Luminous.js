@@ -200,8 +200,9 @@ var Lightbox = function () {
     key: '_updateCaption',
     value: function _updateCaption() {
       var captionAttr = this.settings.captionAttribute;
-      if (captionAttr) {
-        this.captionEl.innerText = this.currentTrigger.getAttribute(captionAttr);
+      var caption = this.currentTrigger.getAttribute(captionAttr);
+      if (captionAttr && caption) {
+        this.captionEl.innerText = caption;
       }
     }
   }, {
