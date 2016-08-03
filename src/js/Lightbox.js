@@ -135,9 +135,9 @@ export default class Lightbox {
     }
 
     let loadingClasses = this._buildClasses('loading');
-    addClasses(this.imgEl, loadingClasses);
+    addClasses(this.el, loadingClasses);
     this.imgEl.onload = () => {
-      removeClasses(this.imgEl, loadingClasses);
+      removeClasses(this.el, loadingClasses);
     }
 
     this.imgEl.setAttribute('src', imageURL);
