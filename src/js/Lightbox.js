@@ -122,8 +122,9 @@ export default class Lightbox {
 
   _updateCaption() {
     let captionAttr = this.settings.captionAttribute;
-    if (captionAttr) {
-      this.captionEl.innerText = this.currentTrigger.getAttribute(captionAttr);
+    let caption = this.currentTrigger.getAttribute(captionAttr);
+    if (captionAttr && caption) {
+      this.captionEl.innerText = caption;
     }
   }
 
