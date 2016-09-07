@@ -454,7 +454,7 @@ module.exports = (_temp = _class = function () {
 }(), _initialiseProps = function _initialiseProps() {
   var _this = this;
 
-  this.VERSION = '0.3.2';
+  this.VERSION = '1.0.0';
 
   this.open = function (e) {
     if (e && typeof e.preventDefault === 'function') {
