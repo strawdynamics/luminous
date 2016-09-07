@@ -130,24 +130,20 @@
   padding: 0;
   outline: 0;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 35%;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 100px;
+  max-height: 100%;
+  width: 60px;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 120ms ease-out;
-}
-
-.lum-gallery-button:hover {
-  opacity: 1;
 }
 
 .lum-previous-button {
-  left: 0;
+  left: 12px;
 }
 
 .lum-next-button {
-  right: 0;
+  right: 12px;
 }
 
 .lum-gallery-button:after {
@@ -163,7 +159,7 @@
 .lum-previous-button:after {
   transform: translateY(-50%) rotate(-45deg);
   border-left: 4px solid rgba(255, 255, 255, 0.8);
-  box-shadow: -1px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: -2px 0 rgba(0, 0, 0, 0.2);
   left: 12%;
   border-radius: 3px 0 0 0;
 }
@@ -171,7 +167,7 @@
 .lum-next-button:after {
   transform: translateY(-50%) rotate(45deg);
   border-right: 4px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 1px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 0 rgba(0, 0, 0, 0.2);
   right: 12%;
   border-radius: 0 3px 0 0;
 }
