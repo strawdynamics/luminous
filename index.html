@@ -110,7 +110,11 @@
     <script src="./dist/Luminous.js"></script>
     <script>
       new Luminous(document.querySelector('.simple-demo'));
-      new LuminousGallery(document.querySelectorAll('.gallery-demo'));
+      new LuminousGallery(document.querySelectorAll('.gallery-demo'), {}, {
+        caption: function(trigger) {
+          return trigger.querySelector('img').getAttribute('alt');
+        }
+      });
     </script>
   </body>
 </html>

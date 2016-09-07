@@ -24,8 +24,8 @@ module.exports = class Luminous {
       namespace = null,
       // Which attribute to pull the lightbox image source from.
       sourceAttribute = 'href',
-      // Which attribute to pull the caption from, if any.
-      captionAttribute = null,
+      // Captions can be a literal string, or a function that receives the Luminous instance's trigger element as an argument and returns a string. Supports HTML, so use caution when dealing with user input.
+      caption = null,
       // The event to listen to on the _trigger_ element: triggers opening.
       openTrigger = 'click',
       // The event to listen to on the _lightbox_ element: triggers closing.
@@ -54,7 +54,7 @@ module.exports = class Luminous {
       _arrowNavigation = null,
     } = options
 
-    this.settings = { namespace, sourceAttribute, captionAttribute, openTrigger, closeTrigger, closeWithEscape, closeOnScroll, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles, _gallery, _arrowNavigation };
+    this.settings = { namespace, sourceAttribute, caption, openTrigger, closeTrigger, closeWithEscape, closeOnScroll, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles, _gallery, _arrowNavigation };
 
     if (this.settings.injectBaseStyles) {
       injectBaseStylesheet();
@@ -114,7 +114,7 @@ module.exports = class Luminous {
       parentEl: document.querySelector(this.settings.appendToSelector),
       triggerEl: this.trigger,
       sourceAttribute: this.settings.sourceAttribute,
-      captionAttribute: this.settings.captionAttribute,
+      caption: this.settings.caption,
       includeImgixJSClass: this.settings.includeImgixJSClass,
       _gallery: this.settings._gallery,
       _arrowNavigation: this.settings._arrowNavigation,
