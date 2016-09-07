@@ -32,7 +32,7 @@ describe('Lightbox', () => {
     expect(() => {
       let triggerEl = document.querySelector('.test-anchor');
 
-      new Lightbox({namespace: 'test', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href', captionAttribute: null});
+      new Lightbox({namespace: 'test', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href', caption: null});
     }).not.toThrowError();
   });
 
@@ -40,14 +40,14 @@ describe('Lightbox', () => {
     expect(() => {
       let triggerEl = document.querySelector('.test-anchor');
 
-      new Lightbox({namespace: 'test', parentEl: '.not-an-element', triggerEl: triggerEl, sourceAttribute: 'href', captionAttribute: null});
+      new Lightbox({namespace: 'test', parentEl: '.not-an-element', triggerEl: triggerEl, sourceAttribute: 'href', caption: null});
     }).toThrowError(TypeError, '`new Lightbox` requires a DOM element passed as `parentEl`.');
   });
 
   it('assigns the correct class to its element', () => {
     let triggerEl = document.querySelector('.test-anchor');
 
-    let lightbox = new Lightbox({namespace: 'test-namespace', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href', captionAttribute: null});
+    let lightbox = new Lightbox({namespace: 'test-namespace', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href', caption: null});
     lightbox.open();
     lightbox.close();
 
@@ -61,7 +61,7 @@ describe('Lightbox', () => {
 
     let triggerEl = document.querySelector('.test-anchor');
 
-    let lightbox = new Lightbox({namespace: 'lum', parentEl: demoDiv, triggerEl: triggerEl, sourceAttribute: 'href', captionAttribute: null});
+    let lightbox = new Lightbox({namespace: 'lum', parentEl: demoDiv, triggerEl: triggerEl, sourceAttribute: 'href', caption: null});
     lightbox.open();
     lightbox.close();
 
@@ -71,7 +71,7 @@ describe('Lightbox', () => {
   it('cleans up its element when destroyed', () => {
     let triggerEl = document.querySelector('.test-anchor');
 
-    let lightbox = new Lightbox({namespace: 'to-destroy', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href', captionAttribute: null});
+    let lightbox = new Lightbox({namespace: 'to-destroy', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href', caption: null});
     lightbox.open();
     lightbox.close();
     lightbox.destroy();
@@ -82,7 +82,7 @@ describe('Lightbox', () => {
   it('adds the `imgix-fluid` param if configured', () => {
     let triggerEl = document.querySelector('.test-anchor');
 
-    let lightbox = new Lightbox({namespace: 'fluid', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href', captionAttribute: null, includeImgixJSClass: true});
+    let lightbox = new Lightbox({namespace: 'fluid', parentEl: document.body, triggerEl: triggerEl, sourceAttribute: 'href', caption: null, includeImgixJSClass: true});
     lightbox.open();
     lightbox.close();
 

@@ -17,13 +17,13 @@ export default class Lightbox {
       parentEl = throwIfMissing(),
       triggerEl = throwIfMissing(),
       sourceAttribute = throwIfMissing(),
-      captionAttribute = throwIfMissing(),
+      caption = null,
       includeImgixJSClass = false,
       _gallery = null,
       _arrowNavigation = null,
     } = options;
 
-    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, captionAttribute, includeImgixJSClass, _gallery, _arrowNavigation };
+    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, caption, includeImgixJSClass, _gallery, _arrowNavigation };
 
     if (!isDOMElement(this.settings.parentEl)) {
       throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
@@ -121,10 +121,17 @@ export default class Lightbox {
   };
 
   _updateCaption() {
-    let captionAttr = this.settings.captionAttribute;
-    let caption = this.currentTrigger.getAttribute(captionAttr);
-    if (captionAttr && caption) {
-      this.captionEl.innerText = caption;
+    let captionType = typeof this.settings.caption;
+    let caption = null;
+
+    if (captionType === 'string') {
+      caption = this.settings.caption;
+    } else if (captionType === 'function') {
+      caption = this.settings.caption(this.currentTrigger)
+    }
+
+    if (caption) {
+      this.captionEl.innerHTML = caption;
     }
   }
 
