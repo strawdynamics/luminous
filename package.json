@@ -2,7 +2,7 @@
   "name": "luminous-lightbox",
   "version": "1.0.0",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
-  "main": "dist/Luminous.js",
+  "main": "src/js/lum-require.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -46,5 +46,8 @@
     "run-sequence": "^1.1.5",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "browserify": {
+    "transform": ["babelify"]
   }
 }
