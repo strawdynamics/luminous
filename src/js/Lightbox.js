@@ -122,7 +122,7 @@ export default class Lightbox {
 
   _updateCaption() {
     let captionType = typeof this.settings.caption;
-    let caption = null;
+    let caption = '';
 
     if (captionType === 'string') {
       caption = this.settings.caption;
@@ -130,9 +130,7 @@ export default class Lightbox {
       caption = this.settings.caption(this.currentTrigger)
     }
 
-    if (caption) {
-      this.captionEl.innerHTML = caption;
-    }
+    this.captionEl.innerHTML = caption;
   }
 
   _updateImgSrc() {
