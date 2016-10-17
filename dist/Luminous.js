@@ -202,7 +202,7 @@ var Lightbox = function () {
     key: '_updateCaption',
     value: function _updateCaption() {
       var captionType = _typeof(this.settings.caption);
-      var caption = null;
+      var caption = '';
 
       if (captionType === 'string') {
         caption = this.settings.caption;
@@ -210,9 +210,7 @@ var Lightbox = function () {
         caption = this.settings.caption(this.currentTrigger);
       }
 
-      if (caption) {
-        this.captionEl.innerHTML = caption;
-      }
+      this.captionEl.innerHTML = caption;
     }
   }, {
     key: '_updateImgSrc',
