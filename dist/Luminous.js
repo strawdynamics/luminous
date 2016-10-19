@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", {
 var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
   return typeof obj === "undefined" ? "undefined" : _typeof2(obj);
 } : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
 };
 
 var _createClass = function () {
@@ -50,7 +50,7 @@ var Lightbox = function () {
   function Lightbox() {
     var _this = this;
 
-    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
     _classCallCheck(this, Lightbox);
 
@@ -348,7 +348,7 @@ function _classCallCheck(instance, Constructor) {
 
 module.exports = (_temp = _class = function () {
   function Luminous(trigger) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     _classCallCheck(this, Luminous);
 
@@ -366,65 +366,32 @@ module.exports = (_temp = _class = function () {
     // Based on the pattern here:
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
     var _options$namespace = options.namespace;
-    var
-    // Prefix for generated element class names (e.g. `my-ns` will
-    // result in classes such as `my-ns-lightbox`. Default `lum-`
-    // prefixed classes will always be added as well.
-    namespace = _options$namespace === undefined ? null : _options$namespace;
+    var namespace = _options$namespace === undefined ? null : _options$namespace;
     var _options$sourceAttrib = options.sourceAttribute;
-    var
-    // Which attribute to pull the lightbox image source from.
-    sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib;
+    var sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib;
     var _options$caption = options.caption;
-    var
-    // Captions can be a literal string, or a function that receives the Luminous instance's trigger element as an argument and returns a string. Supports HTML, so use caution when dealing with user input.
-    caption = _options$caption === undefined ? null : _options$caption;
+    var caption = _options$caption === undefined ? null : _options$caption;
     var _options$openTrigger = options.openTrigger;
-    var
-    // The event to listen to on the _trigger_ element: triggers opening.
-    openTrigger = _options$openTrigger === undefined ? 'click' : _options$openTrigger;
+    var openTrigger = _options$openTrigger === undefined ? 'click' : _options$openTrigger;
     var _options$closeTrigger = options.closeTrigger;
-    var
-    // The event to listen to on the _lightbox_ element: triggers closing.
-    closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
+    var closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
     var _options$closeWithEsc = options.closeWithEscape;
-    var
-    // Allow closing by pressing escape.
-    closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
+    var closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
     var _options$closeOnScrol = options.closeOnScroll;
-    var
-    // Automatically close when the page is scrolled.
-    closeOnScroll = _options$closeOnScrol === undefined ? false : _options$closeOnScrol;
+    var closeOnScroll = _options$closeOnScrol === undefined ? false : _options$closeOnScrol;
     var _options$appendToSele = options.appendToSelector;
-    var
-    // A selector defining what to append the lightbox element to.
-    appendToSelector = _options$appendToSele === undefined ? 'body' : _options$appendToSele;
+    var appendToSelector = _options$appendToSele === undefined ? 'body' : _options$appendToSele;
     var _options$onOpen = options.onOpen;
-    var
-    // If present (and a function), this will be called
-    // whenever the lightbox is opened.
-    onOpen = _options$onOpen === undefined ? null : _options$onOpen;
+    var onOpen = _options$onOpen === undefined ? null : _options$onOpen;
     var _options$onClose = options.onClose;
-    var
-    // If present (and a function), this will be called
-    // whenever the lightbox is closed.
-    onClose = _options$onClose === undefined ? null : _options$onClose;
+    var onClose = _options$onClose === undefined ? null : _options$onClose;
     var _options$includeImgix = options.includeImgixJSClass;
-    var
-    // When true, adds the `imgix-fluid` class to the `img`
-    // inside the lightbox. See https://github.com/imgix/imgix.js
-    // for more information.
-    includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
+    var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
     var _options$injectBaseSt = options.injectBaseStyles;
-    var
-    // Add base styles to the page. See the "Theming"
-    // section of README.md for more information.
-    injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt;
+    var injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt;
     var _options$_gallery = options._gallery;
 
-    var
-    // Internal use only!
-    _gallery = _options$_gallery === undefined ? null : _options$_gallery;
+    var _gallery = _options$_gallery === undefined ? null : _options$_gallery;
 
     var _options$_arrowNaviga = options._arrowNavigation;
 
@@ -486,7 +453,7 @@ module.exports = (_temp = _class = function () {
 }(), _initialiseProps = function _initialiseProps() {
   var _this = this;
 
-  this.VERSION = '1.0.0';
+  this.VERSION = '1.0.1';
 
   this.open = function (e) {
     if (e && typeof e.preventDefault === 'function') {
@@ -579,8 +546,8 @@ function _classCallCheck(instance, Constructor) {
 
 var LuminousGallery = function () {
   function LuminousGallery(triggers) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-    var luminousOpts = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var luminousOpts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     _classCallCheck(this, LuminousGallery);
 
@@ -681,7 +648,7 @@ global.LuminousGallery = _LuminousGallery2.default;
 },{"./Luminous":2,"./LuminousGallery":3}],6:[function(require,module,exports){
 'use strict';
 
-var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -690,7 +657,7 @@ Object.defineProperty(exports, "__esModule", {
 var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
   return typeof obj === "undefined" ? "undefined" : _typeof2(obj);
 } : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
 };
 
 exports.isDOMElement = isDOMElement;
