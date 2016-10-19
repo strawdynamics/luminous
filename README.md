@@ -22,7 +22,23 @@ A simple, lightweight, no-dependencies JavaScript image lightbox.
 * **Bower**: `bower install luminous`
 * **Manual**: [Download](https://github.com/imgix/luminous/archive/master.zip) and use `dist/luminous.min.js` or `dist/luminous.js`
 
-If your build process will re-run `dist/Luminous.js` or `dist/Luminous.min.js` through Browserify, you'll need to add `noParse: ['luminous-lightbox']` to your Browserify config. If you skip this, Browserify will attempt to re-require Luminous' dependencies which have already been inlined.
+If you're using the pre-built version of Luminous, it will automatically make `window.Luminous` and `window.LuminousGallery` available for your use when included on your page.
+
+If you prefer to use `require` statements and a build tool like Browserify, there are a couple other things to keep in mind. First, `require('luminous-lightbox')` gives you an object with `Luminous` and `LuminousGallery` keys. You can use it like this:
+
+``` javascript
+var Luminous = require('luminous-lightbox').Luminous;
+
+new Luminous(…);
+```
+
+If your project uses ES6, you can do the following instead:
+
+``` javascript
+import { Luminous } from 'luminous-lightbox';
+
+new Luminous(…);
+```
 
 
 <a name="usage"></a>
