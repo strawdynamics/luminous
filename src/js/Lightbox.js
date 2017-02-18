@@ -1,53 +1,3 @@
-import { isDOMElement, addClasses, removeClasses } from './util/dom';
-import throwIfMissing from './util/throwIfMissing';
-
-const LEFT_ARROW = 37;
-const RIGHT_ARROW = 39;
-
-// All officially-supported browsers have this, but it's easy to
-// account for, just in case.
-const HAS_ANIMATION = typeof document === 'undefined' ?
-  false :
-  'animation' in document.createElement('div').style;
-
-export default class Lightbox {
-  constructor(options = {}) {
-    let {
-      namespace = null,
-      parentEl = throwIfMissing(),
-      triggerEl = throwIfMissing(),
-      sourceAttribute = throwIfMissing(),
-      caption = null,
-      includeImgixJSClass = false,
-      _gallery = null,
-      _arrowNavigation = null,
-    } = options;
-
-    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, caption, includeImgixJSClass, _gallery, _arrowNavigation };
-
-    if (!isDOMElement(this.settings.parentEl)) {
-      throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
-    }
-
-    this.currentTrigger = this.settings.triggerEl;
-
-    this.openClasses = this._buildClasses('open');
-    this.openingClasses = this._buildClasses('opening');
-    this.closingClasses = this._buildClasses('closing');
-
-    this.elementBuilt = false;
-  }
-
-  _buildClasses(suffix) {
-    let classes = [`lum-${suffix}`];
-
-    let ns = this.settings.namespace;
-    if (ns) {
-      classes.push(`${ns}-${suffix}`);
-    }
-
-    return classes;
-  }
 
   _buildElement() {
     this.el = document.createElement('div');
@@ -141,9 +91,14 @@ export default class Lightbox {
     }
 
     let loadingClasses = this._buildClasses('loading');
-    addClasses(this.el, loadingClasses);
+    
+    if(!this.hasBeenLoaded){
+      addClasses(this.el, loadingClasses);
+    }
+    
     this.imgEl.onload = () => {
       removeClasses(this.el, loadingClasses);
+      this.hasBeenLoaded = true;
     }
 
     this.imgEl.setAttribute('src', imageURL);
