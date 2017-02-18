@@ -35,6 +35,7 @@ export default class Lightbox {
     this.openingClasses = this._buildClasses('opening');
     this.closingClasses = this._buildClasses('closing');
 
+    this.hasBeenLoaded = false;
     this.elementBuilt = false;
   }
 
@@ -141,9 +142,14 @@ export default class Lightbox {
     }
 
     let loadingClasses = this._buildClasses('loading');
-    addClasses(this.el, loadingClasses);
+    
+    if(!this.hasBeenLoaded){
+      addClasses(this.el, loadingClasses);
+    }
+    
     this.imgEl.onload = () => {
       removeClasses(this.el, loadingClasses);
+      this.hasBeenLoaded = true;
     }
 
     this.imgEl.setAttribute('src', imageURL);
