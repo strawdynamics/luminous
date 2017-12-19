@@ -45,7 +45,7 @@ export default class LuminousGallery {
 
   boundMethod = () => {
 
-  };
+  }
 
   destroy() {
 
