@@ -19,16 +19,16 @@ export default class LuminousGallery {
   _constructLuminousInstances() {
     this.luminousInstances = [];
 
-    let triggerLen = this.triggers.length;
+    const triggerLen = this.triggers.length;
     for (let i = 0; i < triggerLen; i++) {
-      let trigger = this.triggers[i];
-      let lum = new Luminous(trigger, this.luminousOpts);
+      const trigger = this.triggers[i];
+      const lum = new Luminous(trigger, this.luminousOpts);
       this.luminousInstances.push(lum);
     }
   }
 
   nextTrigger(trigger) {
-    let nextTriggerIndex = Array.prototype.indexOf.call(this.triggers, trigger) + 1;
+    const nextTriggerIndex = Array.prototype.indexOf.call(this.triggers, trigger) + 1;
 
     return nextTriggerIndex >= this.triggers.length ?
       this.triggers[0] :
@@ -36,7 +36,7 @@ export default class LuminousGallery {
   }
 
   previousTrigger(trigger) {
-    let prevTriggerIndex = Array.prototype.indexOf.call(this.triggers, trigger) - 1;
+    const prevTriggerIndex = Array.prototype.indexOf.call(this.triggers, trigger) - 1;
 
     return prevTriggerIndex < 0 ?
       this.triggers[this.triggers.length - 1] :
