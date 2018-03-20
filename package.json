@@ -2,7 +2,7 @@
   "name": "luminous-lightbox",
   "version": "1.0.1",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
-  "main": "src/js/lum-require.js",
+  "main": "dist/luminous.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
