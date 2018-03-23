@@ -1,5 +1,6 @@
 {
   "name": "luminous",
+  "version": "2.0.0",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
   "main": [
     "dist/Luminous.js",

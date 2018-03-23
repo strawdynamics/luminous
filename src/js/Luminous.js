@@ -3,7 +3,7 @@ import injectBaseStylesheet from './injectBaseStylesheet';
 import Lightbox from './Lightbox';
 
 module.exports = class Luminous {
-  VERSION = '1.0.1'
+  VERSION = '2.0.0'
 
   constructor(trigger, options = {}) {
     this.isOpen = false;

@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
 'use strict';
 
 var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -105,25 +105,22 @@ var Lightbox = function () {
       (0, _dom.removeClasses)(_this.el, _this.closingClasses);
     };
 
-    var _options$namespace = options.namespace;
-    var namespace = _options$namespace === undefined ? null : _options$namespace;
-    var _options$parentEl = options.parentEl;
-    var parentEl = _options$parentEl === undefined ? (0, _throwIfMissing2.default)() : _options$parentEl;
-    var _options$triggerEl = options.triggerEl;
-    var triggerEl = _options$triggerEl === undefined ? (0, _throwIfMissing2.default)() : _options$triggerEl;
-    var _options$sourceAttrib = options.sourceAttribute;
-    var sourceAttribute = _options$sourceAttrib === undefined ? (0, _throwIfMissing2.default)() : _options$sourceAttrib;
-    var _options$caption = options.caption;
-    var caption = _options$caption === undefined ? null : _options$caption;
-    var _options$includeImgix = options.includeImgixJSClass;
-    var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
-    var _options$_gallery = options._gallery;
-
-    var _gallery = _options$_gallery === undefined ? null : _options$_gallery;
-
-    var _options$_arrowNaviga = options._arrowNavigation;
-
-    var _arrowNavigation = _options$_arrowNaviga === undefined ? null : _options$_arrowNaviga;
+    var _options$namespace = options.namespace,
+        namespace = _options$namespace === undefined ? null : _options$namespace,
+        _options$parentEl = options.parentEl,
+        parentEl = _options$parentEl === undefined ? (0, _throwIfMissing2.default)() : _options$parentEl,
+        _options$triggerEl = options.triggerEl,
+        triggerEl = _options$triggerEl === undefined ? (0, _throwIfMissing2.default)() : _options$triggerEl,
+        _options$sourceAttrib = options.sourceAttribute,
+        sourceAttribute = _options$sourceAttrib === undefined ? (0, _throwIfMissing2.default)() : _options$sourceAttrib,
+        _options$caption = options.caption,
+        caption = _options$caption === undefined ? null : _options$caption,
+        _options$includeImgix = options.includeImgixJSClass,
+        includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix,
+        _options$_gallery = options._gallery,
+        _gallery = _options$_gallery === undefined ? null : _options$_gallery,
+        _options$_arrowNaviga = options._arrowNavigation,
+        _arrowNavigation = _options$_arrowNaviga === undefined ? null : _options$_arrowNaviga;
 
     this.settings = { namespace: namespace, parentEl: parentEl, triggerEl: triggerEl, sourceAttribute: sourceAttribute, caption: caption, includeImgixJSClass: includeImgixJSClass, _gallery: _gallery, _arrowNavigation: _arrowNavigation };
 
@@ -137,6 +134,7 @@ var Lightbox = function () {
     this.openingClasses = this._buildClasses('opening');
     this.closingClasses = this._buildClasses('closing');
 
+    this.hasBeenLoaded = false;
     this.elementBuilt = false;
   }
 
@@ -244,9 +242,14 @@ var Lightbox = function () {
       }
 
       var loadingClasses = this._buildClasses('loading');
-      (0, _dom.addClasses)(this.el, loadingClasses);
+
+      if (!this.hasBeenLoaded) {
+        (0, _dom.addClasses)(this.el, loadingClasses);
+      }
+
       this.imgEl.onload = function () {
         (0, _dom.removeClasses)(_this2.el, loadingClasses);
+        _this2.hasBeenLoaded = true;
       };
 
       this.imgEl.setAttribute('src', imageURL);
@@ -365,37 +368,35 @@ module.exports = (_temp = _class = function () {
     // A bit unexpected if you haven't seen this pattern before.
     // Based on the pattern here:
     // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/ch2.md#nested-defaults-destructured-and-restructured
-    var _options$namespace = options.namespace;
-    var namespace = _options$namespace === undefined ? null : _options$namespace;
-    var _options$sourceAttrib = options.sourceAttribute;
-    var sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib;
-    var _options$caption = options.caption;
-    var caption = _options$caption === undefined ? null : _options$caption;
-    var _options$openTrigger = options.openTrigger;
-    var openTrigger = _options$openTrigger === undefined ? 'click' : _options$openTrigger;
-    var _options$closeTrigger = options.closeTrigger;
-    var closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger;
-    var _options$closeWithEsc = options.closeWithEscape;
-    var closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc;
-    var _options$closeOnScrol = options.closeOnScroll;
-    var closeOnScroll = _options$closeOnScrol === undefined ? false : _options$closeOnScrol;
-    var _options$appendToSele = options.appendToSelector;
-    var appendToSelector = _options$appendToSele === undefined ? 'body' : _options$appendToSele;
-    var _options$onOpen = options.onOpen;
-    var onOpen = _options$onOpen === undefined ? null : _options$onOpen;
-    var _options$onClose = options.onClose;
-    var onClose = _options$onClose === undefined ? null : _options$onClose;
-    var _options$includeImgix = options.includeImgixJSClass;
-    var includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix;
-    var _options$injectBaseSt = options.injectBaseStyles;
-    var injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt;
-    var _options$_gallery = options._gallery;
 
-    var _gallery = _options$_gallery === undefined ? null : _options$_gallery;
-
-    var _options$_arrowNaviga = options._arrowNavigation;
-
-    var _arrowNavigation = _options$_arrowNaviga === undefined ? null : _options$_arrowNaviga;
+    var _options$namespace = options.namespace,
+        namespace = _options$namespace === undefined ? null : _options$namespace,
+        _options$sourceAttrib = options.sourceAttribute,
+        sourceAttribute = _options$sourceAttrib === undefined ? 'href' : _options$sourceAttrib,
+        _options$caption = options.caption,
+        caption = _options$caption === undefined ? null : _options$caption,
+        _options$openTrigger = options.openTrigger,
+        openTrigger = _options$openTrigger === undefined ? 'click' : _options$openTrigger,
+        _options$closeTrigger = options.closeTrigger,
+        closeTrigger = _options$closeTrigger === undefined ? 'click' : _options$closeTrigger,
+        _options$closeWithEsc = options.closeWithEscape,
+        closeWithEscape = _options$closeWithEsc === undefined ? true : _options$closeWithEsc,
+        _options$closeOnScrol = options.closeOnScroll,
+        closeOnScroll = _options$closeOnScrol === undefined ? false : _options$closeOnScrol,
+        _options$appendToSele = options.appendToSelector,
+        appendToSelector = _options$appendToSele === undefined ? 'body' : _options$appendToSele,
+        _options$onOpen = options.onOpen,
+        onOpen = _options$onOpen === undefined ? null : _options$onOpen,
+        _options$onClose = options.onClose,
+        onClose = _options$onClose === undefined ? null : _options$onClose,
+        _options$includeImgix = options.includeImgixJSClass,
+        includeImgixJSClass = _options$includeImgix === undefined ? false : _options$includeImgix,
+        _options$injectBaseSt = options.injectBaseStyles,
+        injectBaseStyles = _options$injectBaseSt === undefined ? true : _options$injectBaseSt,
+        _options$_gallery = options._gallery,
+        _gallery = _options$_gallery === undefined ? null : _options$_gallery,
+        _options$_arrowNaviga = options._arrowNavigation,
+        _arrowNavigation = _options$_arrowNaviga === undefined ? null : _options$_arrowNaviga;
 
     this.settings = { namespace: namespace, sourceAttribute: sourceAttribute, caption: caption, openTrigger: openTrigger, closeTrigger: closeTrigger, closeWithEscape: closeWithEscape, closeOnScroll: closeOnScroll, appendToSelector: appendToSelector, onOpen: onOpen, onClose: onClose, includeImgixJSClass: includeImgixJSClass, injectBaseStyles: injectBaseStyles, _gallery: _gallery, _arrowNavigation: _arrowNavigation };
 
@@ -453,7 +454,7 @@ module.exports = (_temp = _class = function () {
 }(), _initialiseProps = function _initialiseProps() {
   var _this = this;
 
-  this.VERSION = '1.0.1';
+  this.VERSION = '2.0.0';
 
   this.open = function (e) {
     if (e && typeof e.preventDefault === 'function') {
@@ -553,8 +554,8 @@ var LuminousGallery = function () {
 
     this.boundMethod = function () {};
 
-    var _options$arrowNavigat = options.arrowNavigation;
-    var arrowNavigation = _options$arrowNavigat === undefined ? true : _options$arrowNavigat;
+    var _options$arrowNavigat = options.arrowNavigation,
+        arrowNavigation = _options$arrowNavigat === undefined ? true : _options$arrowNavigat;
 
     this.settings = { arrowNavigation: arrowNavigation };
 
