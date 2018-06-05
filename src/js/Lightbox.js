@@ -40,9 +40,9 @@ export default class Lightbox {
   }
 
   _buildClasses(suffix) {
-    let classes = [`lum-${suffix}`];
+    const classes = [`lum-${suffix}`];
 
-    let ns = this.settings.namespace;
+    const ns = this.settings.namespace;
     if (ns) {
       classes.push(`${ns}-${suffix}`);
     }
@@ -58,7 +58,7 @@ export default class Lightbox {
     addClasses(this.innerEl, this._buildClasses('lightbox-inner'));
     this.el.appendChild(this.innerEl);
 
-    let loaderEl = document.createElement('div');
+    const loaderEl = document.createElement('div');
     addClasses(loaderEl, this._buildClasses('lightbox-loader'));
     this.innerEl.appendChild(loaderEl);
 
@@ -66,7 +66,7 @@ export default class Lightbox {
     addClasses(this.imgWrapperEl, this._buildClasses('lightbox-image-wrapper'));
     this.innerEl.appendChild(this.imgWrapperEl);
 
-    let positionHelperEl = document.createElement('span');
+    const positionHelperEl = document.createElement('span');
     addClasses(positionHelperEl, this._buildClasses('lightbox-position-helper'));
     this.imgWrapperEl.appendChild(positionHelperEl);
 
@@ -98,7 +98,7 @@ export default class Lightbox {
   }
 
   _buildGalleryButton(name, fn) {
-    let btn = document.createElement('button');
+    const btn = document.createElement('button');
     this[`${name}Button`] = btn;
 
     btn.innerText = name;
@@ -114,7 +114,7 @@ export default class Lightbox {
   }
 
   _sizeImgWrapperEl = () => {
-    let style = this.imgWrapperEl.style;
+    const style = this.imgWrapperEl.style;
     style.width = `${this.innerEl.clientWidth}px`
     style.maxWidth = `${this.innerEl.clientWidth}px`
     style.height = `${this.innerEl.clientHeight - this.captionEl.clientHeight}px`
@@ -122,7 +122,7 @@ export default class Lightbox {
   };
 
   _updateCaption() {
-    let captionType = typeof this.settings.caption;
+    const captionType = typeof this.settings.caption;
     let caption = '';
 
     if (captionType === 'string') {
@@ -135,7 +135,7 @@ export default class Lightbox {
   }
 
   _updateImgSrc() {
-    let imageURL = this.currentTrigger.getAttribute(this.settings.sourceAttribute);
+    const imageURL = this.currentTrigger.getAttribute(this.settings.sourceAttribute);
 
     if (!imageURL) {
       throw new Error(`No image URL was found in the ${this.settings.sourceAttribute} attribute of the trigger.`);

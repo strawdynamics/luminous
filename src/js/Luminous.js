@@ -81,7 +81,7 @@ module.exports = class Luminous {
       window.addEventListener('scroll', this.close, false);
     }
 
-    let onOpen = this.settings.onOpen
+    const onOpen = this.settings.onOpen
     if (onOpen && typeof onOpen === 'function') {
       onOpen();
     }
@@ -100,7 +100,7 @@ module.exports = class Luminous {
 
     this.lightbox.close();
 
-    let onClose = this.settings.onClose
+    const onClose = this.settings.onClose
     if (onClose && typeof onClose === 'function') {
       onClose();
     }
