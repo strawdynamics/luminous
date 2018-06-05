@@ -31,6 +31,7 @@
     "babel-core": "^6.3.21",
     "browserify": "^12.0.1",
     "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^6.1.1",
     "gulp-concat": "^2.6.0",
     "gulp-cssnano": "^2.0.0",
