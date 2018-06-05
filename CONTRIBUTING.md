@@ -161,6 +161,7 @@ npm install
 Once you're configured, building the JavaScript from the command line is easy:
 
 ```
+npm start       # build Luminous from source
 gulp            # build Luminous from source
 gulp watch      # watch for changes and build automatically, testing with PhantomJS
 gulp test-local # run the test against local browsers only (Chrome, Safari, Firefox)
