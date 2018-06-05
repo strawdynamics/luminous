@@ -2,9 +2,10 @@
   "name": "luminous-lightbox",
   "version": "2.0.0",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
-  "main": "dist/luminous.min.js",
+  "main": "dist/Luminous.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp build-ci",
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
@@ -50,6 +51,8 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "browserify": {
-    "transform": ["babelify"]
+    "transform": [
+      "babelify"
+    ]
   }
 }
