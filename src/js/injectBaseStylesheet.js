@@ -44,16 +44,16 @@ const RULES = `
   display: table-cell;
   text-align: center;
 }
-`
+`;
 
 export default function injectBaseStylesheet() {
-  if (document.querySelector('.lum-base-styles')) {
+  if (document.querySelector(".lum-base-styles")) {
     return;
   }
 
-  const styleEl = document.createElement('style');
-  styleEl.type = 'text/css';
-  styleEl.classList.add('lum-base-styles');
+  const styleEl = document.createElement("style");
+  styleEl.type = "text/css";
+  styleEl.classList.add("lum-base-styles");
 
   styleEl.appendChild(document.createTextNode(RULES));
 
