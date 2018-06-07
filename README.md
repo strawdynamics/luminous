@@ -20,7 +20,7 @@ A simple, lightweight, no-dependencies JavaScript image lightbox.
 
 * **NPM**: `npm install luminous-lightbox`
 * **Bower**: `bower install luminous`
-* **Manual**: [Download](https://github.com/imgix/luminous/archive/master.zip) and use `dist/luminous.min.js` or `dist/luminous.js`
+* **Manual**: [Download](https://github.com/imgix/luminous/archive/master.zip) and use `dist/Luminous.min.js` or `dist/Luminous.js`
 
 If you're using the pre-built version of Luminous, it will automatically make `window.Luminous` and `window.LuminousGallery` available for your use when included on your page.
 
