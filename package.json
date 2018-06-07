@@ -2,7 +2,7 @@
   "name": "luminous-lightbox",
   "version": "2.0.0",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
-  "main": "dist/Luminous.min.js",
+  "main": "lib/lum-cjs.js",
   "scripts": {
     "test": "gulp build-ci",
     "start": "gulp"
