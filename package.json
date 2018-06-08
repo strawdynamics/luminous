@@ -2,7 +2,7 @@
   "name": "luminous-lightbox",
   "version": "2.0.0",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
-  "main": "dist/Luminous.min.js",
+  "main": "lib/lum-commonjs.js",
   "scripts": {
     "format": "prettier --write \"{src,test}/**/*.js\"",
     "format:check": "prettier --list-different \"{src,test}/**/*.js\"",
@@ -34,7 +34,7 @@
     "browserify": "^12.0.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^5.0.0",
-    "gulp-babel": "^6.1.1",
+    "gulp-babel": "^6.1.3",
     "gulp-concat": "^2.6.0",
     "gulp-cssnano": "^2.0.0",
     "gulp-rename": "^1.2.2",
