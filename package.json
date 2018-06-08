@@ -4,6 +4,8 @@
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
   "main": "dist/Luminous.min.js",
   "scripts": {
+    "format": "prettier --write \"{src,test}/**/*.js\"",
+    "format:check": "prettier --list-different \"{src,test}/**/*.js\"",
     "test": "gulp build-ci",
     "start": "gulp"
   },
@@ -47,6 +49,7 @@
     "karma-phantomjs-launcher": "^1.0.2",
     "karma-sauce-launcher": "^0.3.0",
     "phantomjs": "^1.9.19",
+    "prettier": "^1.13.4",
     "run-sequence": "^1.1.5",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
