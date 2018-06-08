@@ -1,9 +1,9 @@
-import { isDOMElement } from './util/dom';
-import injectBaseStylesheet from './injectBaseStylesheet';
-import Lightbox from './Lightbox';
+import { isDOMElement } from "./util/dom";
+import injectBaseStylesheet from "./injectBaseStylesheet";
+import Lightbox from "./Lightbox";
 
 module.exports = class Luminous {
-  VERSION = '2.0.0'
+  VERSION = "2.0.0";
 
   constructor(trigger, options = {}) {
     this.isOpen = false;
@@ -11,7 +11,9 @@ module.exports = class Luminous {
     this.trigger = trigger;
 
     if (!isDOMElement(this.trigger)) {
-      throw new TypeError('`new Luminous` requires a DOM element as its first argument.');
+      throw new TypeError(
+        "`new Luminous` requires a DOM element as its first argument."
+      );
     }
 
     // A bit unexpected if you haven't seen this pattern before.
@@ -23,19 +25,19 @@ module.exports = class Luminous {
       // prefixed classes will always be added as well.
       namespace = null,
       // Which attribute to pull the lightbox image source from.
-      sourceAttribute = 'href',
+      sourceAttribute = "href",
       // Captions can be a literal string, or a function that receives the Luminous instance's trigger element as an argument and returns a string. Supports HTML, so use caution when dealing with user input.
       caption = null,
       // The event to listen to on the _trigger_ element: triggers opening.
-      openTrigger = 'click',
+      openTrigger = "click",
       // The event to listen to on the _lightbox_ element: triggers closing.
-      closeTrigger = 'click',
+      closeTrigger = "click",
       // Allow closing by pressing escape.
       closeWithEscape = true,
       // Automatically close when the page is scrolled.
       closeOnScroll = false,
       // A selector defining what to append the lightbox element to.
-      appendToSelector = 'body',
+      appendToSelector = "body",
       // If present (and a function), this will be called
       // whenever the lightbox is opened.
       onOpen = null,
@@ -51,10 +53,25 @@ module.exports = class Luminous {
       injectBaseStyles = true,
       // Internal use only!
       _gallery = null,
-      _arrowNavigation = null,
-    } = options
+      _arrowNavigation = null
+    } = options;
 
-    this.settings = { namespace, sourceAttribute, caption, openTrigger, closeTrigger, closeWithEscape, closeOnScroll, appendToSelector, onOpen, onClose, includeImgixJSClass, injectBaseStyles, _gallery, _arrowNavigation };
+    this.settings = {
+      namespace,
+      sourceAttribute,
+      caption,
+      openTrigger,
+      closeTrigger,
+      closeWithEscape,
+      closeOnScroll,
+      appendToSelector,
+      onOpen,
+      onClose,
+      includeImgixJSClass,
+      injectBaseStyles,
+      _gallery,
+      _arrowNavigation
+    };
 
     if (this.settings.injectBaseStyles) {
       injectBaseStylesheet();
@@ -64,8 +81,8 @@ module.exports = class Luminous {
     this._bindEvents();
   }
 
-  open = (e) => {
-    if (e && typeof e.preventDefault === 'function') {
+  open = e => {
+    if (e && typeof e.preventDefault === "function") {
       e.preventDefault();
     }
 
@@ -78,30 +95,30 @@ module.exports = class Luminous {
     }
 
     if (this.settings.closeOnScroll) {
-      window.addEventListener('scroll', this.close, false);
+      window.addEventListener("scroll", this.close, false);
     }
 
-    const onOpen = this.settings.onOpen
-    if (onOpen && typeof onOpen === 'function') {
+    const onOpen = this.settings.onOpen;
+    if (onOpen && typeof onOpen === "function") {
       onOpen();
     }
 
     this.isOpen = true;
   };
 
-  close = (e) => {
-    if (e && typeof e.preventDefault === 'function') {
+  close = e => {
+    if (e && typeof e.preventDefault === "function") {
       e.preventDefault();
     }
 
     if (this.settings.closeOnScroll) {
-      window.removeEventListener('scroll', this.close, false);
+      window.removeEventListener("scroll", this.close, false);
     }
 
     this.lightbox.close();
 
-    const onClose = this.settings.onClose
-    if (onClose && typeof onClose === 'function') {
+    const onClose = this.settings.onClose;
+    if (onClose && typeof onClose === "function") {
       onClose();
     }
 
@@ -117,7 +134,7 @@ module.exports = class Luminous {
       caption: this.settings.caption,
       includeImgixJSClass: this.settings.includeImgixJSClass,
       _gallery: this.settings._gallery,
-      _arrowNavigation: this.settings._arrowNavigation,
+      _arrowNavigation: this.settings._arrowNavigation
     });
   }
 
@@ -125,26 +142,38 @@ module.exports = class Luminous {
     this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
 
     if (this.settings.closeWithEscape) {
-      window.addEventListener('keyup', this._handleKeyup, false);
+      window.addEventListener("keyup", this._handleKeyup, false);
     }
   }
 
   _bindCloseEvent() {
-    this.lightbox.el.addEventListener(this.settings.closeTrigger, this.close, false);
+    this.lightbox.el.addEventListener(
+      this.settings.closeTrigger,
+      this.close,
+      false
+    );
   }
 
   _unbindEvents() {
-    this.trigger.removeEventListener(this.settings.openTrigger, this.open, false);
+    this.trigger.removeEventListener(
+      this.settings.openTrigger,
+      this.open,
+      false
+    );
     if (this.lightbox.el) {
-      this.lightbox.el.removeEventListener(this.settings.closeTrigger, this.close, false);
+      this.lightbox.el.removeEventListener(
+        this.settings.closeTrigger,
+        this.close,
+        false
+      );
     }
 
     if (this.settings.closeWithEscape) {
-      window.removeEventListener('keyup', this._handleKeyup, false);
+      window.removeEventListener("keyup", this._handleKeyup, false);
     }
   }
 
-  _handleKeyup = (e) => {
+  _handleKeyup = e => {
     if (this.isOpen && e.keyCode === 27) {
       this.close();
     }
@@ -154,4 +183,4 @@ module.exports = class Luminous {
     this._unbindEvents();
     this.lightbox.destroy();
   };
-}
+};

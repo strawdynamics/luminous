@@ -1,11 +1,9 @@
-import { isDOMElement, addClasses, removeClasses } from './util/dom';
-import Luminous from './Luminous';
+import { isDOMElement, addClasses, removeClasses } from "./util/dom";
+import Luminous from "./Luminous";
 
 export default class LuminousGallery {
   constructor(triggers, options = {}, luminousOpts = {}) {
-    let {
-      arrowNavigation = true,
-    } = options;
+    let { arrowNavigation = true } = options;
 
     this.settings = { arrowNavigation };
 
@@ -28,26 +26,24 @@ export default class LuminousGallery {
   }
 
   nextTrigger(trigger) {
-    const nextTriggerIndex = Array.prototype.indexOf.call(this.triggers, trigger) + 1;
+    const nextTriggerIndex =
+      Array.prototype.indexOf.call(this.triggers, trigger) + 1;
 
-    return nextTriggerIndex >= this.triggers.length ?
-      this.triggers[0] :
-      this.triggers[nextTriggerIndex];
+    return nextTriggerIndex >= this.triggers.length
+      ? this.triggers[0]
+      : this.triggers[nextTriggerIndex];
   }
 
   previousTrigger(trigger) {
-    const prevTriggerIndex = Array.prototype.indexOf.call(this.triggers, trigger) - 1;
+    const prevTriggerIndex =
+      Array.prototype.indexOf.call(this.triggers, trigger) - 1;
 
-    return prevTriggerIndex < 0 ?
-      this.triggers[this.triggers.length - 1] :
-      this.triggers[prevTriggerIndex];
+    return prevTriggerIndex < 0
+      ? this.triggers[this.triggers.length - 1]
+      : this.triggers[prevTriggerIndex];
   }
 
-  boundMethod = () => {
+  boundMethod = () => {};
 
-  }
-
-  destroy() {
-
-  }
+  destroy() {}
 }

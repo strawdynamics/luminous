@@ -1,14 +1,15 @@
-import { isDOMElement, addClasses, removeClasses } from './util/dom';
-import throwIfMissing from './util/throwIfMissing';
+import { isDOMElement, addClasses, removeClasses } from "./util/dom";
+import throwIfMissing from "./util/throwIfMissing";
 
 const LEFT_ARROW = 37;
 const RIGHT_ARROW = 39;
 
 // All officially-supported browsers have this, but it's easy to
 // account for, just in case.
-const HAS_ANIMATION = typeof document === 'undefined' ?
-  false :
-  'animation' in document.createElement('div').style;
+const HAS_ANIMATION =
+  typeof document === "undefined"
+    ? false
+    : "animation" in document.createElement("div").style;
 
 export default class Lightbox {
   constructor(options = {}) {
@@ -20,20 +21,31 @@ export default class Lightbox {
       caption = null,
       includeImgixJSClass = false,
       _gallery = null,
-      _arrowNavigation = null,
+      _arrowNavigation = null
     } = options;
 
-    this.settings = { namespace, parentEl, triggerEl, sourceAttribute, caption, includeImgixJSClass, _gallery, _arrowNavigation };
+    this.settings = {
+      namespace,
+      parentEl,
+      triggerEl,
+      sourceAttribute,
+      caption,
+      includeImgixJSClass,
+      _gallery,
+      _arrowNavigation
+    };
 
     if (!isDOMElement(this.settings.parentEl)) {
-      throw new TypeError('`new Lightbox` requires a DOM element passed as `parentEl`.');
+      throw new TypeError(
+        "`new Lightbox` requires a DOM element passed as `parentEl`."
+      );
     }
 
     this.currentTrigger = this.settings.triggerEl;
 
-    this.openClasses = this._buildClasses('open');
-    this.openingClasses = this._buildClasses('opening');
-    this.closingClasses = this._buildClasses('closing');
+    this.openClasses = this._buildClasses("open");
+    this.openingClasses = this._buildClasses("opening");
+    this.closingClasses = this._buildClasses("closing");
 
     this.hasBeenLoaded = false;
     this.elementBuilt = false;
@@ -51,31 +63,34 @@ export default class Lightbox {
   }
 
   _buildElement() {
-    this.el = document.createElement('div');
-    addClasses(this.el, this._buildClasses('lightbox'));
+    this.el = document.createElement("div");
+    addClasses(this.el, this._buildClasses("lightbox"));
 
-    this.innerEl = document.createElement('div');
-    addClasses(this.innerEl, this._buildClasses('lightbox-inner'));
+    this.innerEl = document.createElement("div");
+    addClasses(this.innerEl, this._buildClasses("lightbox-inner"));
     this.el.appendChild(this.innerEl);
 
-    const loaderEl = document.createElement('div');
-    addClasses(loaderEl, this._buildClasses('lightbox-loader'));
+    const loaderEl = document.createElement("div");
+    addClasses(loaderEl, this._buildClasses("lightbox-loader"));
     this.innerEl.appendChild(loaderEl);
 
-    this.imgWrapperEl = document.createElement('div');
-    addClasses(this.imgWrapperEl, this._buildClasses('lightbox-image-wrapper'));
+    this.imgWrapperEl = document.createElement("div");
+    addClasses(this.imgWrapperEl, this._buildClasses("lightbox-image-wrapper"));
     this.innerEl.appendChild(this.imgWrapperEl);
 
-    const positionHelperEl = document.createElement('span');
-    addClasses(positionHelperEl, this._buildClasses('lightbox-position-helper'));
+    const positionHelperEl = document.createElement("span");
+    addClasses(
+      positionHelperEl,
+      this._buildClasses("lightbox-position-helper")
+    );
     this.imgWrapperEl.appendChild(positionHelperEl);
 
-    this.imgEl = document.createElement('img');
-    addClasses(this.imgEl, this._buildClasses('img'));
+    this.imgEl = document.createElement("img");
+    addClasses(this.imgEl, this._buildClasses("img"));
     positionHelperEl.appendChild(this.imgEl);
 
-    this.captionEl = document.createElement('p');
-    addClasses(this.captionEl, this._buildClasses('lightbox-caption'));
+    this.captionEl = document.createElement("p");
+    addClasses(this.captionEl, this._buildClasses("lightbox-caption"));
     positionHelperEl.appendChild(this.captionEl);
 
     if (this.settings._gallery) {
@@ -88,74 +103,86 @@ export default class Lightbox {
     this._updateCaption();
 
     if (this.settings.includeImgixJSClass) {
-      this.imgEl.classList.add('imgix-fluid');
+      this.imgEl.classList.add("imgix-fluid");
     }
   }
 
   _setUpGalleryElements() {
-    this._buildGalleryButton('previous', this.showPrevious);
-    this._buildGalleryButton('next', this.showNext);
+    this._buildGalleryButton("previous", this.showPrevious);
+    this._buildGalleryButton("next", this.showNext);
   }
 
   _buildGalleryButton(name, fn) {
-    const btn = document.createElement('button');
+    const btn = document.createElement("button");
     this[`${name}Button`] = btn;
 
     btn.innerText = name;
     addClasses(btn, this._buildClasses(`${name}-button`));
-    addClasses(btn, this._buildClasses('gallery-button'));
+    addClasses(btn, this._buildClasses("gallery-button"));
     this.innerEl.appendChild(btn);
 
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
+    btn.addEventListener(
+      "click",
+      e => {
+        e.stopPropagation();
 
-      fn();
-    }, false);
+        fn();
+      },
+      false
+    );
   }
 
   _sizeImgWrapperEl = () => {
     const style = this.imgWrapperEl.style;
-    style.width = `${this.innerEl.clientWidth}px`
-    style.maxWidth = `${this.innerEl.clientWidth}px`
-    style.height = `${this.innerEl.clientHeight - this.captionEl.clientHeight}px`
-    style.maxHeight = `${this.innerEl.clientHeight - this.captionEl.clientHeight}px`
+    style.width = `${this.innerEl.clientWidth}px`;
+    style.maxWidth = `${this.innerEl.clientWidth}px`;
+    style.height = `${this.innerEl.clientHeight -
+      this.captionEl.clientHeight}px`;
+    style.maxHeight = `${this.innerEl.clientHeight -
+      this.captionEl.clientHeight}px`;
   };
 
   _updateCaption() {
     const captionType = typeof this.settings.caption;
-    let caption = '';
+    let caption = "";
 
-    if (captionType === 'string') {
+    if (captionType === "string") {
       caption = this.settings.caption;
-    } else if (captionType === 'function') {
-      caption = this.settings.caption(this.currentTrigger)
+    } else if (captionType === "function") {
+      caption = this.settings.caption(this.currentTrigger);
     }
 
     this.captionEl.innerHTML = caption;
   }
 
   _updateImgSrc() {
-    const imageURL = this.currentTrigger.getAttribute(this.settings.sourceAttribute);
+    const imageURL = this.currentTrigger.getAttribute(
+      this.settings.sourceAttribute
+    );
 
     if (!imageURL) {
-      throw new Error(`No image URL was found in the ${this.settings.sourceAttribute} attribute of the trigger.`);
+      throw new Error(
+        `No image URL was found in the ${
+          this.settings.sourceAttribute
+        } attribute of the trigger.`
+      );
     }
 
-    let loadingClasses = this._buildClasses('loading');
-    
-    if(!this.hasBeenLoaded){
+    let loadingClasses = this._buildClasses("loading");
+
+    if (!this.hasBeenLoaded) {
       addClasses(this.el, loadingClasses);
     }
-    
+
     this.imgEl.onload = () => {
       removeClasses(this.el, loadingClasses);
       this.hasBeenLoaded = true;
-    }
+    };
 
-    this.imgEl.setAttribute('src', imageURL);
+    this.imgEl.setAttribute("src", imageURL);
   }
 
-  _handleKeydown = (e) => {
+  _handleKeydown = e => {
     if (e.keyCode == LEFT_ARROW) {
       this.showPrevious();
     } else if (e.keyCode == RIGHT_ARROW) {
@@ -168,7 +195,9 @@ export default class Lightbox {
       return;
     }
 
-    this.currentTrigger = this.settings._gallery.nextTrigger(this.currentTrigger);
+    this.currentTrigger = this.settings._gallery.nextTrigger(
+      this.currentTrigger
+    );
     this._updateImgSrc();
     this._updateCaption();
     this._sizeImgWrapperEl();
@@ -179,7 +208,9 @@ export default class Lightbox {
       return;
     }
 
-    this.currentTrigger = this.settings._gallery.previousTrigger(this.currentTrigger);
+    this.currentTrigger = this.settings._gallery.previousTrigger(
+      this.currentTrigger
+    );
     this._updateImgSrc();
     this._updateCaption();
     this._sizeImgWrapperEl();
@@ -202,27 +233,27 @@ export default class Lightbox {
     addClasses(this.el, this.openClasses);
 
     this._sizeImgWrapperEl();
-    window.addEventListener('resize', this._sizeImgWrapperEl, false);
+    window.addEventListener("resize", this._sizeImgWrapperEl, false);
 
     if (this.settings._arrowNavigation) {
-      window.addEventListener('keydown', this._handleKeydown, false);
+      window.addEventListener("keydown", this._handleKeydown, false);
     }
 
     if (HAS_ANIMATION) {
-      this.el.addEventListener('animationend', this._completeOpen, false);
+      this.el.addEventListener("animationend", this._completeOpen, false);
       addClasses(this.el, this.openingClasses);
     }
   }
 
   close() {
-    window.removeEventListener('resize', this._sizeImgWrapperEl, false);
+    window.removeEventListener("resize", this._sizeImgWrapperEl, false);
 
     if (this.settings._arrowNavigation) {
-      window.removeEventListener('keydown', this._handleKeydown, false);
+      window.removeEventListener("keydown", this._handleKeydown, false);
     }
 
     if (HAS_ANIMATION) {
-      this.el.addEventListener('animationend', this._completeClose, false);
+      this.el.addEventListener("animationend", this._completeClose, false);
       addClasses(this.el, this.closingClasses);
     } else {
       removeClasses(this.el, this.openClasses);
@@ -230,13 +261,13 @@ export default class Lightbox {
   }
 
   _completeOpen = () => {
-    this.el.removeEventListener('animationend', this._completeOpen, false);
+    this.el.removeEventListener("animationend", this._completeOpen, false);
 
     removeClasses(this.el, this.openingClasses);
   };
 
   _completeClose = () => {
-    this.el.removeEventListener('animationend', this._completeClose, false);
+    this.el.removeEventListener("animationend", this._completeClose, false);
 
     removeClasses(this.el, this.openClasses);
     removeClasses(this.el, this.closingClasses);
