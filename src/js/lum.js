@@ -1,4 +1,4 @@
-import Luminous from './Luminous';
+import Luminous       from './Luminous';
 import LuminousGallery from './LuminousGallery';
 
 global.Luminous = Luminous;
