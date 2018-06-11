@@ -6,8 +6,10 @@
 A simple, lightweight, no-dependencies JavaScript image lightbox.
 
 - [Installation](#installation)
-- [Usage](#usage) \* [LuminousGallery Usage](#luminousgallery-usage)
-- [Options / Defaults](#options-defaults) \* [LuminousGallery Options / Defaults](#luminousgallery-options-defaults)
+- [Usage](#usage)
+  - [LuminousGallery Usage](#luminousgallery-usage)
+- [Options / Defaults](#options-defaults)
+  - [LuminousGallery Options / Defaults](#luminousgallery-options-defaults)
 - [Browser Support](#browser-support)
 - [Theming](#theming)
 - [Meta](#meta)
