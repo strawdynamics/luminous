@@ -1,3 +1,4 @@
+<!-- prettier-ignore-start -->
 Hello, and thanks for contributing to luminous! 🎉🙌
 
 **Before submitting a pull request,** please make sure the following is done:
@@ -11,17 +12,12 @@ Hello, and thanks for contributing to luminous! 🎉🙌
 
 **Learn more about contributing:** https://github.com/imgix/luminous/blob/master/CONTRIBUTING.md
 
-<!--
-DELETE EVERYTHING ABOVE THIS LINE
--------------------------------------------
--->
-
 ## tldr
 
-There are three main goals in this document, depending on the nature of your pr:
+There are three main goals in this document, depending on the nature of your PR:
 
-- [description](#description): please tell us about your pr
-- [checklist](#checklist): please review the checklist that is most closly related to your pr
+- [description](#description): please tell us about your PR
+- [checklist](#checklist): please review the checklist that is most closely related to your PR
 - [contributors list](#packagejson-contributors): you're one of us now, please add yourself to `package.json` and let the world know!
 
 The following sections provide more detail on each.
@@ -30,51 +26,62 @@ The following sections provide more detail on each.
 
 Please don't hesitate to [ask questions][issues] for clarification, or to [make suggestions][issues] (or a pull request) to improve this document.
 
+
+
+
+
+delete everything above this line
+-------------------------------------------
+
+
+
+
+
+
 ## Description
 
-_To help the project's maintainers and community to quickly understand the nature of your pull requeset, please create a description that incorporates the following elements:_
+_To help the project's maintainers and community to quickly understand the nature of your pull request, please create a description that incorporates the following elements:_
 
-- [] what is accomplished by the pr
+- [] what is accomplished by the PR
 - [] if there is something potentially controversial in your pr, please take a moment to tell us about your choices
 
 ## Checklist
 
-Please use the checklist that is most closely related to your pr _(you only need to use one checklist, and you can skip items that aren't applicable or don't make sense)_:
+Please use the checklist that is most closely related to your PR _(you only need to use one checklist, and you can skip items that aren't applicable or don't make sense)_:
 
 - [fixing typos]()
 - [documentation]()
 - [bug fix]()
 - [new feature]()
-- [other]()
 
 ### Fixing typos
 
-- [ ] The PR title is in the conventional commit format: e.g. `chore(readme): fixed typo`
-- [ ] Add your to the [contributors](#packagejson-contributors) array in package.json!
+- [ ] The PR title is in the [conventional commit](#conventional-commit-spec) format: e.g. `chore(readme): fixed typo`
+- [ ] Add your info to the [contributors](#packagejson-contributors) array in package.json!
 
 ### Documentation
 
-- [ ] The PR title is in the conventional commit format: e.g. `chore(readme): updated documentation for ___`
+- [ ] The PR title is in the [conventional commit](#conventional-commit-spec) format: e.g. `chore(readme): updated documentation for ___`
 - [ ] Add your info to the [contributors](#packagejson-contributors) array in package.json!
 
 ### Bug Fix
 
 - [ ] All existing unit tests are still passing (if applicable)
-- [ ] Add new passing unit tests to cover the code introduced by your pr
+- [ ] Add new passing unit tests to cover the code introduced by your PR
 - [ ] Update the readme
 - [ ] Update or add any necessary API documentation
 - [ ] Add some [steps](#steps-to-test) so we can test your bug fix
-- [ ] The PR title is in the conventional commit format: e.g. `fix(<area>): fixed bug #issue-number`
+- [ ] The PR title is in the [conventional commit](#conventional-commit-spec) format: e.g. `fix(<area>): fixed bug #issue-number`
 - [ ] Add your info to the [contributors](#packagejson-contributors) array in package.json!
 
 ### New Feature
 
-- [ ] If this is a big feature with breaking changes, consider [opening an issue][issues] to discuss first. This is completely up to you, but please keep in mind that your pr might not be accepted.
+- [ ] If this is a big feature with breaking changes, consider [opening an issue][issues] to discuss first. This is completely up to you, but please keep in mind that your PR might not be accepted.
 - [ ] Run unit tests to ensure all existing tests are still passing
-- [ ] Add new passing unit tests to cover the code introduced by your pr
+- [ ] Add new passing unit tests to cover the code introduced by your PR
 - [ ] Update the readme
 - [ ] Add some [steps](#steps-to-test) so we can test your cool new feature!
-- [ ] The PR title is in the conventional commit format: e.g. `feat(<area>): added new way to do this cool thing #issue-number`
+- [ ] The PR title is in the [conventional commit](#conventional-commit-spec) format: e.g. `feat(<area>): added new way to do this cool thing #issue-number`
 - [ ] Add your info to the [contributors](#packagejson-contributors) array in package.json!
 
 ## Steps to Test
@@ -98,22 +105,34 @@ Steps:
 3.  Scroll down to '....'
 4.  See that the error has been fixed
 
+
+
+
+
+delete everything below this line
+-------------------------------------------
+
+
+
+
+
+
 ## Conventional Commit Spec
 
 PR titles should be in the format `<type>(<scope>): <description>`. For example: `chore(readme): fix typo`
 
-`type` can be one of `feat`, `fix`, `test`, or `chore`
+`type` can be one of `feat`, `fix`, `test`, or `chore`.
 `scope` is optional, and can be anything.
-`description` should be a short description of the change, in past tense
+`description` should be a short description of the change, in past tense.
 
 ## package.json contributors
 
 **Add yourself!**
 
-When adding your information to the `contributors` array in package.json, please use the following format (provide your name at minimum, the other fields are optional):
+When adding your information to the `contributors` array in package.json, please use the following format (provide your name or username at a minimum, the other fields are optional):
 
 ```
-full name <email@address.com> (https://website.com)
+full name or username <email@address.com> (https://website.com)
 ```
 
 **Example**
@@ -123,10 +142,12 @@ full name <email@address.com> (https://website.com)
 {
   "name": "luminous",
   "contributors": [
-    "Brian Woodward <jon.schlinkert@sellside.com> (https://github.com/jonschlinkert)",
-    "Jon Schlinkert <brian.woodward@sellside.com> (https://github.com/doowb)"
+    "Frederick Fogerty <frederick.fogerty@gmail.com> (https://github.com/frederickfogerty)",
+    "Jon Smith <jon.smith@jonsmith.com> (https://github.com/jonsmith)",
+    "helenjones"
   ]
 }
 ```
 
 [issues]: ../../issues
+<!-- prettier-ignore-end -->
