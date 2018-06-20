@@ -2,13 +2,6 @@
   "name": "luminous-lightbox",
   "version": "2.0.0",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
-  "main": "lib/lum-commonjs.js",
-  "scripts": {
-    "format": "prettier --write \"{src,test}/**/*.js\"",
-    "format:check": "prettier --list-different \"{src,test}/**/*.js\"",
-    "test": "gulp build-ci",
-    "start": "gulp"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/imgix/luminous.git"
@@ -23,6 +16,16 @@
     "url": "https://github.com/imgix/luminous/issues"
   },
   "homepage": "https://github.com/imgix/luminous#readme",
+  "contributors": [
+    "Frederick Fogerty <frederick.fogerty@gmail.com> (https://github.com/frederickfogerty)"
+  ],
+  "main": "lib/lum-commonjs.js",
+  "scripts": {
+    "format": "prettier --write \"{src,test}/**/*.js\"",
+    "format:check": "prettier --list-different \"{src,test}/**/*.js\"",
+    "test": "gulp build-ci",
+    "start": "gulp"
+  },
   "dependencies": {
     "babelify": "^7.2.0",
     "babel-preset-es2015": "^6.3.13",
