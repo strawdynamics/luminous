@@ -5,7 +5,7 @@
     "A simple, lightweight, no-dependencies JavaScript image lightbox.",
   "main": ["dist/Luminous.js", "dist/luminous-basic.css"],
   "authors": ["imgix"],
-  "license": "MIT",
+  "license": "BSD-2",
   "keywords": ["javascript", "lightbox", "image", "images"],
   "homepage": "https://github.com/imgix/luminous",
   "moduleType": [],
