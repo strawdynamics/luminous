@@ -24,7 +24,7 @@
     "build": "gulp build",
     "format": "prettier --write \"{src,test}/**/*.js\"",
     "format:check": "prettier --list-different \"{src,test}/**/*.js\"",
-    "release": "npm run build && git add dist lib && standard-version -a",
+    "release": "npm run build && git add dist && standard-version -a",
     "test": "gulp build-ci",
     "start": "gulp"
   },
