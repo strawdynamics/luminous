@@ -8,7 +8,7 @@ export default class Luminous {
     this.destroy = this.destroy.bind(this);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this._handleKeyUp = this._handleKeyUp.bind(this);
+    this._handleKeyup = this._handleKeyup.bind(this);
 
     this.isOpen = false;
 
