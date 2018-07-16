@@ -13,6 +13,13 @@ const HAS_ANIMATION =
 
 export default class Lightbox {
   constructor(options = {}) {
+    this._sizeImgWrapperEl = this._sizeImgWrapperEl.bind(this);
+    this.showNext = this.showNext.bind(this);
+    this.showPrevious = this.showPrevious.bind(this);
+    this._completeOpen = this._completeOpen.bind(this);
+    this._completeClose = this._completeClose.bind(this);
+    this._handleKeydown = this._handleKeydown.bind(this);
+
     let {
       namespace = null,
       parentEl = throwIfMissing(),
@@ -132,7 +139,7 @@ export default class Lightbox {
     );
   }
 
-  _sizeImgWrapperEl = () => {
+  _sizeImgWrapperEl() {
     const style = this.imgWrapperEl.style;
     style.width = `${this.innerEl.clientWidth}px`;
     style.maxWidth = `${this.innerEl.clientWidth}px`;
@@ -140,7 +147,7 @@ export default class Lightbox {
       this.captionEl.clientHeight}px`;
     style.maxHeight = `${this.innerEl.clientHeight -
       this.captionEl.clientHeight}px`;
-  };
+  }
 
   _updateCaption() {
     const captionType = typeof this.settings.caption;
@@ -182,7 +189,7 @@ export default class Lightbox {
     this.imgEl.setAttribute("src", imageURL);
   }
 
-  _handleKeydown = e => {
+  _handleKeydown (e) {
     if (e.keyCode == LEFT_ARROW) {
       this.showPrevious();
     } else if (e.keyCode == RIGHT_ARROW) {
@@ -190,7 +197,7 @@ export default class Lightbox {
     }
   };
 
-  showNext = () => {
+  showNext() {
     if (!this.settings._gallery) {
       return;
     }
@@ -201,9 +208,9 @@ export default class Lightbox {
     this._updateImgSrc();
     this._updateCaption();
     this._sizeImgWrapperEl();
-  };
+  }
 
-  showPrevious = () => {
+  showPrevious() {
     if (!this.settings._gallery) {
       return;
     }
@@ -214,7 +221,7 @@ export default class Lightbox {
     this._updateImgSrc();
     this._updateCaption();
     this._sizeImgWrapperEl();
-  };
+  }
 
   open() {
     if (!this.elementBuilt) {
@@ -260,18 +267,18 @@ export default class Lightbox {
     }
   }
 
-  _completeOpen = () => {
+  _completeOpen() {
     this.el.removeEventListener("animationend", this._completeOpen, false);
 
     removeClasses(this.el, this.openingClasses);
-  };
+  }
 
-  _completeClose = () => {
+  _completeClose() {
     this.el.removeEventListener("animationend", this._completeClose, false);
 
     removeClasses(this.el, this.openClasses);
     removeClasses(this.el, this.closingClasses);
-  };
+  }
 
   destroy() {
     if (this.el) {

@@ -1,3 +1,6 @@
 CHANGELOG.md
-bower.json
 package.json
+bower.json
+es
+lib
+dist
