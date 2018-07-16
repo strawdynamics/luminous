@@ -44,7 +44,7 @@ export default class LuminousGallery {
       : this.triggers[prevTriggerIndex];
   }
 
-  boundMethod () {};
+  boundMethod() {}
 
   destroy() {}
 }

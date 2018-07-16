@@ -189,13 +189,13 @@ export default class Lightbox {
     this.imgEl.setAttribute("src", imageURL);
   }
 
-  _handleKeydown (e) {
+  _handleKeydown(e) {
     if (e.keyCode == LEFT_ARROW) {
       this.showPrevious();
     } else if (e.keyCode == RIGHT_ARROW) {
       this.showNext();
     }
-  };
+  }
 
   showNext() {
     if (!this.settings._gallery) {
