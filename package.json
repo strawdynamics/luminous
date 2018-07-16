@@ -42,11 +42,7 @@
     "test:ci": "karma start config/karma/karma-ci.config.js --singleRun",
     "test": "npm run test:local"
   },
-  "dependencies": {
-    "babelify": "^7.2.0",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-stage-0": "^6.3.13"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.51",
     "@babel/core": "^7.0.0-beta.51",
@@ -58,24 +54,24 @@
     "chai": "^4.1.2",
     "closure-webpack-plugin": "0.0.25",
     "cross-env": "^5.2.0",
-    "cssnano-preset-advanced": "^4.0.0",
     "cssnano": "^4.0.0",
+    "cssnano-preset-advanced": "^4.0.0",
     "google-closure-compiler-js": "^20180610.0.0",
-    "jasmine-core": "^2.4.1",
+    "jasmine-core": "^3.1.0",
+    "karma": "^2.0.4",
     "karma-chrome-launcher": "^2.2.0",
     "karma-firefox-launcher": "^1.1.0",
-    "karma-jasmine": "^0.3.8",
+    "karma-jasmine": "^1.1.2",
     "karma-webpack": "^4.0.0-beta.0",
-    "karma": "^0.13.15",
     "npm-run-all": "^4.1.3",
     "postcss-cli": "^5.0.1",
     "prettier": "^1.13.5",
     "rimraf": "^2.6.2",
     "standard-version": "^4.4.0",
+    "webpack": "^4.12.2",
     "webpack-cli": "^3.0.8",
     "webpack-closure-compiler": "^2.1.6",
-    "webpack": "^4.12.2",
-    "yargs": "^10.0.3"
+    "yargs": "^12.0.1"
   },
   "browserslist": [
     "ie 11",
