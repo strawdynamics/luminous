@@ -1,32 +1,34 @@
 {
-  "name": "luminous",
-  "version": "2.0.1",
-  "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
-  "main": [
-    "dist/Luminous.js",
-    "dist/luminous-basic.css"
-  ],
-  "authors": [
-    "imgix"
-  ],
-  "license": "BSD-2",
-  "keywords": [
-    "javascript",
-    "lightbox",
-    "image",
-    "images"
-  ],
-  "homepage": "https://github.com/imgix/luminous",
-  "moduleType": [],
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "src",
-    "test",
-    "CONTRIBUTING.md",
-    "gulpfile.js",
-    "index.html",
-    "karmaConfig.js",
-    "package.json"
-  ]
+	"name": "luminous",
+	"version": "2.0.1",
+	"description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
+	"main": [
+		"dist/Luminous.min.js",
+		"dist/luminous-basic.css"
+	],
+	"authors": [
+		"imgix"
+	],
+	"license": "BSD-2",
+	"keywords": [
+		"javascript",
+		"lightbox",
+		"image",
+		"images"
+	],
+	"homepage": "https://github.com/imgix/luminous",
+	"moduleType": [],
+	"ignore": [
+		"**/.*",
+		".github",
+		"node_modules",
+		"src",
+		"test",
+		"CONTRIBUTING.md",
+		"index.html",
+		"config",
+		"package.json",
+		"postcss.config.js",
+		"webpack.config.js"
+	]
 }

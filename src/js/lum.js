@@ -1,7 +1,5 @@
-// This file is used for the standalone browser build
-
+// This file exports the Luminous exports in the ES6 Module Spec, which is compatible with the commonjs spec
 import Luminous from "./Luminous";
 import LuminousGallery from "./LuminousGallery";
 
-global.Luminous = Luminous;
-global.LuminousGallery = LuminousGallery;
+export { Luminous, LuminousGallery };

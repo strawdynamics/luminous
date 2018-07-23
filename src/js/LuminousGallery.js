@@ -3,6 +3,7 @@ import Luminous from "./Luminous";
 
 export default class LuminousGallery {
   constructor(triggers, options = {}, luminousOpts = {}) {
+    this.boundMethod = this.boundMethod.bind(this);
     let { arrowNavigation = true } = options;
 
     this.settings = { arrowNavigation };
@@ -43,7 +44,7 @@ export default class LuminousGallery {
       : this.triggers[prevTriggerIndex];
   }
 
-  boundMethod = () => {};
+  boundMethod() {}
 
   destroy() {}
 }
