@@ -81,5 +81,12 @@
     "last 2 Safari versions",
     "last 2 iOS versions",
     "last 2 Android versions"
-  ]
+	],
+	"files": [
+		"bower.json",
+		"CHANGELOG.md",
+		"dist",
+		"lib",
+		"es"
+	]
 }
