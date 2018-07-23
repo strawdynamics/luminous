@@ -1,6 +1,6 @@
 {
   "name": "luminous-lightbox",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
   "repository": {
     "type": "git",
@@ -81,12 +81,12 @@
     "last 2 Safari versions",
     "last 2 iOS versions",
     "last 2 Android versions"
-	],
-	"files": [
-		"bower.json",
-		"CHANGELOG.md",
-		"dist",
-		"lib",
-		"es"
-	]
+  ],
+  "files": [
+    "bower.json",
+    "CHANGELOG.md",
+    "dist",
+    "lib",
+    "es"
+  ]
 }
