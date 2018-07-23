@@ -4,7 +4,7 @@ import Lightbox from "./Lightbox";
 
 export default class Luminous {
   constructor(trigger, options = {}) {
-    this.VERSION = "2.0.0";
+    this.VERSION = "2.1.0";
     this.destroy = this.destroy.bind(this);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);

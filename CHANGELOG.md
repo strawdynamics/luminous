@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/imgix/luminous/compare/v2.0.1...v2.1.0) (2018-07-23)
+
+
+### Features
+
+* add lib and es6 bundles, use closure compiler, remove gulp ([#69](https://github.com/imgix/luminous/issues/69)) ([28be831](https://github.com/imgix/luminous/commit/28be831))
+
+
+
 <a name="2.0.1"></a>
 ## 2.0.1 (2018-06-26)
 
