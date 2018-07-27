@@ -46,5 +46,9 @@ export default class LuminousGallery {
 
   boundMethod() {}
 
-  destroy() {}
+  destroy() {
+    this.luminousInstances.forEach(
+      (instance) => instance.destroy()
+    );
+  }
 }
