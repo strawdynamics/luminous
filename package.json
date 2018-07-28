@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/imgix/luminous#readme",
   "contributors": [
-    "Frederick Fogerty <frederick.fogerty@gmail.com> (https://github.com/frederickfogerty)"
+    "Frederick Fogerty <frederick.fogerty@gmail.com> (https://github.com/frederickfogerty)",
+    "Jakub Duras <jakub@duras.me> (https://duras.me)"
   ],
   "main": "lib/lum.js",
   "module": "es/lum.js",
