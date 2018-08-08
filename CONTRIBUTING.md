@@ -168,7 +168,7 @@ Please note: in order to run tests in-browser (with `gulp test-local`), Chrome a
 
 ### Cutting a release
 
-Ensure all commits and PR titles are correctly described using the [Conventional Commits Specification](https://conventionalcommits.org/). Update src/Luminous.js with new version number.
+Ensure all commits and PR titles are correctly described using the [Conventional Commits Specification](https://conventionalcommits.org/). Update src/Luminous.js with new version number (can be found using `npm run release -- --dry-run`)
 
 ```sh
 npm install                             # update dependencies to latest
