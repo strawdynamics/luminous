@@ -47,3 +47,5 @@ export default class LuminousGallery {
     this.luminousInstances.forEach(instance => instance.destroy());
   }
 }
+
+LuminousGallery.prototype["destroy"] = LuminousGallery.prototype.destroy;
