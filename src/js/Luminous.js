@@ -183,3 +183,7 @@ export default class Luminous {
     this.lightbox.destroy();
   }
 }
+
+Luminous.prototype["open"] = Luminous.prototype.open;
+Luminous.prototype["close"] = Luminous.prototype.close;
+Luminous.prototype["destroy"] = Luminous.prototype.destroy;
