@@ -68,6 +68,10 @@ describe("Core", () => {
   });
 
   it("injects styles into shadow root if parented by one", () => {
+    // TODO (43081j): remove when firefox ships with shadow DOM
+    if (typeof ShadowRoot === "undefined") {
+      return;
+    }
     const container = document.createElement("div");
     container.attachShadow({ mode: "open" });
     const anchor = document.createElement("a");
