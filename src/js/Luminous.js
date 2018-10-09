@@ -20,6 +20,10 @@ export default class Luminous {
       );
     }
 
+    let rootNode = document;
+    if ("getRootNode" in this.trigger) {
+      rootNode = this.trigger.getRootNode();
+    }
     // Prefix for generated element class names (e.g. `my-ns` will
     // result in classes such as `my-ns-lightbox`. Default `lum-`
     // prefixed classes will always be added as well.
@@ -73,7 +77,7 @@ export default class Luminous {
     };
 
     if (this.settings.injectBaseStyles) {
-      injectBaseStylesheet();
+      injectBaseStylesheet(rootNode);
     }
 
     this._buildLightbox();
