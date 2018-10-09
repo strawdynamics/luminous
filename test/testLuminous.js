@@ -78,7 +78,7 @@ describe("Core", () => {
     document.body.appendChild(container);
 
     const lum = new Luminous(anchor);
-    const styles = container.shadowRoot.querySelector('style.lum-base-styles');
+    const styles = container.shadowRoot.querySelector("style.lum-base-styles");
     expect(styles).not.toBe(null);
   });
 });

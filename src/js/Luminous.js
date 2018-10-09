@@ -21,7 +21,7 @@ export default class Luminous {
     }
 
     let rootNode = document;
-    if ('getRootNode' in this.trigger) {
+    if ("getRootNode" in this.trigger) {
       rootNode = this.trigger.getRootNode();
     }
     // Prefix for generated element class names (e.g. `my-ns` will
