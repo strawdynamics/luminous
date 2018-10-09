@@ -1,4 +1,3 @@
-import { isDOMElement, addClasses, removeClasses } from "./util/dom";
 import Luminous from "./Luminous";
 
 export default class LuminousGallery {
@@ -48,4 +47,5 @@ export default class LuminousGallery {
   }
 }
 
+/* eslint-disable-next-line no-self-assign */
 LuminousGallery.prototype["destroy"] = LuminousGallery.prototype.destroy;

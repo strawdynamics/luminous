@@ -41,7 +41,8 @@
     "test:watch": "karma start config/karma/karma-local.config.js",
     "test:local": "karma start config/karma/karma-local.config.js --singleRun",
     "test:ci": "karma start config/karma/karma-ci.config.js --singleRun",
-    "test": "npm run test:local"
+    "test": "npm run test:local",
+    "lint": "eslint \"{src,test}/**/*.js\""
   },
   "dependencies": {},
   "devDependencies": {
@@ -49,7 +50,7 @@
     "@babel/core": "^7.0.0-beta.51",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.52",
     "@babel/preset-env": "^7.0.0-beta.51",
-    "babel-eslint": "^8.0.3",
+    "babel-eslint": "^8.2.6",
     "babel-loader": "^8.0.0-beta.4",
     "babel-preset-env": "^7.0.0-beta.3",
     "chai": "^4.1.2",
@@ -57,6 +58,7 @@
     "cross-env": "^5.2.0",
     "cssnano": "^4.0.0",
     "cssnano-preset-advanced": "^4.0.0",
+    "eslint": "^5.6.1",
     "google-closure-compiler-js": "^20180610.0.0",
     "jasmine-core": "^3.1.0",
     "karma": "^2.0.4",

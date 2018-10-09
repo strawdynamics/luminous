@@ -191,6 +191,8 @@ export default class Luminous {
   }
 }
 
+/* eslint-disable no-self-assign */
 Luminous.prototype["open"] = Luminous.prototype.open;
 Luminous.prototype["close"] = Luminous.prototype.close;
 Luminous.prototype["destroy"] = Luminous.prototype.destroy;
+/* eslint-enable no-self-assign */
