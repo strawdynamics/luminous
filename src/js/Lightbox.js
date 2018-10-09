@@ -19,6 +19,7 @@ export default class Lightbox {
     this._completeOpen = this._completeOpen.bind(this);
     this._completeClose = this._completeClose.bind(this);
     this._handleKeydown = this._handleKeydown.bind(this);
+    this._handleClose = this._handleClose.bind(this);
 
     let {
       namespace = null,
@@ -28,7 +29,9 @@ export default class Lightbox {
       caption = null,
       includeImgixJSClass = false,
       _gallery = null,
-      _arrowNavigation = null
+      _arrowNavigation = null,
+      closeButtonEnabled = true,
+      closeTrigger = "click"
     } = options;
 
     this.settings = {
@@ -39,7 +42,10 @@ export default class Lightbox {
       caption,
       includeImgixJSClass,
       _gallery,
-      _arrowNavigation
+      _arrowNavigation,
+      closeButtonEnabled,
+      onClose: options.onClose,
+      closeTrigger
     };
 
     if (!isDOMElement(this.settings.parentEl)) {
@@ -56,6 +62,22 @@ export default class Lightbox {
 
     this.hasBeenLoaded = false;
     this.elementBuilt = false;
+  }
+
+  _handleClose(e) {
+    if (e && typeof e.preventDefault === "function") {
+      e.preventDefault();
+    }
+    if (this.settings.onClose) {
+      this.settings.onClose();
+    }
+  }
+
+  _bindEventListeners() {
+    this.el.addEventListener(this.settings.closeTrigger, this._handleClose);
+    if (this.closeButtonEl) {
+      this.closeButtonEl.addEventListener("click", this._handleClose);
+    }
   }
 
   _buildClasses(suffix) {
@@ -99,6 +121,12 @@ export default class Lightbox {
     this.captionEl = document.createElement("p");
     addClasses(this.captionEl, this._buildClasses("lightbox-caption"));
     positionHelperEl.appendChild(this.captionEl);
+
+    if (this.settings.closeButtonEnabled) {
+      this.closeButtonEl = document.createElement("div");
+      addClasses(this.closeButtonEl, this._buildClasses("close-button"));
+      this.el.appendChild(this.closeButtonEl);
+    }
 
     if (this.settings._gallery) {
       this._setUpGalleryElements();
@@ -226,6 +254,7 @@ export default class Lightbox {
   open() {
     if (!this.elementBuilt) {
       this._buildElement();
+      this._bindEventListeners();
       this.elementBuilt = true;
     }
 
