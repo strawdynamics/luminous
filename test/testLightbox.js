@@ -146,4 +146,62 @@ describe("Lightbox", () => {
 
     expect(lightbox.el.querySelector(".imgix-fluid")).not.toBeNull();
   });
+
+  describe("Close button", () => {
+    it("shows a close button when the lightbox is open", () => {
+      let triggerEl = document.querySelector(".test-anchor");
+
+      lightbox = new Lightbox({
+        namespace: "lum",
+        parentEl: document.body,
+        triggerEl: triggerEl,
+        sourceAttribute: "href",
+        caption: null
+      });
+      lightbox.open();
+      // lightbox.close();
+
+      expect(document.body.querySelector(".lum-close-button")).not.toBeNull();
+    });
+    it("the close button closes the lightbox", () => {
+      let triggerEl = document.querySelector(".test-anchor");
+
+      let closed = false;
+      lightbox = new Lightbox({
+        namespace: "lum",
+        parentEl: document.body,
+        triggerEl: triggerEl,
+        sourceAttribute: "href",
+        caption: null,
+        onClose: () => {
+          closed = true;
+        }
+      });
+      lightbox.open();
+
+      const closeButtonEl = document.body.querySelector(".lum-close-button");
+      if (!closeButtonEl) {
+        throw new Error("Close button doesn't exist in DOM.");
+      }
+      closeButtonEl.click();
+
+      expect(closed).toBe(true);
+    });
+    it("the close button can be disabled", () => {
+      let triggerEl = document.querySelector(".test-anchor");
+
+      lightbox = new Lightbox({
+        namespace: "lum",
+        parentEl: document.body,
+        triggerEl: triggerEl,
+        sourceAttribute: "href",
+        caption: null,
+        closeButtonEnabled: false
+      });
+      lightbox.open();
+      // lightbox.close();
+
+      expect(document.body.querySelector(".lum-close-button")).toBeNull();
+    });
+  });
 });
