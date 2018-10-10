@@ -68,8 +68,10 @@ export default class Lightbox {
     if (e && typeof e.preventDefault === "function") {
       e.preventDefault();
     }
-    if (this.settings.onClose) {
-      this.settings.onClose();
+
+    const onClose = this.settings.onClose;
+    if (onClose && typeof onClose === "function") {
+      onClose();
     }
   }
 
