@@ -66,6 +66,25 @@ describe("Core", () => {
     lum.close();
     expect(called).toBe(true);
   });
+
+  it("injects styles into shadow root if parented by one", () => {
+    // TODO (43081j): remove when firefox ships with shadow DOM
+    if (typeof ShadowRoot === "undefined") {
+      return;
+    }
+    const container = document.createElement("div");
+    container.attachShadow({ mode: "open" });
+    const anchor = document.createElement("a");
+    anchor.href = "https://example.com/image.png";
+    anchor.classList.add("test-shadow-anchor");
+
+    container.shadowRoot.appendChild(anchor);
+    document.body.appendChild(container);
+
+    const lum = new Luminous(anchor);
+    const styles = container.shadowRoot.querySelector("style.lum-base-styles");
+    expect(styles).not.toBe(null);
+  });
 });
 
 describe("Configuration", () => {
