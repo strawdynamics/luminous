@@ -40,6 +40,8 @@ export default class Luminous {
     const closeWithEscape = options["closeWithEscape"] || true;
     // Automatically close when the page is scrolled.
     const closeOnScroll = options["closeOnScroll"] || false;
+    const closeButtonEnabled =
+      options["showCloseButton"] != null ? options["showCloseButton"] : true;
     // A selector defining what to append the lightbox element to.
     const appendToSelector = options["appendToSelector"] || "body";
     // If present (and a function), this will be called
@@ -67,6 +69,7 @@ export default class Luminous {
       closeTrigger,
       closeWithEscape,
       closeOnScroll,
+      closeButtonEnabled,
       appendToSelector,
       onOpen,
       onClose,
@@ -81,7 +84,7 @@ export default class Luminous {
     }
 
     this._buildLightbox();
-    this._bindEvents();
+    this._bindEventListeners();
   }
 
   open(e) {
@@ -89,13 +92,7 @@ export default class Luminous {
       e.preventDefault();
     }
 
-    let previouslyBuilt = this.lightbox.elementBuilt;
-
     this.lightbox.open();
-
-    if (!previouslyBuilt) {
-      this._bindCloseEvent();
-    }
 
     if (this.settings.closeOnScroll) {
       window.addEventListener("scroll", this.close, false);
@@ -110,10 +107,6 @@ export default class Luminous {
   }
 
   close(e) {
-    if (e && typeof e.preventDefault === "function") {
-      e.preventDefault();
-    }
-
     if (this.settings.closeOnScroll) {
       window.removeEventListener("scroll", this.close, false);
     }
@@ -136,25 +129,20 @@ export default class Luminous {
       sourceAttribute: this.settings.sourceAttribute,
       caption: this.settings.caption,
       includeImgixJSClass: this.settings.includeImgixJSClass,
+      closeButtonEnabled: this.settings.closeButtonEnabled,
       _gallery: this.settings._gallery,
-      _arrowNavigation: this.settings._arrowNavigation
+      _arrowNavigation: this.settings._arrowNavigation,
+      closeTrigger: this.settings.closeTrigger,
+      onClose: this.close
     });
   }
 
-  _bindEvents() {
+  _bindEventListeners() {
     this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
 
     if (this.settings.closeWithEscape) {
       window.addEventListener("keyup", this._handleKeyup, false);
     }
-  }
-
-  _bindCloseEvent() {
-    this.lightbox.el.addEventListener(
-      this.settings.closeTrigger,
-      this.close,
-      false
-    );
   }
 
   _unbindEvents() {
