@@ -191,6 +191,33 @@
   cursor: pointer;
 }
 
+.lum-close-button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+}
+.lum-close-button:hover {
+  opacity: 1;
+}
+.lum-close-button:before,
+.lum-close-button:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 33px;
+  width: 2px;
+  background-color: #fff;
+}
+.lum-close-button:before {
+  transform: rotate(45deg);
+}
+.lum-close-button:after {
+  transform: rotate(-45deg);
+}
+
 .lum-previous-button {
   left: 12px;
 }
