@@ -83,8 +83,13 @@ export default class Luminous {
       _arrowNavigation
     };
 
+    let injectionRoot = document.body;
+    if (appendToNode && "getRootNode" in appendToNode) {
+      injectionRoot = appendToNode.getRootNode();
+    }
+
     if (this.settings.injectBaseStyles) {
-      injectBaseStylesheet(rootNode);
+      injectBaseStylesheet(injectionRoot);
     }
 
     this._buildLightbox();
