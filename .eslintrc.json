@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "google",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "google", "prettier"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": "2015",
@@ -13,12 +9,15 @@
     "browser": true
   },
   "rules": {
-    "require-jsdoc": ["warn", {
-      "require": {
-        "FunctionDeclaration": true,
-        "MethodDefinition": true,
-        "ClassDeclaration": true
+    "require-jsdoc": [
+      "warn",
+      {
+        "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": true,
+          "ClassDeclaration": true
+        }
       }
-    }]
+    ]
   }
 }
