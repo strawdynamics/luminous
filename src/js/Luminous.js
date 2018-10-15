@@ -42,10 +42,10 @@ export default class Luminous {
     const closeOnScroll = options["closeOnScroll"] || false;
     const closeButtonEnabled =
       options["showCloseButton"] != null ? options["showCloseButton"] : true;
-    // A selector defining what to append the lightbox element to.
     const appendToNode =
       options["appendToNode"] ||
       (rootNode === document ? document.body : rootNode);
+    // A selector defining what to append the lightbox element to.
     const appendToSelector = options["appendToSelector"] || null;
     // If present (and a function), this will be called
     // whenever the lightbox is opened.
