@@ -2,7 +2,15 @@ import { isDOMElement } from "./util/dom";
 import injectBaseStylesheet from "./injectBaseStylesheet";
 import Lightbox from "./Lightbox";
 
+/**
+ * Represents the default luminous lightbox
+ */
 export default class Luminous {
+  /**
+   * Constructor
+   * @param {!Element} trigger Trigger element to open lightbox
+   * @param {Object=} options Luminous options
+   */
   constructor(trigger, options = {}) {
     this.VERSION = "2.3.1";
     this.destroy = this.destroy.bind(this);
@@ -96,6 +104,11 @@ export default class Luminous {
     this._bindEventListeners();
   }
 
+  /**
+   * Opens the lightbox
+   * @param {Event=} e Event which triggered opening
+   * @return {void}
+   */
   open(e) {
     if (e && typeof e.preventDefault === "function") {
       e.preventDefault();
@@ -115,6 +128,11 @@ export default class Luminous {
     this.isOpen = true;
   }
 
+  /**
+   * Closes the lightbox
+   * @param {Event=} e Event which triggered closing
+   * @return {void}
+   */
   close(e) {
     if (this.settings.closeOnScroll) {
       window.removeEventListener("scroll", this.close, false);
@@ -130,6 +148,11 @@ export default class Luminous {
     this.isOpen = false;
   }
 
+  /**
+   * Builds the internal lightbox instance
+   * @protected
+   * @return {void}
+   */
   _buildLightbox() {
     let parentEl = this.settings.appendToNode;
 
@@ -152,6 +175,11 @@ export default class Luminous {
     });
   }
 
+  /**
+   * Binds lightbox events to the trigger element
+   * @protected
+   * @return {void}
+   */
   _bindEventListeners() {
     this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
 
@@ -160,6 +188,11 @@ export default class Luminous {
     }
   }
 
+  /**
+   * Unbinds all events
+   * @protected
+   * @return {void}
+   */
   _unbindEvents() {
     this.trigger.removeEventListener(
       this.settings.openTrigger,
@@ -179,12 +212,22 @@ export default class Luminous {
     }
   }
 
+  /**
+   * Handles key up events and closes lightbox when esc is pressed
+   * @param {!Event} e Keyboard event
+   * @return {void}
+   * @protected
+   */
   _handleKeyup(e) {
     if (this.isOpen && e.keyCode === 27) {
       this.close();
     }
   }
 
+  /**
+   * Destroys internal lightbox and unbinds events
+   * @return {void}
+   */
   destroy() {
     this._unbindEvents();
     this.lightbox.destroy();

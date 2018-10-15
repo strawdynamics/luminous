@@ -11,7 +11,14 @@ const HAS_ANIMATION =
     ? false
     : "animation" in document.createElement("div").style;
 
+/**
+ * Represents the default lightbox implementation
+ */
 export default class Lightbox {
+  /**
+   * Constructor
+   * @param {Object=} options Lightbox options
+   */
   constructor(options = {}) {
     this._sizeImgWrapperEl = this._sizeImgWrapperEl.bind(this);
     this.showNext = this.showNext.bind(this);
@@ -21,7 +28,7 @@ export default class Lightbox {
     this._handleKeydown = this._handleKeydown.bind(this);
     this._handleClose = this._handleClose.bind(this);
 
-    let {
+    const {
       namespace = null,
       parentEl = throwIfMissing(),
       triggerEl = throwIfMissing(),
@@ -64,6 +71,12 @@ export default class Lightbox {
     this.elementBuilt = false;
   }
 
+  /**
+   * Handles closing of the lightbox
+   * @param {!Event} e Event that triggered closing
+   * @return {void}
+   * @protected
+   */
   _handleClose(e) {
     if (e && typeof e.preventDefault === "function") {
       e.preventDefault();
@@ -75,6 +88,11 @@ export default class Lightbox {
     }
   }
 
+  /**
+   * Binds event listeners to the trigger element
+   * @return {void}
+   * @protected
+   */
   _bindEventListeners() {
     this.el.addEventListener(this.settings.closeTrigger, this._handleClose);
     if (this.closeButtonEl) {
@@ -82,6 +100,12 @@ export default class Lightbox {
     }
   }
 
+  /**
+   * Builds a class list using the namespace and suffix, if any.
+   * @param {string} suffix Suffix to add to each class
+   * @return {!Array<!string>} Class list
+   * @protected
+   */
   _buildClasses(suffix) {
     const classes = [`lum-${suffix}`];
 
@@ -93,6 +117,11 @@ export default class Lightbox {
     return classes;
   }
 
+  /**
+   * Creates the lightbox element
+   * @return {void}
+   * @protected
+   */
   _buildElement() {
     this.el = document.createElement("div");
     addClasses(this.el, this._buildClasses("lightbox"));
@@ -144,11 +173,23 @@ export default class Lightbox {
     }
   }
 
+  /**
+   * Creates gallery elements such as previous/next buttons
+   * @return {void}
+   * @protected
+   */
   _setUpGalleryElements() {
     this._buildGalleryButton("previous", this.showPrevious);
     this._buildGalleryButton("next", this.showNext);
   }
 
+  /**
+   * Creates a gallery button
+   * @param {string} name Name of button
+   * @param {!Function} fn Click handler
+   * @return {void}
+   * @protected
+   */
   _buildGalleryButton(name, fn) {
     const btn = document.createElement("button");
     this[`${name}Button`] = btn;
@@ -169,6 +210,11 @@ export default class Lightbox {
     );
   }
 
+  /**
+   * Sizes the image wrapper
+   * @return {void}
+   * @protected
+   */
   _sizeImgWrapperEl() {
     const style = this.imgWrapperEl.style;
     style.width = `${this.innerEl.clientWidth}px`;
@@ -179,6 +225,11 @@ export default class Lightbox {
       this.captionEl.clientHeight}px`;
   }
 
+  /**
+   * Updates caption from settings
+   * @return {void}
+   * @protected
+   */
   _updateCaption() {
     const captionType = typeof this.settings.caption;
     let caption = "";
@@ -192,6 +243,11 @@ export default class Lightbox {
     this.captionEl.innerHTML = caption;
   }
 
+  /**
+   * Updates image element from the trigger element's attributes
+   * @return {void}
+   * @protected
+   */
   _updateImgSrc() {
     const imageURL = this.currentTrigger.getAttribute(
       this.settings.sourceAttribute
@@ -205,7 +261,7 @@ export default class Lightbox {
       );
     }
 
-    let loadingClasses = this._buildClasses("loading");
+    const loadingClasses = this._buildClasses("loading");
 
     if (!this.hasBeenLoaded) {
       addClasses(this.el, loadingClasses);
@@ -219,6 +275,12 @@ export default class Lightbox {
     this.imgEl.setAttribute("src", imageURL);
   }
 
+  /**
+   * Handles key up/down events for moving between items
+   * @param {!Event} e Keyboard event
+   * @return {void}
+   * @protected
+   */
   _handleKeydown(e) {
     if (e.keyCode == LEFT_ARROW) {
       this.showPrevious();
@@ -227,6 +289,10 @@ export default class Lightbox {
     }
   }
 
+  /**
+   * Shows the next item if in a gallery
+   * @return {void}
+   */
   showNext() {
     if (!this.settings._gallery) {
       return;
@@ -240,6 +306,10 @@ export default class Lightbox {
     this._sizeImgWrapperEl();
   }
 
+  /**
+   * Shows the previous item if in a gallery
+   * @return {void}
+   */
   showPrevious() {
     if (!this.settings._gallery) {
       return;
@@ -253,6 +323,10 @@ export default class Lightbox {
     this._sizeImgWrapperEl();
   }
 
+  /**
+   * Opens the lightbox
+   * @return {void}
+   */
   open() {
     if (!this.elementBuilt) {
       this._buildElement();
@@ -283,6 +357,10 @@ export default class Lightbox {
     }
   }
 
+  /**
+   * Closes the lightbox
+   * @return {void}
+   */
   close() {
     window.removeEventListener("resize", this._sizeImgWrapperEl, false);
 
@@ -298,12 +376,22 @@ export default class Lightbox {
     }
   }
 
+  /**
+   * Handles animations on completion of opening the lightbox
+   * @return {void}
+   * @protected
+   */
   _completeOpen() {
     this.el.removeEventListener("animationend", this._completeOpen, false);
 
     removeClasses(this.el, this.openingClasses);
   }
 
+  /**
+   * Handles animations on completion of closing the lightbox
+   * @return {void}
+   * @protected
+   */
   _completeClose() {
     this.el.removeEventListener("animationend", this._completeClose, false);
 
@@ -311,6 +399,10 @@ export default class Lightbox {
     removeClasses(this.el, this.closingClasses);
   }
 
+  /**
+   * Destroys the lightbox
+   * @return {void}
+   */
   destroy() {
     if (this.el) {
       this.settings.parentEl.removeChild(this.el);
