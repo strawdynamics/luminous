@@ -42,8 +42,11 @@ export default class Luminous {
     const closeOnScroll = options["closeOnScroll"] || false;
     const closeButtonEnabled =
       options["showCloseButton"] != null ? options["showCloseButton"] : true;
+    const appendToNode =
+      options["appendToNode"] ||
+      (rootNode === document ? document.body : rootNode);
     // A selector defining what to append the lightbox element to.
-    const appendToSelector = options["appendToSelector"] || "body";
+    const appendToSelector = options["appendToSelector"] || null;
     // If present (and a function), this will be called
     // whenever the lightbox is opened.
     const onOpen = options["onOpen"] || null;
@@ -70,6 +73,7 @@ export default class Luminous {
       closeWithEscape,
       closeOnScroll,
       closeButtonEnabled,
+      appendToNode,
       appendToSelector,
       onOpen,
       onClose,
@@ -79,8 +83,13 @@ export default class Luminous {
       _arrowNavigation
     };
 
+    let injectionRoot = document.body;
+    if (appendToNode && "getRootNode" in appendToNode) {
+      injectionRoot = appendToNode.getRootNode();
+    }
+
     if (this.settings.injectBaseStyles) {
-      injectBaseStylesheet(rootNode);
+      injectBaseStylesheet(injectionRoot);
     }
 
     this._buildLightbox();
@@ -122,9 +131,15 @@ export default class Luminous {
   }
 
   _buildLightbox() {
+    let parentEl = this.settings.appendToNode;
+
+    if (this.settings.appendToSelector) {
+      parentEl = document.querySelector(this.settings.appendToSelector);
+    }
+
     this.lightbox = new Lightbox({
       namespace: this.settings.namespace,
-      parentEl: document.querySelector(this.settings.appendToSelector),
+      parentEl: parentEl,
       triggerEl: this.trigger,
       sourceAttribute: this.settings.sourceAttribute,
       caption: this.settings.caption,
