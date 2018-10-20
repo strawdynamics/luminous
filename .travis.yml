@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - '8'
-  - '10'
+  - "8"
+  - "10"
 install:
   - npm install
 git:
@@ -21,3 +21,8 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+
+branches:
+  only:
+    - master
+    - /release.*/
