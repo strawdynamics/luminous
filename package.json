@@ -50,7 +50,7 @@
     "@babel/plugin-proposal-class-properties": "7.0.0-beta.54",
     "@babel/preset-env": "7.0.0-beta.54",
     "babel-eslint": "8.2.6",
-    "babel-loader": "8.0.0-beta.4",
+    "babel-loader": "8.0.4",
     "babel-preset-env": "7.0.0-beta.3",
     "chai": "4.1.2",
     "closure-webpack-plugin": "0.0.25",
