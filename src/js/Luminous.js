@@ -4,7 +4,7 @@ import Lightbox from "./Lightbox";
 
 export default class Luminous {
   constructor(trigger, options = {}) {
-    this.VERSION = "2.2.1";
+    this.VERSION = "2.3.1";
     this.destroy = this.destroy.bind(this);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
@@ -40,8 +40,13 @@ export default class Luminous {
     const closeWithEscape = options["closeWithEscape"] || true;
     // Automatically close when the page is scrolled.
     const closeOnScroll = options["closeOnScroll"] || false;
+    const closeButtonEnabled =
+      options["showCloseButton"] != null ? options["showCloseButton"] : true;
+    const appendToNode =
+      options["appendToNode"] ||
+      (rootNode === document ? document.body : rootNode);
     // A selector defining what to append the lightbox element to.
-    const appendToSelector = options["appendToSelector"] || "body";
+    const appendToSelector = options["appendToSelector"] || null;
     // If present (and a function), this will be called
     // whenever the lightbox is opened.
     const onOpen = options["onOpen"] || null;
@@ -67,6 +72,8 @@ export default class Luminous {
       closeTrigger,
       closeWithEscape,
       closeOnScroll,
+      closeButtonEnabled,
+      appendToNode,
       appendToSelector,
       onOpen,
       onClose,
@@ -76,12 +83,17 @@ export default class Luminous {
       _arrowNavigation
     };
 
+    let injectionRoot = document.body;
+    if (appendToNode && "getRootNode" in appendToNode) {
+      injectionRoot = appendToNode.getRootNode();
+    }
+
     if (this.settings.injectBaseStyles) {
-      injectBaseStylesheet(rootNode);
+      injectBaseStylesheet(injectionRoot);
     }
 
     this._buildLightbox();
-    this._bindEvents();
+    this._bindEventListeners();
   }
 
   open(e) {
@@ -89,13 +101,7 @@ export default class Luminous {
       e.preventDefault();
     }
 
-    let previouslyBuilt = this.lightbox.elementBuilt;
-
     this.lightbox.open();
-
-    if (!previouslyBuilt) {
-      this._bindCloseEvent();
-    }
 
     if (this.settings.closeOnScroll) {
       window.addEventListener("scroll", this.close, false);
@@ -110,10 +116,6 @@ export default class Luminous {
   }
 
   close(e) {
-    if (e && typeof e.preventDefault === "function") {
-      e.preventDefault();
-    }
-
     if (this.settings.closeOnScroll) {
       window.removeEventListener("scroll", this.close, false);
     }
@@ -129,32 +131,33 @@ export default class Luminous {
   }
 
   _buildLightbox() {
+    let parentEl = this.settings.appendToNode;
+
+    if (this.settings.appendToSelector) {
+      parentEl = document.querySelector(this.settings.appendToSelector);
+    }
+
     this.lightbox = new Lightbox({
       namespace: this.settings.namespace,
-      parentEl: document.querySelector(this.settings.appendToSelector),
+      parentEl: parentEl,
       triggerEl: this.trigger,
       sourceAttribute: this.settings.sourceAttribute,
       caption: this.settings.caption,
       includeImgixJSClass: this.settings.includeImgixJSClass,
+      closeButtonEnabled: this.settings.closeButtonEnabled,
       _gallery: this.settings._gallery,
-      _arrowNavigation: this.settings._arrowNavigation
+      _arrowNavigation: this.settings._arrowNavigation,
+      closeTrigger: this.settings.closeTrigger,
+      onClose: this.close
     });
   }
 
-  _bindEvents() {
+  _bindEventListeners() {
     this.trigger.addEventListener(this.settings.openTrigger, this.open, false);
 
     if (this.settings.closeWithEscape) {
       window.addEventListener("keyup", this._handleKeyup, false);
     }
-  }
-
-  _bindCloseEvent() {
-    this.lightbox.el.addEventListener(
-      this.settings.closeTrigger,
-      this.close,
-      false
-    );
   }
 
   _unbindEvents() {

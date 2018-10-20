@@ -1,8 +1,12 @@
 // This is not really a perfect check, but works fine.
 // From http://stackoverflow.com/questions/384286
 const HAS_DOM_2 = typeof HTMLElement === "object";
+const HAS_SHADOW = typeof ShadowRoot !== "undefined";
 
 export function isDOMElement(obj) {
+  if (HAS_SHADOW && obj instanceof ShadowRoot) {
+    return true;
+  }
   return HAS_DOM_2
     ? obj instanceof HTMLElement
     : obj &&

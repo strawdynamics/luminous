@@ -110,8 +110,13 @@ var options = {
   closeWithEscape: true,
   // Automatically close when the page is scrolled.
   closeOnScroll: false,
+  // Disable close button
+  showCloseButton: false,
+  // A node to append the lightbox element to.
+  appendToNode: document.body,
   // A selector defining what to append the lightbox element to.
-  appendToSelector: "body",
+  // This will take precedence over `appendToNode`.
+  appendToSelector: null,
   // If present (and a function), this will be called
   // whenever the lightbox is opened.
   onOpen: null,

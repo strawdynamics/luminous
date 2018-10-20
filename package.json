@@ -1,6 +1,6 @@
 {
   "name": "luminous-lightbox",
-  "version": "2.2.2",
+  "version": "2.3.1",
   "description": "A simple, lightweight, no-dependencies JavaScript image lightbox.",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "dev": "npm run build:watch",
     "format:check": "prettier --list-different \"{src,test}/**/*.js\"",
     "format": "prettier --write \"{src,test}/**/*.js\"",
-    "release": "npm run build && git add dist && standard-version -a",
+    "release": "npm run build && git add dist src/js/Luminous.js && standard-version -a",
     "start": "npm run dev",
     "test:watch": "karma start config/karma/karma-local.config.js",
     "test:local": "karma start config/karma/karma-local.config.js --singleRun",
