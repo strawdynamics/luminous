@@ -1,0 +1,10 @@
+{
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "jasmine": true
+  },
+  "rules": {
+    "require-jsdoc": "off"
+  }
+}

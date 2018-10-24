@@ -2,7 +2,7 @@ import Lightbox from "../src/js/Lightbox";
 
 let lightbox = null;
 beforeEach(function() {
-  let anchor = document.createElement("a");
+  const anchor = document.createElement("a");
   anchor.href = "http://website.com/image.png";
   anchor.classList.add("test-anchor");
 
@@ -10,19 +10,19 @@ beforeEach(function() {
 });
 
 const deleteAllElementsByClassName = className => {
-  var paras = document.getElementsByClassName(className);
+  const paras = document.getElementsByClassName(className);
   while (paras[0]) {
     paras[0].parentNode.removeChild(paras[0]);
   }
 };
 afterEach(function() {
-  let anchor = document.querySelector(".test-anchor");
+  const anchor = document.querySelector(".test-anchor");
 
   if (lightbox) {
     try {
       lightbox.close();
       lightbox.destroy();
-    } catch (e) {}
+    } catch (_e) {} // eslint-disable-line no-empty
     lightbox = null;
   }
   deleteAllElementsByClassName("lum-lightbox");
@@ -44,7 +44,7 @@ describe("Lightbox", () => {
 
   it("does not throw if all required arguments are passed", () => {
     expect(() => {
-      let triggerEl = document.querySelector(".test-anchor");
+      const triggerEl = document.querySelector(".test-anchor");
 
       new Lightbox({
         namespace: "test",
@@ -58,7 +58,7 @@ describe("Lightbox", () => {
 
   it("throws if passed `parentEl` is not a DOM element", () => {
     expect(() => {
-      let triggerEl = document.querySelector(".test-anchor");
+      const triggerEl = document.querySelector(".test-anchor");
 
       new Lightbox({
         namespace: "test",
@@ -74,7 +74,7 @@ describe("Lightbox", () => {
   });
 
   it("assigns the correct class to its element", () => {
-    let triggerEl = document.querySelector(".test-anchor");
+    const triggerEl = document.querySelector(".test-anchor");
 
     lightbox = new Lightbox({
       namespace: "test-namespace",
@@ -92,11 +92,11 @@ describe("Lightbox", () => {
   });
 
   it("appends its element to the specified `appendToEl`", () => {
-    let demoDiv = document.createElement("div");
+    const demoDiv = document.createElement("div");
     demoDiv.classList.add("demo-div");
     document.body.appendChild(demoDiv);
 
-    let triggerEl = document.querySelector(".test-anchor");
+    const triggerEl = document.querySelector(".test-anchor");
 
     lightbox = new Lightbox({
       namespace: "lum",
@@ -114,7 +114,7 @@ describe("Lightbox", () => {
   });
 
   it("cleans up its element when destroyed", () => {
-    let triggerEl = document.querySelector(".test-anchor");
+    const triggerEl = document.querySelector(".test-anchor");
 
     lightbox = new Lightbox({
       namespace: "to-destroy",
@@ -131,7 +131,7 @@ describe("Lightbox", () => {
   });
 
   it("adds the `imgix-fluid` param if configured", () => {
-    let triggerEl = document.querySelector(".test-anchor");
+    const triggerEl = document.querySelector(".test-anchor");
 
     lightbox = new Lightbox({
       namespace: "fluid",
@@ -149,7 +149,7 @@ describe("Lightbox", () => {
 
   describe("Close button", () => {
     it("shows a close button when the lightbox is open", () => {
-      let triggerEl = document.querySelector(".test-anchor");
+      const triggerEl = document.querySelector(".test-anchor");
 
       lightbox = new Lightbox({
         namespace: "lum",
@@ -164,7 +164,7 @@ describe("Lightbox", () => {
       expect(document.body.querySelector(".lum-close-button")).not.toBeNull();
     });
     it("the close button closes the lightbox", () => {
-      let triggerEl = document.querySelector(".test-anchor");
+      const triggerEl = document.querySelector(".test-anchor");
 
       let closed = false;
       lightbox = new Lightbox({
@@ -188,7 +188,7 @@ describe("Lightbox", () => {
       expect(closed).toBe(true);
     });
     it("the close button can be disabled", () => {
-      let triggerEl = document.querySelector(".test-anchor");
+      const triggerEl = document.querySelector(".test-anchor");
 
       lightbox = new Lightbox({
         namespace: "lum",

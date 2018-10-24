@@ -41,7 +41,8 @@
     "test:watch": "karma start config/karma/karma-local.config.js",
     "test:local": "karma start config/karma/karma-local.config.js --singleRun",
     "test:ci": "karma start config/karma/karma-ci.config.js --singleRun",
-    "test": "npm run test:local"
+    "test": "npm run test:local",
+    "lint": "eslint \"{src,test}/**/*.js\""
   },
   "dependencies": {},
   "devDependencies": {
@@ -57,6 +58,9 @@
     "cross-env": "5.2.0",
     "cssnano": "4.1.7",
     "cssnano-preset-advanced": "4.0.5",
+    "eslint": "5.6.1",
+    "eslint-config-google": "0.11.0",
+    "eslint-config-prettier": "3.1.0",
     "google-closure-compiler-js": "20180610.0.0",
     "jasmine-core": "3.2.1",
     "karma": "3.1.1",

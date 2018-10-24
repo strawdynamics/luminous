@@ -1,7 +1,7 @@
 import Luminous from "../src/js/Luminous";
 
 beforeEach(function() {
-  let anchor = document.createElement("a");
+  const anchor = document.createElement("a");
   anchor.href = "http://website.com/image.png";
   anchor.classList.add("test-anchor");
 
@@ -9,7 +9,7 @@ beforeEach(function() {
 });
 
 afterEach(function() {
-  let anchor = document.querySelector(".test-anchor");
+  const anchor = document.querySelector(".test-anchor");
 
   document.body.removeChild(anchor);
 });
@@ -34,8 +34,8 @@ describe("Core", () => {
   });
 
   it("returns an instance of `Luminous` when correctly instantiated", () => {
-    let anchor = document.querySelector(".test-anchor");
-    let lum = new Luminous(anchor);
+    const anchor = document.querySelector(".test-anchor");
+    const lum = new Luminous(anchor);
 
     expect(lum.constructor).toBe(Luminous);
   });
@@ -46,8 +46,8 @@ describe("Core", () => {
       called = true;
     }
 
-    let anchor = document.querySelector(".test-anchor");
-    let lum = new Luminous(anchor, { onOpen: openCallback });
+    const anchor = document.querySelector(".test-anchor");
+    const lum = new Luminous(anchor, { onOpen: openCallback });
 
     lum.open();
     expect(called).toBe(true);
@@ -59,8 +59,8 @@ describe("Core", () => {
       called = true;
     }
 
-    let anchor = document.querySelector(".test-anchor");
-    let lum = new Luminous(anchor, { onClose: closeCallback });
+    const anchor = document.querySelector(".test-anchor");
+    const lum = new Luminous(anchor, { onClose: closeCallback });
 
     lum.open();
     lum.close();
@@ -81,7 +81,7 @@ describe("Core", () => {
     container.shadowRoot.appendChild(anchor);
     document.body.appendChild(container);
 
-    const lum = new Luminous(anchor);
+    new Luminous(anchor);
     const styles = container.shadowRoot.querySelector("style.lum-base-styles");
     expect(styles).not.toBe(null);
   });
@@ -100,7 +100,7 @@ describe("Core", () => {
     container.shadowRoot.appendChild(anchor);
     document.body.appendChild(container);
 
-    const lum = new Luminous(anchor);
+    new Luminous(anchor);
     anchor.click();
 
     const lightbox = container.shadowRoot.querySelector(".lum-lightbox");
@@ -110,35 +110,35 @@ describe("Core", () => {
 
 describe("Configuration", () => {
   it("sets up settings object when no options are passed", () => {
-    let anchor = document.querySelector(".test-anchor");
-    let lum = new Luminous(anchor);
+    const anchor = document.querySelector(".test-anchor");
+    const lum = new Luminous(anchor);
 
     expect(lum.settings).toBeDefined();
   });
 
   it("applies proper setting defaults when no options are passed", () => {
-    let anchor = document.querySelector(".test-anchor");
-    let lum = new Luminous(anchor);
+    const anchor = document.querySelector(".test-anchor");
+    const lum = new Luminous(anchor);
 
     expect(lum.settings.sourceAttribute).toBe("href");
   });
 
   it("accepts custom settings", () => {
-    let anchor = document.querySelector(".test-anchor");
-    let lum = new Luminous(anchor, { namespace: "not-the-default" });
+    const anchor = document.querySelector(".test-anchor");
+    const lum = new Luminous(anchor, { namespace: "not-the-default" });
 
     expect(lum.settings.namespace).toBe("not-the-default");
   });
 
   it("leaves settings defaults in place when custom settings are passed", () => {
-    let anchor = document.querySelector(".test-anchor");
-    let lum = new Luminous(anchor, { namespace: "it-does-not-matter" });
+    const anchor = document.querySelector(".test-anchor");
+    const lum = new Luminous(anchor, { namespace: "it-does-not-matter" });
 
     expect(lum.settings.openTrigger).toBe("click");
   });
 
   it("passes settings to Lightbox", () => {
-    let anchor = document.querySelector(".test-anchor");
+    const anchor = document.querySelector(".test-anchor");
     const settingsToMap = {
       namespace: "custom",
       sourceAttribute: "not-href",
@@ -158,11 +158,12 @@ describe("Configuration", () => {
       return p;
     }, {});
 
-    let lum = new Luminous(anchor, clientSettings);
+    const lum = new Luminous(anchor, clientSettings);
 
     Object.keys(settingsToMap).forEach(settingKey => {
       const valuePrimitiveOrObject = settingsToMap[settingKey];
-      let expectedKey, expectedValue;
+      let expectedKey;
+      let expectedValue;
       if (isObject(valuePrimitiveOrObject)) {
         const valueConfig = valuePrimitiveOrObject;
         expectedKey = valueConfig.lightboxKey || settingKey;
@@ -181,8 +182,8 @@ describe("Configuration", () => {
 
 describe("#destroy", () => {
   it("does not throw if the Lightbox instance has never been `#open`ed", () => {
-    let anchor = document.querySelector(".test-anchor");
-    let lum = new Luminous(anchor);
+    const anchor = document.querySelector(".test-anchor");
+    const lum = new Luminous(anchor);
 
     expect(function() {
       lum.destroy();
