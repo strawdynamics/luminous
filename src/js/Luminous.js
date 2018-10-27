@@ -32,68 +32,56 @@ export default class Luminous {
     if ("getRootNode" in this.trigger) {
       rootNode = this.trigger.getRootNode();
     }
-    // Prefix for generated element class names (e.g. `my-ns` will
-    // result in classes such as `my-ns-lightbox`. Default `lum-`
-    // prefixed classes will always be added as well.
-    const namespace = options["namespace"] || null;
-    // Which attribute to pull the lightbox image source from.
-    const sourceAttribute = options["sourceAttribute"] || "href";
-    // Captions can be a literal string, or a function that receives the Luminous instance's trigger element as an argument and returns a string. Supports HTML, so use caution when dealing with user input.
-    const caption = options["caption"] || null;
-    // The event to listen to on the _trigger_ element: triggers opening.
-    const openTrigger = options["openTrigger"] || "click";
-    // The event to listen to on the _lightbox_ element: triggers closing.
-    const closeTrigger = options["closeTrigger"] || "click";
-    // Allow closing by pressing escape.
-    const closeWithEscape = options["closeWithEscape"] || true;
-    // Automatically close when the page is scrolled.
-    const closeOnScroll = options["closeOnScroll"] || false;
-    const closeButtonEnabled =
-      options["showCloseButton"] != null ? options["showCloseButton"] : true;
-    const appendToNode =
-      options["appendToNode"] ||
-      (rootNode === document ? document.body : rootNode);
-    // A selector defining what to append the lightbox element to.
-    const appendToSelector = options["appendToSelector"] || null;
-    // If present (and a function), this will be called
-    // whenever the lightbox is opened.
-    const onOpen = options["onOpen"] || null;
-    // If present (and a function), this will be called
-    // whenever the lightbox is closed.
-    const onClose = options["onClose"] || null;
-    // When true, adds the `imgix-fluid` class to the `img`
-    // inside the lightbox. See https://github.com/imgix/imgix.js
-    // for more information.
-    const includeImgixJSClass = options["includeImgixJSClass"] || false;
-    // Add base styles to the page. See the "Theming"
-    // section of README.md for more information.
-    const injectBaseStyles = options["injectBaseStyles"] || true;
-    // Internal use only!
-    const _gallery = options["_gallery"] || null;
-    const _arrowNavigation = options["_arrowNavigation"] || null;
 
-    this.settings = {
-      namespace,
-      sourceAttribute,
-      caption,
-      openTrigger,
-      closeTrigger,
-      closeWithEscape,
-      closeOnScroll,
-      closeButtonEnabled,
-      appendToNode,
-      appendToSelector,
-      onOpen,
-      onClose,
-      includeImgixJSClass,
-      injectBaseStyles,
-      _gallery,
-      _arrowNavigation
+    const DEFAULTS = {
+      // Prefix for generated element class names (e.g. `my-ns` will
+      // result in classes such as `my-ns-lightbox`. Default `lum-`
+      // prefixed classes will always be added as well.
+      namespace: null,
+      // Which attribute to pull the lightbox image source from.
+      sourceAttribute: "href",
+      // Captions can be a literal string, or a function that receives the Luminous
+      // instance's trigger element as an argument and returns a string. Supports
+      // HTML, so use caution when dealing with user input.
+      caption: null,
+      // The event to listen to on the _trigger_ element: triggers opening.
+      openTrigger: "click",
+      // The event to listen to on the _lightbox_ element: triggers closing.
+      closeTrigger: "click",
+      // Allow closing by pressing escape.
+      closeWithEscape: true,
+      // Automatically close when the page is scrolled.
+      closeOnScroll: false,
+      closeButtonEnabled: true,
+      appendToNode: rootNode === document ? document.body : rootNode,
+      // A selector defining what to append the lightbox element to.
+      appendToSelector: null,
+      // If present (and a function), this will be called
+      // whenever the lightbox is opened.
+      onOpen: null,
+      // If present (and a function), this will be called
+      // whenever the lightbox is closed.
+      onClose: null,
+      // When true, adds the `imgix-fluid` class to the `img`
+      // inside the lightbox. See https://github.com/imgix/imgix.js
+      // for more information.
+      includeImgixJSClass: false,
+      // Add base styles to the page. See the "Theming"
+      // section of README.md for more information.
+      injectBaseStyles: true,
+      // Internal use only!
+      _gallery: null,
+      _arrowNavigation: null
     };
 
+    this.settings = Object.assign({}, DEFAULTS, options);
+
     let injectionRoot = document.body;
-    if (appendToNode && "getRootNode" in appendToNode) {
-      injectionRoot = appendToNode.getRootNode();
+    if (
+      this.settings.appendToNode &&
+      "getRootNode" in this.settings.appendToNode
+    ) {
+      injectionRoot = this.settings.appendToNode.getRootNode();
     }
 
     if (this.settings.injectBaseStyles) {
