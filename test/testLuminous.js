@@ -139,43 +139,19 @@ describe("Configuration", () => {
 
   it("passes settings to Lightbox", () => {
     const anchor = document.querySelector(".test-anchor");
-    const settingsToMap = {
+    const settings = {
       namespace: "custom",
       sourceAttribute: "not-href",
       caption: "custom",
       includeImgixJSClass: true,
-      showCloseButton: {
-        value: false,
-        lightboxKey: "closeButtonEnabled"
-      }
+      closeButtonEnabled: false
     };
-    const isObject = v => typeof v === "object" && v != null;
-    const clientSettings = Object.keys(settingsToMap).reduce((p, key) => {
-      const valuePrimitiveOrObject = settingsToMap[key];
-      p[key] = isObject(valuePrimitiveOrObject)
-        ? valuePrimitiveOrObject.value
-        : valuePrimitiveOrObject;
-      return p;
-    }, {});
 
-    const lum = new Luminous(anchor, clientSettings);
+    const lum = new Luminous(anchor, settings);
 
-    Object.keys(settingsToMap).forEach(settingKey => {
-      const valuePrimitiveOrObject = settingsToMap[settingKey];
-      let expectedKey;
-      let expectedValue;
-      if (isObject(valuePrimitiveOrObject)) {
-        const valueConfig = valuePrimitiveOrObject;
-        expectedKey = valueConfig.lightboxKey || settingKey;
-        expectedValue =
-          "lightboxValue" in valueConfig
-            ? valueConfig.lightboxValue
-            : valueConfig.value;
-      } else {
-        expectedKey = settingKey;
-        expectedValue = valuePrimitiveOrObject;
-      }
-      expect(lum.lightbox.settings[expectedKey]).toBe(expectedValue);
+    Object.keys(settings).forEach(key => {
+      const value = settings[key];
+      expect(lum.lightbox.settings[key]).toBe(value);
     });
   });
 });
