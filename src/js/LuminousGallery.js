@@ -11,14 +11,16 @@ export default class LuminousGallery {
    * @param {Object=} luminousOpts Luminous options
    */
   constructor(triggers, options = {}, luminousOpts = {}) {
-    const { arrowNavigation = true } = options;
+    const optionsDefaults = {
+      arrowNavigation: true
+    };
 
-    this.settings = { arrowNavigation };
+    this.settings = Object.assign({}, optionsDefaults, options);
 
     this.triggers = triggers;
     this.luminousOpts = luminousOpts;
-    this.luminousOpts._gallery = this;
-    this.luminousOpts._arrowNavigation = this.settings.arrowNavigation;
+    this.luminousOpts["_gallery"] = this;
+    this.luminousOpts["_arrowNavigation"] = this.settings["arrowNavigation"];
     this._constructLuminousInstances();
   }
 
