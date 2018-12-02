@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.2"></a>
+## [2.3.2](https://github.com/imgix/luminous/compare/v2.3.1...v2.3.2) (2018-12-02)
+
+
+### Bug Fixes
+
+* fix arrow navigation ([#121](https://github.com/imgix/luminous/issues/121)) ([2be022a](https://github.com/imgix/luminous/commit/2be022a))
+
+
+
 <a name="2.3.1"></a>
 ## [2.3.1](https://github.com/imgix/luminous/compare/v2.3.0...v2.3.1) (2018-10-15)
 
