@@ -2,7 +2,8 @@ import LuminousGallery from "../src/js/LuminousGallery";
 
 const genLink = idx => `http://website.com/image-${idx}.png`;
 
-const isChrome = !!window.chrome && !!window.chrome.webstore;
+const isChromeHeadless = /HeadlessChrome/.test(window.navigator.userAgent);
+console.log("isChromeHeadless", isChromeHeadless);
 
 beforeEach(function() {
   for (let index = 0; index < 3; index++) {
@@ -67,8 +68,8 @@ describe("LuminousGallery", () => {
   });
   it("should navigate right when right arrow key pressed", () => {
     console.log("process.env.CI", process.env.CI);
-    console.log("isChrome", isChrome);
-    if (isChrome && process.env.CI) {
+    console.log("isChromeHeadless", isChromeHeadless);
+    if (isChromeHeadless && process.env.CI) {
       return;
     }
     const gallery = new LuminousGallery(
@@ -85,7 +86,7 @@ describe("LuminousGallery", () => {
     expect(document.body.querySelector(".lum-img").src).toBe(genLink(1));
   });
   it("should navigate left when left arrow key pressed", () => {
-    if (isChrome && process.env.CI) {
+    if (isChromeHeadless && process.env.CI) {
       return;
     }
     const gallery = new LuminousGallery(
