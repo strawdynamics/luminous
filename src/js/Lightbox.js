@@ -282,7 +282,6 @@ export default class Lightbox {
    * @protected
    */
   _handleKeydown(e) {
-    console.log("[Lightbox] e.keyCode", e.keyCode);
     if (e.keyCode == LEFT_ARROW) {
       this.showPrevious();
     } else if (e.keyCode == RIGHT_ARROW) {

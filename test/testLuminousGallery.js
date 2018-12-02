@@ -34,10 +34,9 @@ function openLuminous(index = 0) {
 
 describe("LuminousGallery", () => {
   it("should navigate right when right arrow button pressed", () => {
-    const gallery = new LuminousGallery(
-      document.querySelectorAll(".test-gallery-anchor"),
-      { arrowNavigation: true }
-    );
+    new LuminousGallery(document.querySelectorAll(".test-gallery-anchor"), {
+      arrowNavigation: true
+    });
 
     openLuminous(0);
 
@@ -50,10 +49,9 @@ describe("LuminousGallery", () => {
     expect(document.body.querySelector(".lum-img").src).toBe(genLink(1));
   });
   it("should navigate left when left arrow button pressed", () => {
-    const gallery = new LuminousGallery(
-      document.querySelectorAll(".test-gallery-anchor"),
-      { arrowNavigation: true }
-    );
+    new LuminousGallery(document.querySelectorAll(".test-gallery-anchor"), {
+      arrowNavigation: true
+    });
 
     openLuminous(1);
 
@@ -70,15 +68,13 @@ describe("LuminousGallery", () => {
     if (isChromeHeadless) {
       return;
     }
-    const gallery = new LuminousGallery(
-      document.querySelectorAll(".test-gallery-anchor"),
-      { arrowNavigation: true }
-    );
+    new LuminousGallery(document.querySelectorAll(".test-gallery-anchor"), {
+      arrowNavigation: true
+    });
 
     openLuminous(0);
 
     const event = new KeyboardEvent("keydown", { keyCode: 39 });
-    console.log(event.keyCode);
     window.dispatchEvent(event);
 
     expect(document.body.querySelector(".lum-img").src).toBe(genLink(1));
@@ -88,10 +84,9 @@ describe("LuminousGallery", () => {
     if (isChromeHeadless) {
       return;
     }
-    const gallery = new LuminousGallery(
-      document.querySelectorAll(".test-gallery-anchor"),
-      { arrowNavigation: true }
-    );
+    new LuminousGallery(document.querySelectorAll(".test-gallery-anchor"), {
+      arrowNavigation: true
+    });
 
     openLuminous(1);
 
