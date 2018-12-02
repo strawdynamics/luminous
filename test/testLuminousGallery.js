@@ -72,6 +72,7 @@ describe("LuminousGallery", () => {
     openLuminous(0);
 
     const event = new KeyboardEvent("keydown", { keyCode: 39 });
+    console.log(event.keyCode);
     window.dispatchEvent(event);
 
     expect(document.body.querySelector(".lum-img").src).toBe(genLink(1));
