@@ -158,9 +158,11 @@ new LuminousGallery(document.querySelectorAll("a"), galleryOpts, luminousOpts);
 
 ## Theming
 
-By default, Luminous injects an extremely basic set of styles into the page. You will almost certainly want to extend these basic styles for a prettier, more usable experience that matches your site. There is an included basic theme that may meet your needs, or at least give a good example of how to build out your own custom styles. The `namespace` option can be used as a way to easily apply different themes to specific instances of Luminous.
+By default, Luminous injects an extremely basic set of styles into the page via the `injectBaseStyles` option. You will almost certainly want to extend these basic styles for a prettier, more usable experience that matches your site. If you need to do something very out of the ordinary, or just prefer to include the default styles in CSS yourself, you can pass `injectBaseStyles: false` when instantiating a new instance of Luminous. Please note that if you disable the included base styles, you will still need to provide an animation for `.lum-lightbox.lum-opening` and `.lum-lightbox.lum-closing` (this can be a "noop" style animation, as seen in the base styles source).
 
-If you need to do something very out of the ordinary, or just prefer to include the default styles in CSS yourself, you can pass `injectBaseStyles: false` when instantiating a new instance of Luminous. Please note that if you disable the included base styles, you will still need to provide an animation for `.lum-lightbox.lum-opening` and `.lum-lightbox.lum-closing` (this can be a "noop" style animation, as seen in the base styles source).
+There is also an included basic theme (`luminous-basic.css`) that may meet your needs, or at least give a good example of how to build out your own custom styles. This can either be included in your site's CSS via `@import "node_modules/luminous-lightbox/dist/luminous-basic.css";` or as a linked stylesheet in your HTML.
+
+Additionally, the `namespace` option can be used as a way to easily apply different themes to specific instances of Luminous.
 
 <a name="browser-support"></a>
 
