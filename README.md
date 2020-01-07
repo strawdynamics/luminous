@@ -1,17 +1,24 @@
-<img src="https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=120" srcset="https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=120 1x,
- https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=120&dpr=2 2x, https://assets.imgix.net/imgix-logo-web-2014.pdf?page=2&fm=png&w=120&dpr=3 3x" alt="imgix logo">
+<!-- ix-docs-ignore -->
+![imgix logo](https://assets.imgix.net/sdk-imgix-logo.svg)
 
-# Luminous [![Build Status](https://travis-ci.org/imgix/luminous.svg?branch=master)](https://travis-ci.org/imgix/luminous)
+`Luminous` is a simple, lightweight, no-dependencies JavaScript image lightbox.
 
-A simple, lightweight, no-dependencies JavaScript image lightbox.
+[![npm version](https://img.shields.io/npm/v/luminous-lightbox.svg)](https://www.npmjs.com/package/luminous-lightbox)
+[![Build Status](https://travis-ci.org/imgix/luminous.svg?branch=master)](https://travis-ci.org/imgix/luminous)
+[![npm](https://img.shields.io/npm/dm/luminous-lightbox.svg)](https://www.npmjs.com/package/luminous-lightbox)
+[![License](https://img.shields.io/github/license/imgix/luminous)](https://github.com/imgix/luminous/blob/master/LICENSE.md)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+
+---
+<!-- /ix-docs-ignore -->
 
 - [Installation](#installation)
 - [Usage](#usage)
   - [LuminousGallery Usage](#luminousgallery-usage)
-- [Options / Defaults](#options-defaults)
-  - [LuminousGallery Options / Defaults](#luminousgallery-options-defaults)
-- [Browser Support](#browser-support)
+- [Options / Defaults](#options--defaults)
+  - [LuminousGallery Options / Defaults](#luminousgallery-options--defaults)
 - [Theming](#theming)
+- [Browser Support](#browser-support)
 - [Meta](#meta)
 
 <a name="installation"></a>
@@ -24,7 +31,7 @@ A simple, lightweight, no-dependencies JavaScript image lightbox.
 
 If you're using the pre-built version of Luminous, it will automatically make `window.Luminous` and `window.LuminousGallery` available for your use when included on your page.
 
-If you prefer to use `require` statements and a build tool like Browserify, there are a couple other things to keep in mind. First, `require('luminous-lightbox')` gives you an object with `Luminous` and `LuminousGallery` keys. You can use it like this:
+If you prefer to use `require` statements and a build tool like Browserify, there are a couple other things to keep in mind. First, `require('luminous-lightbox')` gives you an object with `Luminous` and `LuminousGallery` keys. You can use it in the following ways:
 
 ```javascript
 var Luminous = require('luminous-lightbox').Luminous;
@@ -44,7 +51,7 @@ new Luminous(…);
 
 ## Usage
 
-Once you've installed Luminous via one of the above methods, you're ready to get started. There are no dependencies, so you can just start making cool stuff. Check out the [announcement blog post](http://blog.imgix.com/2016/01/06/better-lightbox-zoom-viewer-with-imgix.html) for a demo, or take a peek here: https://imgix.github.io/luminous. Here's an example of the most basic possible implementation:
+Once you've installed Luminous via one of the above methods, you're ready to get started. There are no dependencies, so you can just start making cool stuff. Check out the [announcement blog post](http://blog.imgix.com/2016/01/06/better-lightbox-zoom-viewer-with-imgix.html), or take a peek at [our demo](https://imgix.github.io/luminous). Here's an example of a basic implementation:
 
 ```html
 <a href="http://assets.imgix.net/dog.png?w=1600">
