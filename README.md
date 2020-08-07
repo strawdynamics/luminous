@@ -4,9 +4,9 @@
 `Luminous` is a simple, lightweight, no-dependencies JavaScript image lightbox.
 
 [![npm version](https://img.shields.io/npm/v/luminous-lightbox.svg)](https://www.npmjs.com/package/luminous-lightbox)
-[![Build Status](https://travis-ci.org/imgix/luminous.svg?branch=master)](https://travis-ci.org/imgix/luminous)
+[![Build Status](https://travis-ci.org/imgix/luminous.svg?branch=main)](https://travis-ci.org/imgix/luminous)
 [![npm](https://img.shields.io/npm/dm/luminous-lightbox.svg)](https://www.npmjs.com/package/luminous-lightbox)
-[![License](https://img.shields.io/github/license/imgix/luminous)](https://github.com/imgix/luminous/blob/master/LICENSE.md)
+[![License](https://img.shields.io/github/license/imgix/luminous)](https://github.com/imgix/luminous/blob/main/LICENSE.md)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 ---
@@ -27,7 +27,7 @@
 
 - **NPM**: `npm install luminous-lightbox`
 - **Bower**: `bower install luminous`
-- **Manual**: [Download](https://github.com/imgix/luminous/archive/master.zip) and use `dist/Luminous.min.js` or `dist/Luminous.js`
+- **Manual**: [Download](https://github.com/imgix/luminous/archive/main.zip) and use `dist/Luminous.min.js` or `dist/Luminous.js`
 
 If you're using the pre-built version of Luminous, it will automatically make `window.Luminous` and `window.LuminousGallery` available for your use when included on your page.
 
@@ -181,4 +181,4 @@ We support the latest version of Google Chrome (which [automatically updates](ht
 
 ## Meta
 
-Luminous was made by [imgix](http://imgix.com). It's licensed under the BSD 2-Clause license (see the [license file](https://github.com/imgix/luminous/blob/master/LICENSE.md) for more info). Any contribution is absolutely welcome, but please review the [contribution guidelines](https://github.com/imgix/luminous/blob/master/CONTRIBUTING.md) before getting started.
+Luminous was made by [imgix](http://imgix.com). It's licensed under the BSD 2-Clause license (see the [license file](https://github.com/imgix/luminous/blob/main/LICENSE.md) for more info). Any contribution is absolutely welcome, but please review the [contribution guidelines](https://github.com/imgix/luminous/blob/main/CONTRIBUTING.md) before getting started.
