@@ -137,6 +137,14 @@ describe("Configuration", () => {
     expect(lum.settings.openTrigger).toBe("click");
   });
 
+  it("allows truthy defaults to be overridden  ", () => {
+    const anchor = document.querySelector(".test-anchor");
+    const lum = new Luminous(anchor, { closeWithEscape: false, injectBaseStyles: false });
+
+    expect(lum.settings.closeWithEscape).toBe(false);
+    expect(lum.settings.injectBaseStyles).toBe(false);
+  });
+
   it("passes settings to Lightbox", () => {
     const anchor = document.querySelector(".test-anchor");
     const settingsToMap = {
