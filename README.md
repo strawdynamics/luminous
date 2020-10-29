@@ -51,11 +51,11 @@ new Luminous(…);
 
 ## Usage
 
-Once you've installed Luminous via one of the above methods, you're ready to get started. There are no dependencies, so you can just start making cool stuff. Check out the [announcement blog post](http://blog.imgix.com/2016/01/06/better-lightbox-zoom-viewer-with-imgix.html), or take a peek at [our demo](https://imgix.github.io/luminous). Here's an example of a basic implementation:
+Once you've installed Luminous via one of the above methods, you're ready to get started. There are no dependencies, so you can just start making cool stuff. Check out the [announcement blog post](https://blog.imgix.com/2016/01/06/better-lightbox-zoom-viewer-with-imgix?utm_medium=referral&utm_source=github&utm_campaign=luminous), or take a peek at [our demo](https://imgix.github.io/luminous). Here's an example of a basic implementation:
 
 ```html
-<a href="http://assets.imgix.net/dog.png?w=1600">
-  <img alt="A dog!" src="http://assets.imgix.net/dog.png?w=400">
+<a href="https://assets.imgix.net/dog.png?w=1600">
+  <img alt="A dog!" src="https://assets.imgix.net/dog.png?w=400">
 </a>
 ```
 
@@ -72,18 +72,18 @@ Luminous supports gallery-style navigation using the LuminousGallery class. It w
 ```html
 <ul>
   <li>
-    <a class="gallery-demo" href="http://assets.imgix.net/unsplash/coyote.jpg?w=1600">
-      <img src="http://assets.imgix.net/unsplash/coyote.jpg?w=100" alt="Coyote">
+    <a class="gallery-demo" href="https://assets.imgix.net/unsplash/coyote.jpg?w=1600">
+      <img src="https://assets.imgix.net/unsplash/coyote.jpg?w=100" alt="Coyote">
     </a>
   </li>
   <li>
-    <a class="gallery-demo" href="http://assets.imgix.net/unsplash/motorbike.jpg?w=1600">
-      <img src="http://assets.imgix.net/unsplash/motorbike.jpg?w=100" alt="Motorbike">
+    <a class="gallery-demo" href="https://assets.imgix.net/unsplash/motorbike.jpg?w=1600">
+      <img src="https://assets.imgix.net/unsplash/motorbike.jpg?w=100" alt="Motorbike">
     </a>
   </li>
   <li>
-    <a class="gallery-demo" href="http://assets.imgix.net/unsplash/hotairballoon.jpg?w=1600">
-      <img src="http://assets.imgix.net/unsplash/hotairballoon.jpg?w=100" alt="Hot air balloon">
+    <a class="gallery-demo" href="https://assets.imgix.net/unsplash/hotairballoon.jpg?w=1600">
+      <img src="https://assets.imgix.net/unsplash/hotairballoon.jpg?w=100" alt="Hot air balloon">
     </a>
   </li>
 </ul>
@@ -181,4 +181,4 @@ We support the latest version of Google Chrome (which [automatically updates](ht
 
 ## Meta
 
-Luminous was made by [imgix](http://imgix.com). It's licensed under the BSD 2-Clause license (see the [license file](https://github.com/imgix/luminous/blob/main/LICENSE.md) for more info). Any contribution is absolutely welcome, but please review the [contribution guidelines](https://github.com/imgix/luminous/blob/main/CONTRIBUTING.md) before getting started.
+Luminous was made by [imgix](https://imgix.com?utm_medium=referral&utm_source=github&utm_campaign=luminous). It's licensed under the BSD 2-Clause license (see the [license file](https://github.com/imgix/luminous/blob/main/LICENSE.md) for more info). Any contribution is absolutely welcome, but please review the [contribution guidelines](https://github.com/imgix/luminous/blob/main/CONTRIBUTING.md) before getting started.
