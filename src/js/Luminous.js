@@ -12,7 +12,7 @@ export default class Luminous {
    * @param {Object=} options Luminous options
    */
   constructor(trigger, options = {}) {
-    this.VERSION = "2.3.2";
+    this.VERSION = "2.3.3";
     this.destroy = this.destroy.bind(this);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
