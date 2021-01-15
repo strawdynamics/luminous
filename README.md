@@ -8,18 +8,20 @@
 [![npm](https://img.shields.io/npm/dm/luminous-lightbox.svg)](https://www.npmjs.com/package/luminous-lightbox)
 [![License](https://img.shields.io/github/license/imgix/luminous)](https://github.com/imgix/luminous/blob/main/LICENSE.md)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fimgix%2Fluminous.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fimgix%2Fluminous?ref=badge_shield)
 
 ---
 <!-- /ix-docs-ignore -->
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [LuminousGallery Usage](#luminousgallery-usage)
+    * [LuminousGallery Usage](#luminousgallery-usage)
 - [Options / Defaults](#options--defaults)
-  - [LuminousGallery Options / Defaults](#luminousgallery-options--defaults)
+    * [LuminousGallery Options / Defaults](#luminousgallery-options--defaults)
 - [Theming](#theming)
 - [Browser Support](#browser-support)
 - [Meta](#meta)
+- [License](#license)
 
 <a name="installation"></a>
 
@@ -182,3 +184,6 @@ We support the latest version of Google Chrome (which [automatically updates](ht
 ## Meta
 
 Luminous was made by [imgix](https://imgix.com?utm_medium=referral&utm_source=github&utm_campaign=luminous). It's licensed under the BSD 2-Clause license (see the [license file](https://github.com/imgix/luminous/blob/main/LICENSE.md) for more info). Any contribution is absolutely welcome, but please review the [contribution guidelines](https://github.com/imgix/luminous/blob/main/CONTRIBUTING.md) before getting started.
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fimgix%2Fluminous.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fimgix%2Fluminous?ref=badge_large)
