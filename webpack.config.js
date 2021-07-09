@@ -2,6 +2,8 @@ const webpack = require("webpack");
 const path = require("path");
 const env = require("yargs").argv.env; // use --env with webpack 2
 const ClosureCompilerPlugin = require("webpack-closure-compiler");
+const pkg = require('./package.json');
+const year = new Date().getFullYear();
 
 let libraryName = "luminous";
 
@@ -45,7 +47,12 @@ function buildWithEnv(mode, outputFile) {
         },
         test: /^(?!.*tests\.webpack).*$/,
         concurrency: 3
-      })
+      }),
+      new webpack.BannerPlugin({
+        banner:`Luminous v${pkg.version}
+Copyright 2015-${year}, Zebrafish Labs
+Licensed under BSD-2 (https://github.com/imgix/luminous/blob/main/LICENSE.md)`
+      }),
     ]
   };
 
