@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.4](https://github.com/imgix/luminous/compare/v2.3.3...v2.3.4) (2021-07-13)
+
+
+### Bug Fixes
+
+* updated demo url on readme file ([#522](https://github.com/imgix/luminous/issues/522)) ([cae0218](https://github.com/imgix/luminous/commit/cae02188731e2e931dfd988c7bed1cefc50d06d5))
+
 ### [2.3.3](https://github.com/imgix/luminous/compare/v2.3.2...v2.3.3) (2020-11-02)
 
 
