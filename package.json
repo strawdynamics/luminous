@@ -113,13 +113,13 @@
           "replacements": [
             {
               "files": [
-                "src/Luminous.js"
+                "src/js/Luminous.js"
               ],
               "from": "this.VERSION = '.*'",
               "to": "this.VERSION = '${nextRelease.version}'",
               "results": [
                 {
-                  "file": "src/Luminous.js",
+                  "file": "src/js/Luminous.js",
                   "hasChanged": true,
                   "numMatches": 1,
                   "numReplacements": 1
