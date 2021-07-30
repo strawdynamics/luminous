@@ -12,7 +12,7 @@ export default class Luminous {
    * @param {Object=} options Luminous options
    */
   constructor(trigger, options = {}) {
-    this.VERSION = "2.3.3";
+    this.VERSION = "2.3.4";
     this.destroy = this.destroy.bind(this);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
@@ -45,7 +45,8 @@ export default class Luminous {
     // The event to listen to on the _lightbox_ element: triggers closing.
     const closeTrigger = options["closeTrigger"] || "click";
     // Allow closing by pressing escape.
-    const closeWithEscape = "closeWithEscape" in options ? !!options["closeWithEscape"] : true;
+    const closeWithEscape =
+      "closeWithEscape" in options ? !!options["closeWithEscape"] : true;
     // Automatically close when the page is scrolled.
     const closeOnScroll = options["closeOnScroll"] || false;
     const closeButtonEnabled =
@@ -67,7 +68,8 @@ export default class Luminous {
     const includeImgixJSClass = options["includeImgixJSClass"] || false;
     // Add base styles to the page. See the "Theming"
     // section of README.md for more information.
-    const injectBaseStyles = "injectBaseStyles" in options ? !!options["injectBaseStyles"] : true;
+    const injectBaseStyles =
+      "injectBaseStyles" in options ? !!options["injectBaseStyles"] : true;
     // Internal use only!
     const _gallery = options["_gallery"] || null;
     const _arrowNavigation = options["_arrowNavigation"] || null;
@@ -88,7 +90,7 @@ export default class Luminous {
       includeImgixJSClass,
       injectBaseStyles,
       _gallery,
-      _arrowNavigation
+      _arrowNavigation,
     };
 
     let injectionRoot = document.body;
@@ -171,7 +173,7 @@ export default class Luminous {
       _gallery: this.settings._gallery,
       _arrowNavigation: this.settings._arrowNavigation,
       closeTrigger: this.settings.closeTrigger,
-      onClose: this.close
+      onClose: this.close,
     });
   }
 
