@@ -44,7 +44,7 @@
     "test": "npm run test:local",
     "lint": "eslint \"{src,test}/**/*.js\"",
     "release:dryRun": "npx node-env-run --exec 'semantic-release --dryRun'",
-    "release:publish": "sematic-release"
+    "release:publish": "semantic-release"
   },
   "devDependencies": {
     "@babel/cli": "7.14.5",
