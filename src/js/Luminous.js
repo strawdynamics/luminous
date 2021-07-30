@@ -1,4 +1,3 @@
-import { version } from "../../package.json";
 import { isDOMElement } from "./util/dom";
 import injectBaseStylesheet from "./injectBaseStylesheet";
 import Lightbox from "./Lightbox";
@@ -13,7 +12,7 @@ export default class Luminous {
    * @param {Object=} options Luminous options
    */
   constructor(trigger, options = {}) {
-    this.VERSION = version;
+    this.VERSION = "2.3.4";
     this.destroy = this.destroy.bind(this);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
