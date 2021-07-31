@@ -1,5 +1,5 @@
 /*!
- * Luminous v2.3.3
+ * Luminous v2.3.4
  * Copyright 2015-2021, Zebrafish Labs
  * Licensed under BSD-2 (https://github.com/imgix/luminous/blob/main/LICENSE.md)
  */
