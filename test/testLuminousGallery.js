@@ -95,4 +95,38 @@ describe("LuminousGallery", () => {
 
     expect(document.body.querySelector(".lum-img").src).toBe(genLink(0));
   });
+  it("should call onChange when current image moves right", () => {
+    let current = null;
+    new LuminousGallery(document.querySelectorAll(".test-gallery-anchor"), {
+      arrowNavigation: true,
+      onChange: ({ imgEl }) => current = imgEl,
+    });
+
+    openLuminous(0);
+
+    const nextButtonEl = document.body.querySelector(".lum-next-button");
+    if (!nextButtonEl) {
+      throw new Error("Navigation button not found in DOM.");
+    }
+    nextButtonEl.click();
+
+    expect(current.src).toBe(genLink(1));
+  });
+  it("should call onChange when current image moves left", () => {
+    let current = null;
+    new LuminousGallery(document.querySelectorAll(".test-gallery-anchor"), {
+      arrowNavigation: true,
+      onChange: ({ imgEl }) => current = imgEl,
+    });
+
+    openLuminous(1);
+
+    const prevButtonEl = document.body.querySelector(".lum-previous-button");
+    if (!prevButtonEl) {
+      throw new Error("Navigation button not found in DOM.");
+    }
+    prevButtonEl.click();
+
+    expect(current.src).toBe(genLink(0));
+  });
 });
