@@ -304,6 +304,7 @@ export default class Lightbox {
     this._updateImgSrc();
     this._updateCaption();
     this._sizeImgWrapperEl();
+    this.settings._gallery.onChange({ imgEl: this.imgEl });
   }
 
   /**
@@ -321,6 +322,7 @@ export default class Lightbox {
     this._updateImgSrc();
     this._updateCaption();
     this._sizeImgWrapperEl();
+    this.settings._gallery.onChange({ imgEl: this.imgEl });
   }
 
   /**

@@ -153,7 +153,9 @@ LuminousGallery supports two sets of options arguments. The first set is specifi
 ```javascript
 var galleryOpts = {
   // Whether pressing the arrow keys should move to the next/previous slide.
-  arrowNavigation: true
+  arrowNavigation: true,
+  // A callback triggered when the image changes that is passed the image HTML element 
+  onChange: ({ imgEl }) => { … },
 };
 
 var luminousOpts = {

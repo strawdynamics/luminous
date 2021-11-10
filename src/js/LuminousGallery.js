@@ -12,7 +12,8 @@ export default class LuminousGallery {
    */
   constructor(triggers, options = {}, luminousOpts = {}) {
     const optionsDefaults = {
-      arrowNavigation: true
+      arrowNavigation: true,
+      onChange: null,
     };
 
     this.settings = Object.assign({}, optionsDefaults, options);
@@ -66,6 +67,18 @@ export default class LuminousGallery {
     return prevTriggerIndex < 0
       ? this.triggers[this.triggers.length - 1]
       : this.triggers[prevTriggerIndex];
+  }
+
+  /**
+   * Callback called when current image is changed
+   * @param {Object} params
+   * @param {!Element} params.imgEl New image element
+   */
+  onChange({ imgEl }) {
+    const onChange = this.settings.onChange;
+    if (onChange && typeof onChange === "function") {
+      onChange({ imgEl });
+    }
   }
 
   /**
