@@ -1,6 +1,9 @@
 language: node_js
-node_js:
-  - stable
+jobs:
+  include:
+  - node: lts/*
+  - node: stable
+    env: NODE_OPTIONS=--openssl-legacy-provider
 install:
   - npm install
 git:
