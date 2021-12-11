@@ -80,7 +80,7 @@
     "postcss": "8.4.4",
     "postcss-banner": "4.0.1",
     "postcss-cli": "8.3.0",
-    "prettier": "2.4.1",
+    "prettier": "2.5.1",
     "rimraf": "3.0.2",
     "semantic-release": "17.4.7",
     "standard-version": "9.3.2",
