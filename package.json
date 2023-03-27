@@ -64,7 +64,7 @@
     "babel-loader": "8.3.0",
     "babel-preset-env": "7.0.0-beta.3",
     "chai": "4.3.7",
-    "closure-webpack-plugin": "2.5.0",
+    "closure-webpack-plugin": "2.6.1",
     "cross-env": "7.0.3",
     "cssnano": "5.1.15",
     "cssnano-preset-advanced": "5.3.10",
