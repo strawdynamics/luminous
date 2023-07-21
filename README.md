@@ -1,4 +1,10 @@
 <!-- ix-docs-ignore -->
+
+# This repository is no longer actively maintained.
+See [#626](https://github.com/imgix/luminous/issues/626) for details.
+
+---
+
 ![imgix logo](https://assets.imgix.net/sdk-imgix-logo.svg)
 
 `Luminous` is a simple, lightweight, no-dependencies JavaScript image lightbox.
@@ -154,7 +160,7 @@ LuminousGallery supports two sets of options arguments. The first set is specifi
 var galleryOpts = {
   // Whether pressing the arrow keys should move to the next/previous slide.
   arrowNavigation: true,
-  // A callback triggered when the image changes that is passed the image HTML element 
+  // A callback triggered when the image changes that is passed the image HTML element
   onChange: ({ imgEl }) => { … },
 };
 
