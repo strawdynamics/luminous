@@ -30,7 +30,7 @@ jobs:
 
   deploy:
     docker:
-      - image: cimg/node:17.9-browsers
+      - image: cimg/node:20.8-browsers
     steps:
       - checkout
       - run: echo 'export NODE_OPTIONS=--openssl-legacy-provider' >> $BASH_ENV
