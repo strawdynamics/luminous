@@ -1,12 +1,3 @@
-<!-- ix-docs-ignore -->
-
-# This repository is no longer actively maintained.
-See [#626](https://github.com/imgix/luminous/issues/626) for details.
-
----
-
-![imgix logo](https://assets.imgix.net/sdk-imgix-logo.svg)
-
 `Luminous` is a simple, lightweight, no-dependencies JavaScript image lightbox.
 
 [![npm version](https://img.shields.io/npm/v/luminous-lightbox.svg)](https://www.npmjs.com/package/luminous-lightbox)
@@ -17,7 +8,6 @@ See [#626](https://github.com/imgix/luminous/issues/626) for details.
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fimgix%2Fluminous.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fimgix%2Fluminous?ref=badge_shield)
 
 ---
-<!-- /ix-docs-ignore -->
 
 - [Installation](#installation)
 - [Usage](#usage)
