@@ -1,3 +1,5 @@
+# Luminous
+
 `Luminous` is a simple, lightweight, no-dependencies JavaScript image lightbox.
 
 [![npm version](https://img.shields.io/npm/v/luminous-lightbox.svg)](https://www.npmjs.com/package/luminous-lightbox)
